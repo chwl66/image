@@ -1,0 +1,178 @@
+{extend name="index/base" /}
+{block name="title"}{$Hidove.image.filename} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+
+<!--cdn-->
+<link href="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet">
+<script src="{$Hidove.config.system.base.cdnjs}/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+{/block}
+{block name="body"}
+<div class="container mt-3 mb-3 Hidove-main">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="image-container">
+                <div class="image-src">
+                    <a class="fancybox"
+                       href="{:splice_distribute_url($Hidove.image.signatures)}"
+                       data-caption="{$Hidove.image.filename}" data-fancybox="gallery">
+                        <img class="image" style="max-width: 100%; height: auto;"
+                             data-original="{:splice_distribute_url($Hidove.image.signatures)}">
+                    </a>
+                </div>
+                <div class="text-center image-size-container" style="margin: 10px 0px;">
+                    <span class="badge badge-dark">File Name: <span
+                            class="image-size">{$Hidove.image.filename}</span></span>
+                    <span class="badge badge-dark">Image Size: <span class="image-size">{$Hidove.image.file_size|format_bytes}</span></span>
+                </div>
+                <div class="text-center image-size-container">
+                    <span class="badge badge-dark">Upload Time: <span class="image-size">{$Hidove.image.create_time|date='Y-m-d H:i:s'}</span></span>
+                    <span class="badge badge-dark">Image Mime: <span
+                            class="image-size">{$Hidove.image.mime}</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a aria-selected="true" data-toggle="tab" role="tab" class="nav-link active" href="#distribute">
+                        分发
+                    </a>
+                </li>
+                {foreach $Hidove.image.url as $key => $value}
+                {if is_array($value)}
+                {foreach $value as $k => $v}
+                <li class="nav-item">
+                    <a aria-selected="false" data-toggle="tab" role="tab" class="nav-link" href="#{$k}">
+                        Private {$k}
+                    </a>
+                </li>
+                {/foreach}
+                {else}
+                <li class="nav-item">
+                    <a aria-selected="false" data-toggle="tab" role="tab" class="nav-link" href="#{$key}">
+                        {if isset($Hidove.api[$key])}
+                        {$Hidove.api[$key]}
+                        {else}
+                        {$key}
+                        {/if}
+                    </a>
+                </li>
+                {/if}
+                {/foreach}
+            </ul>
+            <div id="navTabContent" class="tab-content">
+                <div id="distribute" class="tab-pane active show">
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <div class="group">
+                                <div class="form-group">
+                                    <div class="">Image URL</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="{:splice_distribute_url($Hidove.image.signatures)}">
+                                </div>
+                                <div class="form-group">
+                                    <div class="">HTML</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="<a href=&quot;{:Request()->domain().'/info/'.$Hidove.image.signatures}&quot; target=&quot;_blank&quot;><img src=&quot;{:splice_distribute_url($Hidove.image.signatures)}&quot; alt=&quot;{$Hidove.image.filename}&quot;></a>">
+                                </div>
+                                <div class="form-group">
+                                    <div class="">BBCode</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="[URL={:splice_distribute_url($Hidove.image.signatures)}][IMG]{:splice_distribute_url($Hidove.image.signatures)}[/IMG][/URL]">
+                                </div>
+                                <div class="form-group">
+                                    <div class="">Markdown</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="![{$Hidove.image.filename}]({:splice_distribute_url($Hidove.image.signatures)})">
+                                </div>
+                                <div class="form-group">
+                                    <div class="">Markdown with Link</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="[![{:splice_distribute_url($Hidove.image.signatures)}]({:splice_distribute_url($Hidove.image.signatures)})]({:splice_distribute_url($Hidove.image.signatures)})">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {foreach $Hidove.image.url as $key => $value}
+                {if is_array($value)}
+                {foreach $value as $k => $v}
+                <div id="{$k}" class="tab-pane">
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <div class="group">
+                                <div class="form-group">
+                                    <div>Image URL</div>
+                                    <input type="text" class="form-control" onclick="this.select();" value="{$v}">
+                                </div>
+                                <div class="form-group">
+                                    <div>HTML</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="<a href=&quot;{:Request()->domain().'/info/'.$Hidove.image.signatures}&quot; target=&quot;_blank&quot;><img src=&quot;{$v}&quot; alt=&quot;{$Hidove.image.filename}&quot;></a>">
+                                </div>
+                                <div class="form-group">
+                                    <div>BBCode</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="[URL={$v}][IMG]{$v}[/IMG][/URL]">
+                                </div>
+                                <div class="form-group">
+                                    <div>Markdown</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="![{$Hidove.image.filename}]({$v})">
+                                </div>
+                                <div class="form-group">
+                                    <div>Markdown with Link</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="[![{$v}]({$v})]({$v})">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+                {else}
+                <div id="{$key}" class="tab-pane">
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <div class="group">
+                                <div class="form-group">
+                                    <div>Image URL</div>
+                                    <input type="text" class="form-control" onclick="this.select();" value="{$value}">
+                                </div>
+                                <div class="form-group">
+                                    <div>HTML</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="<a href=&quot;{:Request()->domain().'/info/'.$Hidove.image.signatures}&quot; target=&quot;_blank&quot;><img src=&quot;{$value}&quot; alt=&quot;{$Hidove.image.filename}&quot;></a>">
+                                </div>
+                                <div class="form-group">
+                                    <div>BBCode</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="[URL={$value}][IMG]{$value}[/IMG][/URL]">
+                                </div>
+                                <div class="form-group">
+                                    <div>Markdown</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="![{$Hidove.image.filename}]({$value})">
+                                </div>
+                                <div class="form-group">
+                                    <div>Markdown with Link</div>
+                                    <input type="text" class="form-control" onclick="this.select();"
+                                           value="[![{$value}]({$value})]({$value})">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/if}
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+<script>
+    lazyload($(".fancybox img"));
+</script>
+{/block}

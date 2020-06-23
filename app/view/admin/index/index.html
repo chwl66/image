@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hidove图床 - 后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css?t=20200514" media="all">
+    <script src="{$Hidove.system.basic.cdnjs}/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="LAY_app"></div>
+<script src="/static/admin/layui/layui.js"></script>
+<script src="/static/index/js/function.js"></script>
+<script>
+    const authPath = "/{$Hidove.system.other.authPath}";
+    const ajaxPath = authPath + "/ajax";
+    layui.config({
+        base: '/static/admin/dist/' //指定 layuiAdmin 项目路径
+        , version: '2.1.1'
+    }).use('index', function () {
+        var layer = layui.layer, admin = layui.admin;
+    });
+    if (getCookie('update_checked') !== '1') {
+        $.ajax({
+            url: authPath + '/update/check',
+            type: 'get',
+            success: function (data) {
+                if (data.code === 200) {
+                    if (data.data.version !== data.data.lastestVersion) {
+                        layer.open({
+                            type: 1,
+                            title: false ,//不显示标题栏
+                            closeBtn: false,
+                            area: '300px;',
+                            shade: 0.8,
+                            id: 'LAY_layuipro', //设定一个id，防止重复弹出
+                            btn: ['火速围观', '残忍拒绝'],
+                            btnAlign: 'c',
+                            moveType: 1,//拖拽模式，0或者1
+                            content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;"><pre>'
+                                + data.data.content +
+                                '</pre></div>'
+                            ,
+                            success: function (res) {
+                                var btn = res.find('.layui-layer-btn');
+                                btn.find('.layui-layer-btn0').attr({
+                                    href: authPath + '/update'
+                                    , target: '_blank'
+                                });
+                            }
+                        });
+                        setCookie('update_checked', 1, 86400);
+                    }
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

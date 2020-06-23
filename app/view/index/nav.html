@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container Hidove-nav-main">
+    <a class="navbar-brand" href="/">{$Hidove.config.system.base.sitename}</a>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">{:lang('Home')}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">{:lang('About')}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/explore">{:lang('Explore')}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/simple" target="_blank">{:lang('Simple')}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://blog.hidove.cn/" target="_blank">{:lang('Blog')}</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/changelog">{:lang('Change Log')}</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{:lang('API')}</a>
+                <div class="dropdown-menu" aria-labelledby="drop_api">
+                    <a class="dropdown-item" href="/doc/upload">{:lang('Upload API')}</a>
+                    <a class="dropdown-item" href="/doc/imageinfo">{:lang('Image Info')}</a>
+                    <a class="dropdown-item" href="/doc/imageupdate">{:lang('Image Update')}</a>
+                    <a class="dropdown-item" href="/doc/imageList">{:lang('Image List')}</a>
+                    <a class="dropdown-item" href="/doc/folderList">{:lang('Folder List')}</a>
+                </div>
+            </li>
+            {if empty($Hidove.user)}
+            <li class="nav-item">
+                <a class="nav-link" href="/user/login">{:lang('Log In')}</a>
+            </li>
+            {else}
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    {$Hidove.user.username}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="drop_api">
+                    <a class="dropdown-item" href="/user">用户中心</a>
+                    <a class="dropdown-item" href="/user/images">图片管理</a>
+                    <a class="dropdown-item" href="/user/cache">刷新缓存</a>
+                    <a class="dropdown-item" href="/user/node">节点管理</a>
+                    <a class="dropdown-item" href="/user/storage">储存策略</a>
+                    <a class="dropdown-item" href="/user/finance">支付中心</a>
+                    <a class="dropdown-item" href="/user/watermark">水印设置</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/user/loginout">{:lang('Log Out')}</a>
+                </div>
+            </li>
+            {/if}
+        </ul>
+    </div>
+    </div>
+</nav>

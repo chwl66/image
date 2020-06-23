@@ -1,0 +1,62 @@
+{
+    "name": "hidove/image",
+    "description": "HidoveImage Pro V2",
+    "type": "project",
+    "keywords": [
+        "Hidove",
+        "Image"
+    ],
+    "homepage": "http://www.hidove.cn/",
+    "authors": [
+        {
+            "name": "Ivey",
+            "email": "loliconla@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "topthink/framework": "^6.0.0",
+        "topthink/think-orm": "^2.0",
+        "topthink/think-view": "^1.0",
+      "ext-curl": "*",
+        "topthink/think-captcha": "^3.0",
+        "liliuwei/thinkphp-jump": "^1.5",
+      "ext-json": "*",
+        "topthink/think-image": "^1.0",
+        "topthink/think-ide-helper": "^1.0",
+        "aliyuncs/oss-sdk-php": "^2.3",
+        "qiniu/php-sdk": "^7.2",
+        "upyun/sdk": "^3.4",
+      "ext-ftp": "*",
+        "nesbot/carbon": "^2.34",
+        "swiftmailer/swiftmailer": "^6.2",
+        "endroid/qr-code": "^3.7",
+        "easy-task/easy-task": "^2.3",
+        "qcloud/cos-sdk-v5": "^2.0",
+      "ext-openssl": "*",
+      "ext-zip": "*",
+      "ext-pdo": "*",
+      "ext-zend-opcache": "*"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^4.2",
+        "topthink/think-trace":"^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app"
+        },
+        "psr-0": {
+            "": "extend/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php think service:discover",
+            "@php think vendor:publish"
+        ]
+    }
+}

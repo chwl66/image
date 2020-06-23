@@ -1,0 +1,249 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Storage')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+{/block}
+{block name="body"}
+<div class="container Hidove-main mt-5">
+    <div class="col-md-9 shadow rounded py-3" style="margin: auto">
+        <h2 style="text-align: center">储存策略</h2>
+        <h4 class="mt-3" style="text-align: center">这个貌似不用多介绍</h4>
+        <div class="mt-3">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#this" role="tab" aria-controls="distribute"
+                       aria-selected="true">分发</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#ftp" role="tab" aria-controls="ftp">FTP</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#ufile" role="tab" aria-controls="UFILE">UFILE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#oss" role="tab" aria-controls="OSS">OSS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#cos" role="tab" aria-controls="COS">COS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#upyun" role="tab" aria-controls="UPYUN">UPYUN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#qiniu" role="tab" aria-controls="QINIU">QINIU</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#zzidc" role="tab" aria-controls="ZZIDC">ZZIDC</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#github" role="tab" aria-controls="GITHUB">GITHUB</a>
+                </li>
+            </ul>
+            <div class="tab-content mt-3" id="content">
+                <div class="tab-pane fade show active" id="this" role="tabpanel" aria-labelledby="this-tab">
+                    <div class="form-group">
+                        <label>分发域名</label>
+                        <input type="text" class="form-control" name="distribute">
+                        <small class="form-text text-muted">用于图片分发的域名</small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="ftp" aria-labelledby="ftp-tab">
+                    <div class="form-group">
+                        <label>Host</label>
+                        <input type="text" class="form-control" name="host">
+                        <small class="form-text text-muted">提示：主机地址</small>
+                    </div>
+                    <div class="form-group">
+                        <label>端口</label>
+                        <input type="text" class="form-control" name="port">
+                        <small class="form-text text-muted">提示：一般为21</small>
+                    </div>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" class="form-control" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label>CDN加速域名</label>
+                        <input type="text" class="form-control" name="cdn">
+                        <small class="form-text text-muted">提示：CDN加速域名</small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="ufile" aria-labelledby="urfile-tab">
+                    <div class="form-group">
+                        <label>Host</label>
+                        <input type="text" class="form-control" name="host">
+                        <small class="form-text text-muted">提示：主机地址</small>
+                    </div>
+                    <div class="form-group">
+                        <label>端口</label>
+                        <input type="text" class="form-control" name="port">
+                        <small class="form-text text-muted">提示：一般为21</small>
+                    </div>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" class="form-control" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label>CDN加速域名</label>
+                        <input type="text" class="form-control" name="cdn">
+                        <small class="form-text text-muted">提示：CDN加速域名</small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="oss" aria-labelledby="oos-tab">
+                    <div class="form-group">
+                        <label>Bucket域名</label>
+                        <input type="text" class="form-control" name="cdn">
+                        <small class="form-text text-muted">提示：Bucket域名</small>
+                    </div>
+                    <div class="form-group">
+                        <label>AccessKeyId</label>
+                        <input type="text" class="form-control" name="AccessKeyId">
+                    </div>
+                    <div class="form-group">
+                        <label>AccessKeySecret</label>
+                        <input type="text" class="form-control" name="AccessKeySecret">
+                    </div>
+                    <div class="form-group">
+                        <label>Endpoint</label>
+                        <input type="text" class="form-control" name="Endpoint">
+                        <small class="form-text text-muted">提示：Endpoint(地域节点),例如:oss-cn-shanghai.aliyuncs.com</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Bucket</label>
+                        <input type="text" class="form-control" name="Bucket">
+                        <small class="form-text text-muted">提示：储存桶标识</small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="cos" aria-labelledby="cos-tab">
+                    <div class="form-group">
+                        <label>Bucket域名</label>
+                        <input type="text" class="form-control" name="cdn">
+                        <small class="form-text text-muted">提示：Bucket域名</small>
+                    </div>
+                    <div class="form-group">
+                        <label>SecretId</label>
+                        <input type="text" class="form-control" name="SecretId">
+                    </div>
+                    <div class="form-group">
+                        <label>SecretKey</label>
+                        <input type="text" class="form-control" name="SecretKey">
+                    </div>
+                    <div class="form-group">
+                        <label>Region</label>
+                        <input type="text" class="form-control" name="Region">
+                        <small class="form-text text-muted">提示：Region(地域节点),例如：ap-guangzhou</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Bucket</label>
+                        <input type="text" class="form-control" name="Bucket">
+                        <small class="form-text text-muted">提示：储存桶标识</small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="upyun" aria-labelledby="upyun-tab">
+                    <div class="form-group">
+                        <label>CDN加速域名</label>
+                        <input type="text" class="form-control" name="cdn">
+                        <small class="form-text text-muted">提示：CDN加速域名</small>
+                    </div>
+                    <div class="form-group">
+                        <label>操作员账号</label>
+                        <input type="text" class="form-control" name="OperatorName">
+                    </div>
+                    <div class="form-group">
+                        <label>操作员密码</label>
+                        <input type="text" class="form-control" name="OperatorPwd">
+                    </div>
+                    <div class="form-group">
+                        <label>服务名称</label>
+                        <input type="text" class="form-control" name="ServiceName">
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="qiniu" aria-labelledby="qiniu-tab">
+                    <div class="form-group">
+                        <label>CDN加速域名</label>
+                        <input type="text" class="form-control" name="cdn">
+                        <small class="form-text text-muted">提示：CDN加速域名</small>
+                    </div>
+                    <div class="form-group">
+                        <label>AccessKey</label>
+                        <input type="text" class="form-control" name="AccessKey">
+                    </div>
+                    <div class="form-group">
+                        <label>SecretKey</label>
+                        <input type="text" class="form-control" name="SecretKey">
+                    </div>
+                    <div class="form-group">
+                        <label>Bucket</label>
+                        <input type="text" class="form-control" name="Bucket">
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="zzidc" aria-labelledby="zzidc-tab">
+                    <div class="form-group">
+                        <label>CDN加速域名</label>
+                        <input type="text" class="form-control" name="cdn">
+                        <small class="form-text text-muted">提示：CDN加速域名</small>
+                    </div>
+                    <div class="form-group">
+                        <label>accessKey</label>
+                        <input type="text" class="form-control" name="accessKey">
+                        <small class="form-text text-muted">提示：accessKey提示：用户秘钥对：开通快云存储时的Access_Key，可在会员中心获取</small>
+                    </div>
+                    <div class="form-group">
+                        <label>secretKey</label>
+                        <input type="text" class="form-control" name="secretKey">
+                        <small class="form-text text-muted">提示：用户秘钥对：开通快云存储时的Secret_Key，可在会员中心获取</small>
+                    </div>
+                    <div class="form-group">
+                        <label>resource</label>
+                        <input type="text" class="form-control" name="resource">
+                        <small class="form-text text-muted">提示：调用来源，联系快云存储协作获取</small>
+                    </div>
+                    <div class="form-group">
+                        <label>voucher</label>
+                        <input type="text" class="form-control" name="voucher">
+                        <small class="form-text text-muted">提示：用户通过accesskey和secretkey获取的，可在会员中心点击，以邮件形式获取</small>
+                    </div>
+                    <div class="form-group">
+                        <label>bucketName</label>
+                        <input type="text" class="form-control" name="bucketName">
+                        <small class="form-text text-muted">提示：用户的空间名称</small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" role="tabpanel" id="github" aria-labelledby="github-tab">
+                    <div class="form-group">
+                        <label>GitHub CDN</label>
+                        <input type="text" name="cdn" class="form-control">
+                        <small class="form-text text-muted">提示：CDN加速域名，格式：https://cdn.jsdelivr.net/gh/:owner/:repo</small>
+                    </div>
+                    <div class="form-group">
+                        <label>GitHub Owner</label>
+                        <input type="text" class="form-control" name="owner">
+                        <small class="form-text text-muted">提示：用户名，区分大小写</small>
+                    </div>
+                    <div class="form-group">
+                        <label>GitHub Repository</label>
+                        <input type="text" class="form-control" name="repository">
+                        <small class="form-text text-muted">提示：你的GitHub仓库名称，区分大小写</small>
+                    </div>
+                    <div class="form-group">
+                        <label>GitHub Personal access token</label>
+                        <input type="text" class="form-control" name="token">
+                        <small class="form-text text-muted">提示：秘钥，获取地址：https://github.com/settings/tokens</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="send" type="button" class="btn btn-outline-secondary btn-block">提交</button>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="/static/index/js/user/storage.js"></script>
+{/block}

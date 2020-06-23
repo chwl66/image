@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Hidove图床在线更新</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css" media="all">
+    <script src="https://lib.baomitu.com/jquery/3.5.0/jquery.min.js"></script>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+
+    <style>
+        .main {
+            min-height: 100vh;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .blockquote {
+                width: 90%;
+            }
+        }
+
+        .blockquote {
+            width: 60%;
+        }
+
+        .display-none {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <blockquote class="layui-elem-quote blockquote display-none" id="version"></blockquote>
+    <blockquote class="layui-elem-quote  layui-quote-nm blockquote display-none" id="msg"></blockquote>
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn" id="check">检查更新</button>
+        <button type="button" class="layui-btn display-none" id="downloadBtn">立即更新</button>
+        <button type="button" class="layui-btn display-none" id="updateSqlBtn">重试</button>
+        <button type="button" class="layui-btn display-none" id="redirect" onclick="window.location='/'">访问首页</button>
+    </div>
+
+
+    <br/>
+    <blockquote class="layui-elem-quote  blockquote display-none" id="content"></blockquote>
+
+</div>
+<script src="/static/admin/layui/layui.js"></script>
+<script>
+    const authPath = "/{:hidove_config_get('system.other.authPath')}";
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        let loading = {};
+        let msg = '';
+        check();
+
+        $('#check').click(function () {
+            check();
+        });
+        $('#downloadBtn').click(function () {
+            download();
+        });
+        $('#updateSqlBtn').click(function () {
+            updateSql();
+        });
+
+        function download() {
+            loading = layer.load(1);
+            add_msg('正在下载更新包');
+            $.ajax({
+                url: authPath + '/update/download',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    add_msg(data.msg);
+                    layer.close(loading);
+                    if (data.code === 200) {
+                        $('#downloadBtn').css('display', 'none');
+                        updateSql();
+                    } else {
+                        $('#downloadBtn').text('重试').css('display', 'block');
+                    }
+
+                }
+            });
+        }
+
+        function updateSql() {
+            loading = layer.load(1);
+            add_msg('正在更新数据库');
+            $.ajax({
+                url: authPath + '/update/updateSql',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    add_msg(data.msg);
+                    layer.close(loading);
+                    if (data.code === 200) {
+                        $('#updateSqlBtn').css('display', 'none');
+                        add_msg('更新完毕！本地可能会有缓存从而导致版本号显示不正确，等会刷新后就能显示正确的版本号啦~~~');
+                        check();
+                    } else {
+                        $('#updateSqlBtn').css('display', 'block');
+                    }
+
+                }
+            });
+        }
+
+        function check() {
+            loading = layer.load(1);
+            add_msg('正在检查更新');
+            $.ajax({
+                url: authPath + '/update/check',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loading);
+                    add_msg(data.msg);
+                    if (data.code === 200) {
+                        add_msg('当前版本：' + data.data.version + '，最新版本：' + data.data.lastestVersion);
+                        $('#version').text('当前版本：' + data.data.version + '，最新版本：' + data.data.lastestVersion)
+                            .css('display', 'block');
+                        $('#content').html('<pre>更新日志\n' + data.data.content + '</pre>')
+                            .css('display', 'block');
+
+                        if (data.data.version < data.data.lastestVersion) {
+                            $('#downloadBtn').text('立即更新').css('display', 'block');
+                        } else {
+                            $('#redirect').css('display', 'block');
+                        }
+                    } else {
+                        // $('#check').css('display', 'block');
+                        $('#version').text(data.msg)
+                            .css('display', 'block');
+                    }
+
+                }
+            });
+        }
+
+        function add_msg(data) {
+            if (msg !== '') {
+                msg = msg + "<br/>" + data;
+            } else {
+                msg = data;
+            }
+            $('#msg').html(msg)
+                .css('display', 'block');
+        }
+
+    });
+</script>
+</body>
+</html>

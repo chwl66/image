@@ -1,0 +1,44 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Sign Up')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}{/block}
+{block name="body"}
+<div class="container mt-5 Hidove-main">
+    <div class="col-md-6 shadow rounded py-5 px-4" style="margin: auto">
+        <div class="form-group">
+            <h3 style="text-align: center">{:lang('Get started with Picture bed')}</h3>
+            <label for="username">{:lang('Username')}</label>
+            <input type="text" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+            <label for="password">{:lang('Password')}</label>
+            <input type="text" class="form-control" id="password">
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">{:lang('Confirm Password')}</label>
+            <input type="text" class="form-control" id="confirm_password">
+        </div>
+        <div class="form-group">
+            <label for="email">{:lang('E-Mail')}</label>
+            <input type="email" class="form-control" id="email">
+        </div>
+        <div class="form-group">
+            <label for="captcha">{:lang('Captcha')}</label>
+            <div class="input-group">
+                <input type="captcha" class="form-control" id="captcha">
+                <div class="input-group-prepend col-5">
+                    <img id="captcha-img" data-src="{:captcha_src()}" class="img-fluid"
+                         src="{:captcha_src().'?v='.time()}"
+                         alt="">
+                </div>
+            </div>
+        </div>
+        <button id="register" type="button" class="btn btn-outline-secondary btn-block">{:lang('Create Account')}</button>
+    </div>
+    <div class="clearfix mt-3 col-md-4" style="margin: auto">
+        <a href="/user/login" class="badge badge-light float-left">{:lang('Already have an account? Log In')}</a>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="/static/index/js/user/register.js"></script>
+{/block}

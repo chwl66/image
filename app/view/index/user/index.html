@@ -1,0 +1,89 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('User center')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+<link rel="stylesheet" href="/static/index/css/user.css">
+{/block}
+{block name="body"}
+<div class="container Hidove-main">
+    <div class="card bg-light mt-3 mb-3">
+        <div class="card-header">用户信息</div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <i class="far fa-user" aria-hidden="true"></i>
+                    <span class="Hidove-panel-tip">用户名：</span>
+                    <span>{$Hidove.user.username}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-hashtag" aria-hidden="true"></i>
+                    <span class="Hidove-panel-tip">密码：</span>
+                    <button id="resetPassword" type="button" class="btn btn-outline-secondary">修改密码</button>
+                </li>
+                <li class="list-group-item">
+                    <i class="far fa-envelope"></i>
+                    <span class="Hidove-panel-tip">邮箱：</span>
+                    <span id="HidoveEmail">{$Hidove.user.email}</span>
+                    <button id="resetEmail" type="button" class="btn btn-outline-secondary ml-5">修改邮箱</button>
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    <span class="Hidove-panel-tip">Token：</span>
+                    <span id="HidoveToken">{$Hidove.user.token}</span>
+                    <button id="resetToken" type="button" class="btn btn-outline-secondary ml-5">重置</button>
+                </li>
+                <li class="list-group-item">
+                    <i class="far fa-heart"></i>
+                    <span class="Hidove-panel-tip">注册时间：</span>
+                    <span>{$Hidove.user.create_time|date='Y-m-d H:i:s'}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="far fa-folder-open"></i>
+                    <span class="Hidove-panel-tip">API上传文件夹：</span>
+                    <span id="apiFolder">{:empty($Hidove.user.apiFolder.name)?'根目录':$Hidove.user.apiFolder.name}</span>
+                    <button id="resetApiFolder" type="button" class="btn btn-outline-secondary ml-5">修改文件夹</button>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-lock"></i>
+                    <span class="Hidove-panel-tip">是否私密(不显示在探索)：</span>
+                    {if $Hidove.user.is_private==0}
+                    <span id="isprivateStatus">已关闭</span>
+                    <button id="isprivate" type="button" class="btn btn-outline-secondary ml-5">开启</button>
+                    {else}
+                    <span id="isprivateStatus">已开启</span>
+                    <button id="isprivate" type="button" class="btn btn-outline-secondary ml-5">关闭</button>
+                    {/if}
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-battery-quarter" aria-hidden="true"></i>
+                    <span class="Hidove-panel-tip">已用容量：</span>
+                    <div class="progress">
+                        <div id="capacityProgress" class="progress-bar progress-bar-striped progress-bar-animated"
+                             role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"
+                             style="width: 0%">
+                            <span></span>
+                        </div>
+                    </div>
+                    <span id="capacityPercentage"></span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-crown"></i>
+                    <span class="Hidove-panel-tip">级别：</span>
+                    <span>{$Hidove.user.group.name}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-cloud"></i>
+                    <span class="Hidove-panel-tip">总容量：</span>
+                    <span id="capacity"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    var capacityUsed = '{$Hidove.user.capacity_used}';
+    var capacity = '{$Hidove.user.group.capacity}';
+</script>
+<script src="/static/index/js/user/index.js"></script>
+{/block}

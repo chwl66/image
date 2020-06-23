@@ -1,0 +1,172 @@
+{extend name="index/base" /}
+{block name="title"}{$Hidove.config.system.base.sitename} - {$Hidove.config.system.base.subtitle}{/block}
+{block name="head"}
+
+<!--<link href="https://cdn.jsdelivr.net/gh/daneden/animate.css/animate.css" rel="stylesheet">-->
+<link href="/static/index/css/animate.css" rel="stylesheet" type="text/css"/>
+
+<!--本地-->
+<link href="/static/common/bootstrap-fileinput/5.0.7/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
+<script src="/static/common/bootstrap-fileinput/5.0.7/js/fileinput.min.js"></script>
+<script src="/static/common/bootstrap-fileinput/5.0.7/js/plugins/piexif.min.js"></script>
+<script src="/static/common/bootstrap-fileinput/5.0.7/js/plugins/purify.min.js"></script>
+<script src="/static/common/bootstrap-fileinput/5.0.7/themes/fas/theme.min.js"></script>
+{/block}
+{block name="body"}
+<div class="container Hidove-main">
+    <div class="page-header">
+        <h1>Image Upload</h1>
+        <p><span id="maxImageSize">5 MB</span> max per file. <span id="maxFileCount">10</span> files max per request. We
+            have hosted {$Hidove.total} pictures.</p>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Free</h5>
+            <div class="btn-group-toggle" data-toggle="buttons" id="publicStorage">
+                {foreach $Hidove.api as $key=>$value}
+                {if $value.checked === 1}
+                <label class="btn btn-outline-secondary active">
+                    <input type="checkbox" checked autocomplete="off" name="apiType" value="{$value.key}"
+                           title="{$value.name}">{$value.name}
+                </label>
+                {else}
+                <label class="btn btn-outline-secondary">
+                    <input type="checkbox" autocomplete="off" name="apiType" value="{$value.key}" title="{$value.name}">{$value.name}
+                </label>
+                {/if}
+                {/foreach}
+            </div>
+            {if !empty($Hidove.user) && !empty($Hidove.user.storage)}
+            <h5 class="card-title">Private storage</h5>
+            <div class="btn-group-toggle" data-toggle="buttons" id="privateStorage">
+                {foreach $Hidove.user.storage as $key=>$value}
+
+                {if($key !== 'this')}
+                    {if empty($value.cdn)}
+                    <label class="btn btn-outline-secondary disabled">
+                        <input type="checkbox" autocomplete="off" name="privateStorage" value="{$key}"
+                               title="{$key}">{$key|strtoupper}
+                    </label>
+                    {else}
+                    <label class="btn btn-outline-secondary">
+                        <input type="checkbox" autocomplete="off" name="privateStorage" value="{$key}"
+                               title="{$key}">{$key|strtoupper}
+                    </label>
+                    {/if}
+                {/if}
+                {/foreach}
+            </div>
+            {/if}
+        </div>
+    </div>
+
+    <div class="post">
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+                <input id="Hidove" type="file" name="image" multiple="true" class="file" data-overwrite-initial="false"
+                       data-min-file-count="1" accept="image/*">
+            </div>
+        </form>
+    </div>
+    <div id="showurl" style="display:none;">
+        <ul id="navTab" class="nav nav-tabs">
+            <li class="nav-item">
+                <a aria-selected="true" data-toggle="tab" role="tab" class="nav-link active" href="#urlcode">URL</a>
+            </li>
+            <li class="nav-item"><a aria-selected="false" data-toggle="tab" role="tab" class="nav-link"
+                                    href="#htmlcode">HTML</a></li>
+            <li class="nav-item"><a aria-selected="false" data-toggle="tab" role="tab" class="nav-link" href="#bbcode">BBCode</a>
+            </li>
+            <li class="nav-item"><a aria-selected="false" data-toggle="tab" role="tab" class="nav-link"
+                                    href="#markdown">Markdown</a></li>
+            <li class="nav-item"><a aria-selected="false" data-toggle="tab" role="tab" class="nav-link"
+                                    href="#markdownwithlink">Markdown with Link</a></li>
+        </ul>
+        <div id="navTabContent" class="tab-content">
+            <div id="urlcode" class="tab-pane active show">
+                <div class="card card-default">
+                    <div class="card-body Hidove-imageucode">
+                        <table class="table table-bordered">
+                            <tbody id="urlcodes">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="htmlcode" class="tab-pane">
+                <div class="card card-default">
+                    <div class="card-body Hidove-imageucode">
+                        <table class="table table-bordered">
+                            <tbody id="htmlcodes">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="bbcode" class="tab-pane">
+                <div class="card card-default">
+                    <div class="card-body Hidove-imageucode">
+                        <table class="table table-bordered">
+                            <tbody id="bbcodes">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="markdown" class="tab-pane">
+                <div class="card card-default">
+                    <div class="card-body Hidove-imageucode">
+                        <table class="table table-bordered">
+                            <tbody id="markdowncodes">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="markdownwithlink" class="tab-pane">
+                <div class="card card-default">
+                    <div class="card-body Hidove-imageucode">
+                        <table class="table table-bordered">
+                            <tbody id="markdowncodes2">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="/static/index/js/index/upload.js?v=2.1.1"></script>
+<script src="/static/index/js/index/index.js"></script>
+<script>
+    if (getCookie('indexPopup') != 1) {
+        setCookie("indexPopup", 1, 7 * 86400);
+        Swal.fire({
+            title: '要不要试试？',
+            html: $('<div>')
+                .addClass('bounce')
+                .text('我们有全新简约版的界面！'),
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '试试看！',
+            animation: false,
+            customClass: 'animated tada'
+        }).then(function (isConfirm) {
+            if (isConfirm.value) {
+                window.open("/simple");
+                Swal.close();
+            } else {
+                Swal.fire(
+                    'You look like KUN!',
+                    'Oh!',
+                    'warning'
+                );
+            }
+        })
+    }
+</script>
+{/block}

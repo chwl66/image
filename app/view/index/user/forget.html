@@ -1,0 +1,22 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Reset Password')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+{/block}
+{block name="body"}
+<div class="container Hidove-main mt-5">
+    <div class="col-md-6 shadow rounded py-5 px-5" style="margin: auto">
+        <div class="form-group">
+            <label for="username">{:lang('Username')}</label>
+            <input type="text" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+            <label for="email">{:lang('E-Mail')}</label>
+            <input type="email" class="form-control" id="email">
+        </div>
+        <button  type="submit" id="send" class="btn btn-outline-secondary btn-block">{:lang('Submit')}</button>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="/static/index/js/user/forget.js"></script>
+{/block}

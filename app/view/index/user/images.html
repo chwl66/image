@@ -1,0 +1,216 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Image management')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+<link href="/static/index/css/user.css" rel="stylesheet">
+<!--右键菜单-->
+<link rel="stylesheet" href="/static/common/contextjs/css/context.css">
+<!--cdn-->
+<link href="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet">
+{/block}
+{block name="body"}
+<div class="container Hidove-main mt-3 mb-3">
+    <div class="clearfix Hidove-user-form">
+        <div class="float-left Hidove-action-btn">
+            <button id="selectAll" type="button" class="btn btn-secondary">
+                全选
+            </button>
+        </div>
+        <div class="float-left">
+            <select id="selectAction" class="form-control">
+                <option value="">选中项</option>
+                <option value="移动">移动</option>
+                <option value="更新">更新</option>
+                <option value="导出">导出</option>
+                <option value="删除">删除</option>
+                <option value="强制删除">强制删除</option>
+            </select>
+        </div>
+        <div class="float-left ml-3">
+            <select id="limit" class="form-control">
+                <option value="12">每页12条</option>
+                <option value="24">每页24条</option>
+                <option value="36">每页36条</option>
+                <option value="48">每页48条</option>
+            </select>
+        </div>
+        <div class="float-left ml-3" style="display: block; height: 100%">
+            <span class="border border-secondary rounded Hidove-block-span">
+                图片总数为&nbsp;<span id="totalImage">0</span>&nbsp;张
+            </span>
+        </div>
+        <div class="float-right">
+            <div class="form-group mx-sm-3 mb-2">
+                <input id="Hidove-action-search" type="text" name="keyword" class="form-control" placeholder="回车搜索..."
+                       value="">
+            </div>
+        </div>
+    </div>
+    <div class="Hidove-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" onclick="loadMethod(this);" data-id="0" data-parentid="0"><a>Home</a>
+            </li>
+        </ol>
+    </div>
+    <div class="Hidove-photos">
+        <!--        <div class="row" id="folders">-->
+        <!--        </div>-->
+        <div class="row" id="images">
+        </div>
+    </div>
+    <!--    分页-->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+    <span id="copy-url" class="hidden copy-url" data-clipboard-action="copy" data-clipboard-text=""></span>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="imageAttribute" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="imageAttributeLabel">
+                        Modal
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-xs-12 col-sm-5 col-md-5">
+                        <img class="qr-code" src="" alt="">
+                    </div>
+                    <div class="col-xs-12 col-sm-7 col-md-7">
+                        <div class="imageAttribute-body ">
+                            <div>
+                                <span>链接：</span>
+                                <pre onclick="clip(this)" id="imageDistribute">https://i.cnm.ink/2019/09/29/f4c7aebd02ed5.gif</pre>
+                            </div>
+                            <p><span>大小：</span><span id="fileSize">2.93 KB</span></p>
+                            <p><span>MD5：</span><span id="imagemd5">0a1b722ff39e04d42cc5bdffbdf8b136</span></p>
+                            <p><span>类型：</span><span id="imageType">image/gif</span></p>
+                            <p><span>时间：</span><span id="imageCreateTime">2019/09/29/f4c7aebd02ed5.gif</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="imageUrlOpen" type="button" class="btn btn-primary">
+                        详情
+                    </button>
+                    <button data-clipboard-action="copy" data-clipboard-text="" id="imageUrlCopy" type="button"
+                            class="btn btn-success">
+                        复制链接
+                    </button>
+                    <button id="imageUrlDelete" type="button" class="btn btn-info">
+                        删除
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="folder-rename" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        重命名
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body row form-horizontal">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label">文件夹名</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="folderName" placeholder="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="folderRenameSubmit" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="Hidove-move-image" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        移动文件
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="Hidove-move-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" onclick="loadMoveListBreadcrumb(this);" data-id="0"
+                            data-parentid="0"><a>Home</a></li>
+                    </ol>
+                </div>
+                <div class="modal-body row form-horizontal">
+                    <div class="modal-body">
+                        <div class="list-group" id="Hidove-folder-list">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="Hidove-move-image-Submit" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div style="display: none;" id="Hidove-apiInfo">
+    </div>
+</div>
+{/block}
+{block name="script"}
+<!--cdn-->
+<script src="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/clipboard.js/2.0.4/clipboard.min.js"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+<script src="/static/common/contextjs/js/context.js "></script>
+<script src="/static/index/js/jquery.base64.js"></script>
+<script src="/static/index/js/user/images.js"></script>
+<script>
+    spop({
+        template: '正在加载中',
+        group: 'loading',
+        style: 'info',
+    });
+
+    //目录加载ajax对象
+    var folderAjax = null;
+    //图片加载ajax对象
+    var imagesAjax = null;
+    //初始 当前分页
+    var initialPage = 1;
+    // 当前 每页限制数
+    var initialLimit = 12;
+    // 当前目录
+    var initialFolder = 0;
+
+    //当前文件管理器状态。1：正常加载。2：图片搜索
+    var status = 1;
+    //重载操作锁
+    var lock = false;
+    //文件夹扩展
+    var folderExtend = false;
+    //初始化
+    initialize();
+</script>
+{/block}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Install HidoveImageV2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
+    <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+</head>
+<style>
+    .main {
+        max-width: 600px;
+        margin: 1em auto;
+        padding: 2em;
+    }
+
+    #installSqlLog {
+        resize: none;
+        width: 100%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+</style>
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
+<div class="mdui-container main">
+    {switch $step }
+    {case 1 }
+    <div class="mdui-card">
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title">{$step} - 运行环境检测</div>
+        </div>
+        <!-- 卡片的内容 -->
+        <div class="mdui-card-content">
+            <div class="mdui-table-fluid">
+                <table class="mdui-table">
+                    <thead>
+                    <tr>
+                        <th>要求</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach($requirement as $key => $value)}
+                    <tr>
+                        <td>{$key}</td>
+                        {if $value === true}
+                        <td class="requirement mdui-text-color-green">YES</td>
+                        {else}
+                        <td class="requirement mdui-text-color-red">NO</td>
+                        {/if}
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <button class="mdui-m-t-3 mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" id="install">立即安装
+            </button>
+        </div>
+    </div>
+    {/case}
+    {case 2}
+    <div class="mdui-card">
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title">{$step} - 填写数据库配置信息</div>
+        </div>
+        <!-- 卡片的内容 -->
+        <div class="mdui-card-content">
+            <form action="?step=2" method="post">
+
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">数据库连接地址</label>
+                    <input class="mdui-textfield-input" type="text" name="mysql_HOSTNAME" placeholder="数据库连接地址"
+                           value="127.0.0.1" autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">数据库名</label>
+                    <input class="mdui-textfield-input" type="text" name="mysql_DATABASE" placeholder="数据库名称"
+                           value="img_abcyun_co"
+                           autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">数据库用户名</label>
+                    <input class="mdui-textfield-input" type="text" name="mysql_USERNAME" placeholder="数据库用户名"
+                           value="root"
+                           autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">数据库密码</label>
+                    <input class="mdui-textfield-input" type="password" name="mysql_PASSWORD" placeholder="数据库密码"
+                           autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">数据库连接端口</label>
+                    <input class="mdui-textfield-input" type="number" name="mysql_HOSTPORT" placeholder="数据库连接端口"
+                           value="3306"
+                           autocomplete="off"/>
+                </div>
+                <button class="mdui-m-t-3 mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">提交</button>
+            </form>
+        </div>
+    </div>
+    {/case}
+    {case 3}
+    <!--    写入数据库-->
+    <div class="mdui-card">
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title">{$step} - 写入数据库记录</div>
+        </div>
+        <div class="mdui-card-content">
+            <div class="mdui-textfield">
+                <textarea rows="10" id="installSqlLog">请点击按钮写入数据&#10;</textarea>
+            </div>
+            <button class="mdui-m-t-3 mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" id="installSql">写入数据
+            </button>
+            <button class="mdui-m-t-3 mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple next mdui-hidden">下一步
+            </button>
+        </div>
+    </div>
+    {/case}
+    {case 4}
+    <!--    配置管理信息-->
+    <div class="mdui-card">
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title">{$step} - 配置管理信息</div>
+        </div>
+        <div class="mdui-card-content">
+            <form action="" method="post">
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">主站域名</label>
+                    <input class="mdui-textfield-input" type="text" name="MASTER_DOMAIN" placeholder="主站域名" value="{:request()->host()}" autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">授权码</label>
+                    <textarea class="mdui-textfield-input" name="AUTH_TOKEN" placeholder="授权码" autocomplete="off"></textarea>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">管理员用户名</label>
+                    <input class="mdui-textfield-input" type="text" name="username" placeholder="管理员用户名" value="admin" autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">管理员邮箱</label>
+                    <input class="mdui-textfield-input" type="email" name="email" placeholder="管理员邮箱" autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">管理员密码</label>
+                    <input class="mdui-textfield-input" type="password" name="password" placeholder="管理员密码" autocomplete="off"/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">确认管理员密码</label>
+                    <input class="mdui-textfield-input" type="password" name="password_confirm" placeholder="确认管理员密码" autocomplete="off"/>
+                </div>
+                <button class="mdui-m-t-3 mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple next">提交</button>
+            </form>
+        </div>
+    </div>
+    {/case}
+    {case 5}
+    <div class="mdui-card">
+        <div class="mdui-card-primary">
+            <div class="mdui-card-primary-title">{$step} - 安装成功</div>
+        </div>
+        <div class="mdui-card-content">
+            <div class="mdui-text-center">
+                <p>程序安装成功，请牢记管理员账号密码！</p>
+                <a href="{:url('/')}" class="mdui-btn mdui-btn-block mdui-m-t-3 mdui-color-theme-accent mdui-ripple">网站首页</a>
+                <a href="https://blog.hidove.cn" class="mdui-btn mdui-btn-block mdui-m-t-1 mdui-color-indigo mdui-ripple">作者博客</a>
+            </div>
+            <div class="mdui-m-t-2 mdui-text-color-grey">Copyright &copy; {:date('Y')} - Hidove All rights reserved.</div>
+        </div>
+    </div>
+    {/case}
+    {default}
+    You just like KUN.
+    {/switch}
+</div>
+<script>
+    var $ = mdui.JQ;
+    var error = `{$error}`;
+    if (error !== '') {
+        mdui.alert(error);
+    }
+    // 1.
+    $('#install').on('click', function (e) {
+        $('.requirement').each(function (key, element) {
+            if ($(this).text() === 'NO') {
+                mdui.alert('环境检测不通过请配置好环境后重试！');
+                return;
+            }
+        });
+        window.location = "?step=2";
+    });
+    // 2.填写数据库配置信息
+    // 3.写入数据库
+    $('#installSql').on('click', function (e) {
+        $.ajax({
+            url: '?step=3',
+            method: 'post',
+            dataType: 'json',
+            success: function (res) {
+                $('#installSqlLog').append(res.msg + '\n');
+                let height = $('#installSqlLog').prop("scrollHeight");
+                let index = 0;
+                setInterval(function () {
+                    if (index <= height) {
+                        $('#installSqlLog').prop("scrollTop", index);
+                        index += height / 100
+                    }
+                }, 1);
+                switch (res.code) {
+                    case 200:
+                        $('.next').removeClass('mdui-hidden');
+                        break;
+                    case 100:
+                        $('#installSql').trigger('click');
+                        break;
+                    default:
+                }
+            }
+        });
+    });
+
+    $('.next').on('click',function () {
+        window.location = '?step=4'
+    });
+</script>
+</body>
+</html>

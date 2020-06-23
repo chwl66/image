@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{block name="title"}title{/block}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="{$Hidove.config.system.base.keywords}">
+    <meta name="description" content="{$Hidove.config.system.base.description}">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <meta name="csrf-token" content="{:token()}">
+    <!--    cdn-->
+    <script src="{$Hidove.config.system.base.cdnjs}/jquery/3.4.1/jquery.min.js"></script>
+    <link href="{$Hidove.config.system.base.cdnjs}/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+    <link href="{$Hidove.config.system.base.cdnjs}/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="{$Hidove.config.system.base.cdnjs}/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--    无cdn-->
+    <link rel="stylesheet" href="/static/common/spop/spop.min.css">
+    <link rel="stylesheet" href="/static/index/css/notifyme.css">
+    <link href="/static/index/css/style.css" rel="stylesheet">
+    {block name="head"}head{/block}
+</head>
+<body>
+{include file='index/nav'/}
+{block name="body"}body{/block}
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Copyright &#9400; 2019 <a href="/">{$Hidove.config.system.base.sitename}</a>. All rights
+            reserved. 请勿上传违反中国大陆和香港法律的图片，违者后果自负. </p>
+    </div>
+</footer>
+</body>
+<script src="{$Hidove.config.system.base.cdnjs}/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+<script src="/static/common/spop/spop.min.js"></script>
+<script src="/static/index/js/function.js"></script>
+{if !empty($Hidove.config.system.other.notify)}
+<script type="text/html" id="notify" style="display: none;">
+    {:base64_decode($Hidove.config.system.other.notify)}
+</script>
+<script src="/static/index/js/notifyme.js"></script>
+{/if}
+<script>
+    //导航切换
+    $(function () {
+        $(".navbar-nav").find("li").each(function () {
+            let a = $(this).find("a:first")[0];
+            if ($(a).attr("href") === location.pathname) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        });
+    });
+    //初始化spop显示时间
+    const spopTimeOut = 3000;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+</script>
+{block name="script"}{/block}
+</html>

@@ -1,0 +1,75 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Explore')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+<style>
+    #images {
+        margin: auto;
+        position: relative;
+    }
+    .box {
+        float: left;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background: #f7f7f7;
+        box-shadow: 0 0 8px #ccc;
+    }
+    .box:hover { box-shadow: 0 0 10px #999; }
+    .box img {
+        width: 100%;
+        max-width: 200px;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="mt-5 mb-5 clearfix row Hidove-main" id="images">
+</div>
+<div id="footTip" style="display: none;text-align: center">我也是有底线的~</div>
+<div id="exploreClosed" style="display: none;text-align: center">The Explore has been turned off.</div>
+{/block}
+{block name="script"}
+<script src="{$Hidove.config.system.base.cdnjs}/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+<script src="/static/common/jQuery-waterfall/js/jquery.waterfall.js"></script>
+<script>
+    var page = 0;
+    load(++page);
+    function load(page){
+        $.ajax({
+            url:'/ajax/explore?limit=20&page='+page,
+            type:'get',
+            async:false,
+            success:function(data){
+                if (data.code == 200){
+                    var images = data.data;
+                    var html = '';
+                    images.forEach(function (value) {
+                        html = html+
+                            `<div class="box col-6 col-sm-4 col-md-3 col-lg-2 layzyload-`+page+`" onclick="window.open('/info/`
+                            + value.signatures+ `')"><img data-original="`+value.url+`"></div>`;
+                    });
+                    if(html == ''){
+                        $('#footTip').css('display','block');
+                    }else {
+                        $('#images').append(html);
+                        lazyload($(".layzyload-"+page+' img'));
+                    }
+                }else {
+                    $('#exploreClosed').css('display','block');
+                }
+            },
+        });
+    }
+    $("#images").waterfall({
+        itemClass: ".box",
+        minColCount: 2,
+        spacingHeight: 10,
+        itemAlign:'center',
+        isFadeIn:true,
+        resizeable: true,
+        ajaxCallback: function(success, end) {
+            load(++page);
+            success();
+            end();
+        },
+    });
+</script>
+{/block}

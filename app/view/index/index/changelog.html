@@ -1,0 +1,128 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Change Log')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}{/block}
+{block name="body"}
+<div class="container Hidove-main mt-3 mb-3">
+    <div class="page-header mt-3 mb-5">
+        <h1>更新日志</h1>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2020-6-18</h3>
+        <ul>
+            <li>新增用户水印</li>
+            <li>去除Qpic、QCoral</li>
+            <li>新增V6直播、偶流、PostImages</li>
+            <li>修复`Sina`节点</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2020-5-27</h3>
+        <ul>
+            <li>新增用户水印</li>
+            <li>后台定时更新节点</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2020-4-15</h3>
+        <ul>
+            <li>新增Qpic、QCoral、QDoc图床</li>
+            <li>新增Bilibili、Bcebos图床</li>
+            <li>新增简约上传页</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2020-3-19</h3>
+        <ul>
+            <li>新增Github图床支持</li>
+            <li>修复图片CDN更新API</li>
+            <li>修复gif图片上传异常</li>
+            <li>更新vim、uploadcc图床的api标识</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-12-22</h3>
+        <ul>
+            <li>新增图片信息 API</li>
+            <li>新增API指定目录上传</li>
+            <li>新增腾讯CDN节点</li>
+            <li>新增葫芦侠CDN节点</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-12-15</h3>
+        <ul>
+            <li>新增图片列表 API</li>
+            <li>新增目录列表 API</li>
+            <li>修复牛图、奇虎、百度上传问题</li>
+            <li>新增防盗链检测</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-11-29</h3>
+        <ul>
+            <li>新增图片链接粘贴上传</li>
+            <li>新增快云储存</li>
+            <li>新增自义定分发域名</li>
+            <li>新增导出图片链接</li>
+            <li>新增充值卡密升级用户组</li>
+            <li>新增用户中心储存策略</li>
+            <li>图片管理重构</li>
+            <li>细节美化</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-11-20</h3>
+        <ul>
+            <li>新增用户刷新全部缓存功能</li>
+            <li>完善API接口上传功能</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-11-8</h3>
+        <ul>
+            <li>新增探索、用户可自行控制是否私密</li>
+            <li>新增缓存机制,大幅度提高抗压能力</li>
+            <li>新增用户节点控制功能</li>
+            <li>更新上传标识为image</li>
+            <li>新增Baklib接口</li>
+            <li>优化登录注册等界面</li>
+            <li>优化图片管理更新CDN节点功能</li>
+            <li>修复更新节点功能</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-11-3</h3>
+        <ul>
+            <li>新增更新记录页面</li>
+            <li>优化分发算法</li>
+            <li>优化黑名单</li>
+            <li>更新上传标识为image</li>
+            <li>修复上传API</li>
+            <li>细节优化</li>
+            <li>细节优化</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-11-1</h3>
+        <ul>
+            <li>新增储存策略(支持ftp、ufile、oos、cos、kodo、uss)</li>
+            <li>新增黑名单机制</li>
+            <li>新增节点更新功能</li>
+            <li>优化界面</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded">
+        <h3># 2019-10-2</h3>
+        <ul>
+            <li>发布版本</li>
+        </ul>
+    </div>
+    <div class="border border-secondary shadow-sm p-3 mb-3 bg-white rounded text-center">
+        <span>违规图片投诉邮箱&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-secondary"><code>{$Hidove.config.system.base.email}</code></button></span>
+    </div>
+    <!-- /.content-wrapper -->
+
+</div>
+{/block}
+{block name="script"}
+{/block}

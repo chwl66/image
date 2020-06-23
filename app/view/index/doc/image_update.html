@@ -1,0 +1,141 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Image Update Doc')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+<link rel="stylesheet" type="text/css" href="/static/common/highlight/styles/github-gist.css"/>
+<script src="/static/common/highlight/highlight.pack.js"></script>
+{/block}
+{block name="body"}
+<div class="container Hidove-main">
+    <div class="card bg-light mt-3 mb-3">
+        <h5 class="card-header">{$Hidove.config.system.base.sitename} {:lang('Image Update API')}</h5>
+        <div class="card-body">
+            <h3># 请求信息</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover Hidove-table-small">
+                    <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>接口</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>请求方式</td>
+                        <td>POST\GET</td>
+                    </tr>
+                    <tr>
+                        <td>URL</td>
+                        <td>{:url('api/imageUpdate')->suffix('')->domain(true)}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="Hidove-api-tips">请求参数</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <th>参数名称</th>
+                    <th>类型</th>
+                    <th>是否必须</th>
+                    <th>说明</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>token</td>
+                    <td>String</td>
+                    <td>是</td>
+                    <td>用户的秘钥</td>
+                </tr>
+                <tr>
+                    <td>signatures</td>
+                    <td>String</td>
+                    <td>是</td>
+                    <td>图片唯一标识</td>
+                </tr>
+                <tr>
+                    <td>publicCloud</td>
+                    <td>String</td>
+                    <td>是</td>
+                    <td>公有云CDN，上传的图床类型（this、ali、huluxia等等），支持字符串传入（英文逗号分隔，例如：ali,huluxia）</td>
+                </tr>
+                <tr>
+                    <td>privateStorage</td>
+                    <td>int</td>
+                    <td>否</td>
+                    <td>私有云CDN，上传的储存策略类型（ftp、oos、cos等等），支持字符串传入（英文逗号分隔，例如：ftp,oos）</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="alert alert-danger" role="alert">
+                <p>注意：为防止图片恶意上传，Token为必须项，接口将认证该token，需要操作的图片必须在该token用户下，否则无法更新。</p>
+            </div>
+            <div class="alert alert-danger" role="alert">
+                <p>注意：publicCloud和privateStorage必须传入一项，需要操作的图片必须在该token用户下，否则无法更新。</p>
+            </div>
+            <p class="Hidove-api-tips">响应参数</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <td>参数名称</td>
+                        <td>类型</td>
+                        <td>实例值</td>
+                        <td>说明</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>200</td>
+                        <td>状态码，成功返回200，失败返回400</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>success</td>
+                        <td>提示信息</td>
+                    </tr>
+                    <tr>
+                        <td>data</td>
+                        <td>Array|Object</td>
+                        <td>
+                        <pre><code>"data":{
+        "huluxia":"https://cdn.u1.huluxia.com/g3/M01/A9/0D/wKgBOV3_ZnKARR54AAB9RLFR0hA157.jpg",
+        "private":[
+
+        ],
+        "ali":"https://ae01.alicdn.com/kf/H89f697dd25c44146ad45d012cf06212fr.jpg"
+    }</code></pre>
+                        </td>
+                        <td>获取的文件夹信息数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <p class="Hidove-api-tips">正确响应示例</p>
+                <pre><code>{
+    "code":200,
+    "msg":"success",
+    "data":{
+        "huluxia":"https://cdn.u1.huluxia.com/g3/M01/A9/0D/wKgBOV3_ZnKARR54AAB9RLFR0hA157.jpg",
+        "private":[
+
+        ],
+        "ali":"https://ae01.alicdn.com/kf/H89f697dd25c44146ad45d012cf06212fr.jpg"
+    }
+}</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+{/block}

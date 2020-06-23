@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$Hidove.config.system.base.sitename} - {$Hidove.config.system.base.subtitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="{$Hidove.config.system.base.keywords}">
+    <meta name="description" content="{$Hidove.config.system.base.description}">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <link href="/static/index/css/simple.css" rel="stylesheet">
+    <link href="/static/index/css/toast.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="app" class="container" v-cloak>
+    <div class="uploading-data" v-if="isUploading"></div>
+
+    <div class="upload-img-column">
+        <div class="words">上传图片 ({{imgTempList.length}}/10)</div>
+        <div class="upload-wrap">
+            <div class="box">
+                <label class="p dotted">
+                    <input type="file" accept="image/*" multiple="true" name="file"
+                           @change="onChooseImage($event)"/>
+                    <span class="add">
+                        </span>
+                </label>
+            </div>
+            <template v-for="(imgItem, imgIndex) in imgTempList">
+                <div class="box">
+                    <div class="p">
+                        <img :src="imgItem.src" :date-filename="imgItem.fileName">
+                        <div class="delete" @click.stop="deleteImg(imgIndex)">
+                            <img src="data:image/png;base64,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"
+                                 alt="">
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button class="btn" @click="onUploadImg">上传</button>
+        <button class="btn" @click="copyAll">复制全部</button>
+        <button class="btn" @click="changeUrl('markdown')">Markdown</button>
+    </div>
+
+    <div class="success-path image-list" v-if="successData.length > 0">
+        <template v-for="(item, index) in successData">
+            <div class="li">
+                <div class="image">
+                    <img :src="item.src" alt="" srcset="">
+                </div>
+                <input type="text" :value="item.fileName">
+                <button class="image-delete image-btn" @click.stop="removeUrlItem(index);"></button>
+                <button class="image-copy image-btn" @click.stop="copy(item.url);"></button>
+                <div v-if="index < successData.length-1">
+                    <hr>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+<script src="{$Hidove.config.system.base.cdnjs}/vue/2.6.10/vue.min.js"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/axios/0.19.2/axios.min.js"></script>
+<script src="/static/index/js/index/toast.js"></script>
+<script>
+    var apiType = [];
+    var maxFileCount = 10;
+    //是否压缩
+    var compressor = false;
+    axios({
+        method: "get",
+        url: "/ajax/uploadOption",
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    }).then(function (response) {
+        let res = response.data;
+        maxFileCount = res.data.maxFileCount;
+        let apiTypeTmp = res.data.apiType;
+        apiTypeTmp.map(function (item, index) {
+            if (item.checked === 1)
+                apiType.push(item.key);
+        });
+    }).catch(function (error) {
+        alert(error);
+        console.error(error);
+    });
+</script>
+<script src="/static/index/js/index/simpleUpload.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Image Info Doc')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+<link rel="stylesheet" type="text/css" href="/static/common/highlight/styles/github-gist.css"/>
+<script src="/static/common/highlight/highlight.pack.js"></script>
+{/block}
+{block name="body"}
+<div class="container Hidove-main">
+    <div class="card bg-light mt-3 mb-3">
+        <h5 class="card-header">{$Hidove.config.system.base.sitename} {:lang('Image Info API')}</h5>
+        <div class="card-body">
+            <h3># 请求信息</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover Hidove-table-small">
+                    <thead>
+                    <tr>
+                        <th>功能</th>
+                        <th>接口</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>请求方式</td>
+                        <td>POST\GET</td>
+                    </tr>
+                    <tr>
+                        <td>URL</td>
+                        <td>{:url('api/imageInfo')->suffix('')->domain(true)}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="Hidove-api-tips">请求参数</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <th>参数名称</th>
+                    <th>类型</th>
+                    <th>是否必须</th>
+                    <th>说明</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>token</td>
+                    <td>String</td>
+                    <td>是</td>
+                    <td>用户的秘钥</td>
+                </tr>
+                <tr>
+                    <td>signatures</td>
+                    <td>String</td>
+                    <td>是</td>
+                    <td>图片唯一标识</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <p class="Hidove-api-tips">响应参数</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                    <tr>
+                        <td>参数名称</td>
+                        <td>类型</td>
+                        <td>实例值</td>
+                        <td>说明</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>200</td>
+                        <td>状态码，成功返回200，失败返回400</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>success</td>
+                        <td>提示信息</td>
+                    </tr>
+                    <tr>
+                        <td>data</td>
+                        <td>Array|Object</td>
+                        <td>
+                        <pre><code>"data":{
+        "signatures":"5df33fac03c1c",
+        "url":"{"this":"images\/2019\/12\/13\/5df33fac03c1c.jpg","private":[]}",
+        "pathname":"images/2019/12/13/5df33fac03c1c.jpg",
+        "userid":1,
+        "folder":0,
+        "filename":"15200390891799222.jpg",
+        "isillegal":"0.00",
+        "imagetype":"jpg",
+        "imagemime":"image/jpeg",
+        "imagesize":32068,
+        "sha1":"bab33331b4ab0baa2e420ff0509ecd6a626739f8",
+        "md5":"dcb5c8dd3fc7e20c21a745cd39bbd176",
+        "createtime":1576222639,
+        "ip":"127.0.0.1",
+        "yesterdayrequest":0,
+        "todayrequest":1,
+        "finalrequesttime":1576663712
+    }</code></pre>
+                        </td>
+                        <td>获取的图片信息数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <p class="Hidove-api-tips">正确响应示例</p>
+                <pre><code>{
+    "code":200,
+    "msg":"success",
+    "data":{
+        "signatures":"5df33fac03c1c",
+        "url":"{"this":"images\/2019\/12\/13\/5df33fac03c1c.jpg","private":[]}",
+        "pathname":"images/2019/12/13/5df33fac03c1c.jpg",
+        "userid":1,
+        "folder":0,
+        "filename":"15200390891799222.jpg",
+        "isillegal":"0.00",
+        "imagetype":"jpg",
+        "imagemime":"image/jpeg",
+        "imagesize":32068,
+        "sha1":"bab33331b4ab0baa2e420ff0509ecd6a626739f8",
+        "md5":"dcb5c8dd3fc7e20c21a745cd39bbd176",
+        "createtime":1576222639,
+        "ip":"127.0.0.1",
+        "yesterdayrequest":0,
+        "todayrequest":1,
+        "finalrequesttime":1576663712
+    }
+}</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+{/block}

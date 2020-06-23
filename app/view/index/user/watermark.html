@@ -1,0 +1,200 @@
+{extend name="index/base" /}
+{block name="title"}{:lang('Watermark')} - {$Hidove.config.system.base.sitename}{/block}
+{block name="head"}
+{/block}
+{block name="body"}
+<div class="container Hidove-main mt-5">
+    <div class="col-md-9 shadow rounded py-3" style="margin: auto">
+        <h2 style="text-align: center">水印设置</h2>
+        <h4 class="mt-3" style="text-align: center">这个貌似不用多介绍</h4>
+        <div class="mt-3">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#process" role="tab" aria-controls="process"
+                       aria-selected="true">图片处理设置</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#watermark" role="tab" aria-controls="second">水印设置</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#imageWatermark" role="tab" aria-controls="fourth">图片水印设置</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#textWatermark" role="tab"
+                       aria-controls="fifth">文字水印设置</a>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3" id="content">
+                <div class="tab-pane fade show active" id="process">
+                    <!--            图片处理设置-->
+                    <div class="alert alert-primary" role="alert">
+                        图片处理设置
+                    </div>
+                    <div class="form-group">
+                        <label>是否对JPEG类型图像设置隔行扫描</label>
+                        <select class="custom-select" name="interlace">
+                            <option value="0">OFF</option>
+                            <option value="1">NO</option>
+                        </select>
+                        <small class="form-text text-muted">
+                            提示：设置隔行扫描的情况下在网页进行浏览时。是从上到下一行一行的显示，否则图片整个显示出来 然后由模糊到清晰显示。
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>图像质量</label>
+                        <input type="text" class="form-control" name="quality">
+                        <small class="form-text text-muted">提示：0 ~ 100
+                        </small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="watermark">
+                    <div class="alert alert-primary" role="alert">
+                        水印设置
+                    </div>
+                    <div class="form-group">
+                        <label>开关</label>
+                        <select class="custom-select" name="switch">
+                            <option value="0">OFF</option>
+                            <option value="1">NO</option>
+                        </select>
+                        <small class="form-text text-muted">提示：0 ~ 100
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>水印类型</label>
+                        <select class="custom-select" name="type">
+                            <option value="1">图片水印</option>
+                            <option value="2">文字水印</option>
+                        </select>
+                        <small class="form-text text-muted">提示： 0 = 图片水印, 1 = 文字水印
+                        </small>
+                    </div>
+                    <!--需要添加水印的图片的最小尺寸-->
+
+                    <div class="alert alert-primary" role="alert">
+                        需要添加水印的图片的最小尺寸
+                    </div>
+                    <div class="form-group">
+                        <label>宽度</label>
+                        <input type="text" class="form-control" name="height">
+                        <small class="form-text text-muted">提示：单位像素
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>高度</label>
+                        <input type="text" class="form-control" name="width">
+                        <small class="form-text text-muted">提示：单位像素
+                        </small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="imageWatermark">
+                    <!--图片水印设置-->
+                    <div class="alert alert-primary" role="alert">
+                        图片水印设置
+                    </div>
+                    <div id="watermarkImage" class="mb-2">
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="pathname" accept="image/*">
+                        <label class="custom-file-label" id="filename">选择水印图片</label>
+                        <small class="form-text text-muted">提示：点击上传</small>
+                    </div>
+                    <div class="form-group">
+                        <label>水印位置</label>
+                        <select class="custom-select" name="locate">
+                            <option value="0">请选择位置</option>
+                            <option value="1">左上角水印</option>
+                            <option value="2">上居中水印</option>
+                            <option value="3">右上角水印</option>
+                            <option value="4">左居中水印</option>
+                            <option value="5">居中水印</option>
+                            <option value="6">右居中水印</option>
+                            <option value="7">左下角水印</option>
+                            <option value="8">下居中水印</option>
+                            <option value="9">右下角水印</option>
+                        </select>
+                        <small class="form-text text-muted">提示：左上角水印
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>透明度</label>
+                        <input type="text" class="form-control" name="alpha">
+                        <small class="form-text text-muted">
+                            提示：0 ~ 100
+                        </small>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="textWatermark">
+                    <!--文字水印设置-->
+                    <div class="alert alert-primary" role="alert">
+                        文字水印设置
+                    </div>
+                    <div class="form-group">
+                        <label>添加的文字</label>
+                        <input type="text" class="form-control" name="text">
+                        <small class="form-text text-muted">提示：添加的文字，不能为空
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>字体文件路径</label>
+                        <input type="text" class="form-control" name="font" disabled>
+                        <small class="form-text text-muted">提示：字体文件路径，不能为空，默认 default.ttf
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>字号</label>
+                        <input type="text" class="form-control" name="size">
+                        <small class="form-text text-muted">
+                            提示：字号，单位是像素，不能为空
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>文字颜色</label>
+                        <input type="text" class="form-control" name="color">
+                        <small class="form-text text-muted">
+                            提示：文字颜色 例如：#00000000
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>文字写入位置</label>
+                        <select class="custom-select" name="locate">
+                            <option value="0">请选择位置</option>
+                            <option value="1">左上角水印</option>
+                            <option value="2">上居中水印</option>
+                            <option value="3">右上角水印</option>
+                            <option value="4">左居中水印</option>
+                            <option value="5">居中水印</option>
+                            <option value="6">右居中水印</option>
+                            <option value="7">左下角水印</option>
+                            <option value="8">下居中水印</option>
+                            <option value="9">右下角水印</option>
+                        </select>
+                        <small class="form-text text-muted">
+                            提示：文字写入位置
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>文字相对当前位置的偏移量</label>
+                        <input type="text" class="form-control" name="offset">
+                        <small class="form-text text-muted">
+                            提示：文字相对当前位置的偏移量 例如：0
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>文字倾斜角度</label>
+                        <input type="text" class="form-control" name="angle">
+                        <small class="form-text text-muted">
+                            提示：文字倾斜角度 例如：0
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="send" type="button" class="btn btn-outline-secondary btn-block">提交</button>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="/static/index/js/user/watermark.js"></script>
+{/block}
