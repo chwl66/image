@@ -140,33 +140,4 @@
 {block name="script"}
 <script src="/static/index/js/index/upload.js?v=2.1.1"></script>
 <script src="/static/index/js/index/index.js"></script>
-<script>
-    if (getCookie('indexPopup') != 1) {
-        setCookie("indexPopup", 1, 7 * 86400);
-        Swal.fire({
-            title: '要不要试试？',
-            html: $('<div>')
-                .addClass('bounce')
-                .text('我们有全新简约版的界面！'),
-            type: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '试试看！',
-            animation: false,
-            customClass: 'animated tada'
-        }).then(function (isConfirm) {
-            if (isConfirm.value) {
-                window.open("/simple");
-                Swal.close();
-            } else {
-                Swal.fire(
-                    'You look like KUN!',
-                    'Oh!',
-                    'warning'
-                );
-            }
-        })
-    }
-</script>
 {/block}

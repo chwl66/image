@@ -112,7 +112,7 @@ class Upload extends BaseController
                     'image' => [
                         'require',
                         'file',
-                        'image',
+//                        'image',
                         'fileSize:' . $this->uploadConfig['maxImageSize'],
                         'fileExt:' . $this->uploadConfig['imageType'],
                     ]

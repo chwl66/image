@@ -4,10 +4,10 @@
 namespace app\controller\index;
 
 
+use app\model\Storage;
 use PDO;
 use think\Exception;
 use think\facade\Cache;
-use think\facade\Config;
 use think\facade\Db;
 use think\facade\Request;
 use think\facade\Validate;
@@ -137,6 +137,10 @@ class Install
                     $model->create_time = time();
                     $model->group_id = 2;
                     $model->save();
+
+                    Storage::where('name', '=', 'this')
+                        ->update(['cdn' => Request::domain() . '/images']);
+
                 } catch (\Exception $e) {
                     $this->error = $e->getMessage();
                     break;

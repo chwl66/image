@@ -14,3 +14,4 @@ use think\facade\Route;
 Route::get('refresh/token', function () {
     return token();
 })->cache(false);
+

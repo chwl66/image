@@ -10,6 +10,7 @@
 namespace app\controller\index;
 
 use app\BaseController;
+use app\middleware\Template;
 use app\middleware\UserAuth;
 use app\model\Api;
 use think\facade\Session;
@@ -22,7 +23,8 @@ class User extends BaseController
     private $Hidove;
 
     protected $middleware = [
-        UserAuth::class => ['except' => ['login','loginOut', 'register', 'forget', 'resetPassword']],
+        UserAuth::class => ['except' => ['login', 'loginOut', 'register', 'forget', 'resetPassword']],
+        Template::class,
     ];
 
     protected function initialize()
@@ -49,7 +51,7 @@ class User extends BaseController
     public function loginOut()
     {
         Session::clear();
-        $this->success('退出成功',url('user/login'));
+        $this->success('退出成功', url('user/login'));
     }
 
     public function images(Request $request)
@@ -66,13 +68,13 @@ class User extends BaseController
     {
         $this->Hidove['user'] = $request->user;
         //获取多级目录名称
-        if (!empty($this->Hidove['user']->apiFolder)){
+        if (!empty($this->Hidove['user']->apiFolder)) {
             $parent = $this->Hidove['user']->apiFolder->parent;
             while (!empty($parent->parent_id) && $parent->parent_id != 0) {
                 $this->Hidove['user']->apiFolder->name = $parent->name . '/' . $this->Hidove['user']->apiFolder->name;
                 $parent = $parent->parent;
             }
-            $this->Hidove['user']->apiFolder->name =  '/' . $this->Hidove['user']->apiFolder->name;
+            $this->Hidove['user']->apiFolder->name = '/' . $this->Hidove['user']->apiFolder->name;
         }
         View::assign([
             'Hidove' => $this->Hidove,
@@ -104,10 +106,10 @@ class User extends BaseController
         $this->Hidove['user'] = $request->user;
         $this->Hidove['api'] = Api::order('id', 'asc')->where('is_ok', 1)->select();
         $this->Hidove['forbidden_node'] = $this->Hidove['user']->forbidden_node;
-        foreach ( $this->Hidove['api'] as &$value){
-            if (in_array(mb_strtolower($value['key']) ,$this->Hidove['forbidden_node'])){
+        foreach ($this->Hidove['api'] as &$value) {
+            if (in_array(mb_strtolower($value['key']), $this->Hidove['forbidden_node'])) {
                 $value['checked'] = 1;
-            }else{
+            } else {
                 $value['checked'] = 0;
             }
         }
@@ -135,6 +137,7 @@ class User extends BaseController
         ]);
         return View::fetch();
     }
+
     public function watermark(Request $request)
     {
         $this->Hidove['user'] = $request->user;

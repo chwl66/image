@@ -58,6 +58,7 @@ foreach ([
              'AdminUser' => 'user',
              'AdminGroup' => 'group',
              'AdminMenu' => 'menu',
+             'AdminTemplate' => 'template',
              'AdminSet' => 'set',
              'AdminSetGroup' => 'setGroup',
          ] as $key => $value) {

@@ -3,6 +3,7 @@ return [
     'Home'  => '首頁',
     'About'  => '關於',
     'Explore' => '探索',
+    'Plugin' => '插件',
     'Simple' => '簡約',
     'Blog' => '博客',
     'Change Log' => '更新日誌',

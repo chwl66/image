@@ -32,7 +32,7 @@ class WhiteListFilter
             unset($imageInfo);
             //是否直接删除
             $img2base64 = '';
-            if ($this->audit ['action'] != 1) {
+            if ($this->audit ['action'] == 1) {
                 $img2base64 = img2base64($realPath);
             }
             $tmp = time();

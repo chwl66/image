@@ -381,23 +381,23 @@ function splice_distribute_url($signatures)
 {
     $userId = Session::get('userId');
 
-    $distribute = Cache::get(__FUNCTION__ .'_'. $userId);
+    $distribute = Cache::get(__FUNCTION__ . '_' . $userId);
 
     $suffix = hidove_config_get('system.distribute.suffix');
 
-    if (!$distribute && !empty($userId)){
+    if (!$distribute && !empty($userId)) {
         $model = \app\model\User::where('id', $userId)
             ->findOrEmpty();
         @$distribute = $model->storage['this']['distribute'];
     }
-    if (!filter_var($distribute,FILTER_VALIDATE_URL)){
+    if (!filter_var($distribute, FILTER_VALIDATE_URL)) {
         $distribute = hidove_config_get('system.distribute.distribute');
-        if (!filter_var($distribute,FILTER_VALIDATE_URL)){
+        if (!filter_var($distribute, FILTER_VALIDATE_URL)) {
             $distribute = Request::domain();
         }
     }
-    Cache::tag('config_user_'.$userId)
-        ->set(__FUNCTION__ .'_'. $userId,$distribute);
+    Cache::tag('config_user_' . $userId)
+        ->set(__FUNCTION__ . '_' . $userId, $distribute);
     $suffix = empty($suffix) ? '' : $suffix;
     return $distribute . '/image/' . $signatures . $suffix;
 }
@@ -417,13 +417,21 @@ function format_api_type($apiType)
     return $apiType;
 }
 
-function array_merge_deep($arr,$arr2){
-    foreach ($arr2 as $key =>$value){
-        if (is_array($value) && isset($arr[$key])){
-            $arr[$key] = array_merge_deep($arr[$key],$value);
+function array_merge_deep($arr, $arr2)
+{
+    foreach ($arr2 as $key => $value) {
+        if (is_array($value) && isset($arr[$key])) {
+            $arr[$key] = array_merge_deep($arr[$key], $value);
             continue;
         }
         $arr[$key] = $value;
     }
     return $arr;
+}
+
+function get_template_path()
+{
+    $template = hidove_config_get('system.base.template');
+    if (empty(trim($template))) $template = 'default';
+    return app()->getRootPath() . '/template/' . $template . '/';
 }

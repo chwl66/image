@@ -12,23 +12,22 @@ namespace app\controller\index;
 
 use app\BaseController;
 use app\controller\common\ImageInitial;
+use app\middleware\Template;
 use app\model\Api;
 use app\model\Image;
 use think\facade\Request;
 use think\facade\Session;
 use think\facade\View;
 
-/**
- * Class Index
- * @package app\controller\index
- *
- */
 class Index extends BaseController
 {
     protected $userId = null;
     protected $Hidove = null;
 
-    protected $middleware = [];
+    protected $middleware = [
+        Template::class
+    ];
+
     protected function initialize()
     {
         $this->userId = Session::get('userId');

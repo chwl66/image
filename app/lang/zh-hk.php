@@ -2,6 +2,7 @@
 return [
     'Home'  => '首頁',
     'About'  => '關於',
+    'Plugin' => '插件',
     'Explore' => '探索',
     'Simple' => '簡約',
     'Blog' => '博客',

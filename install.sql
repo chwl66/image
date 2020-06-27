@@ -1,3 +1,19 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50726
+ Source Host           : localhost:3306
+ Source Schema         : install.com
+
+ Target Server Type    : MySQL
+ Target Server Version : 50726
+ File Encoding         : 65001
+
+ Date: 24/06/2020 20:43:36
+*/
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -19,38 +35,37 @@ CREATE TABLE `hipic_api`  (
 -- ----------------------------
 -- Records of hipic_api
 -- ----------------------------
-INSERT INTO `hipic_api` VALUES (1, '本地', 'this', 1, 100, 1);
-INSERT INTO `hipic_api` VALUES (2, '阿里图床', 'ali', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (3, 'Vim_Cn', 'vimcn', 1, 1000, 0);
-INSERT INTO `hipic_api` VALUES (4, 'Upload_Cc', 'uploadcc', 1, 90, 0);
-INSERT INTO `hipic_api` VALUES (6, 'SMMS', 'smms', 1, 70, 0);
-INSERT INTO `hipic_api` VALUES (8, '搜狗', 'sougou', 1, 70, 0);
-INSERT INTO `hipic_api` VALUES (9, '小米', 'xiaomi', 1, 1000, 0);
-INSERT INTO `hipic_api` VALUES (10, 'Catbox', 'catbox', 1, 80, 0);
-INSERT INTO `hipic_api` VALUES (11, '奇虎', 'qihoo', 1, 70, 0);
-INSERT INTO `hipic_api` VALUES (12, '京东', 'jd', 1, 60, 0);
-INSERT INTO `hipic_api` VALUES (13, '苏宁', 'suning', 1, 60, 0);
-INSERT INTO `hipic_api` VALUES (15, '掘金论坛', 'juejin', 1, 50, 0);
-INSERT INTO `hipic_api` VALUES (19, '网易', 'neteasy', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (20, '头条', 'toutiao', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (21, '牛图', 'niupic', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (22, 'FTP', 'ftp', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (24, '百度', 'baidu', 1, 70, 0);
-INSERT INTO `hipic_api` VALUES (25, '葫芦侠', 'huluxia', 1, 80, 0);
-INSERT INTO `hipic_api` VALUES (26, '腾讯', 'qpic', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (27, 'Chevereto图床', 'chevereto', 0, 100, 0);
-INSERT INTO `hipic_api` VALUES (28, 'Qdoc', 'qdoc', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (29, 'Qcoral', 'qcoral', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (30, 'Bcebos', 'bcebos', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (31, 'bilibili', 'bilibili', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (33, 'bjbcebos', 'bjbcebos', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (34, 'Ouliu', 'ouliu', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (35, 'Postimages', 'postimages', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (36, 'UPYUN', 'upyun', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (37, 'Sina', 'sina', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (38, 'HidoveApi', 'phpcdn', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (39, 'Chaoxing', 'chaoxing', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (40, 'v6直播', 'v6', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (1, 'THIS', 'this', 1, 100, 1);
+INSERT INTO `hipic_api` VALUES (2, 'ALI', 'ali', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (3, 'VIMCN', 'Vimcn', 1, 1000, 0);
+INSERT INTO `hipic_api` VALUES (4, 'UPLOADCC', 'Uploadcc', 1, 90, 0);
+INSERT INTO `hipic_api` VALUES (5, 'SMMS', 'smms', 1, 70, 0);
+INSERT INTO `hipic_api` VALUES (6, 'SOUGOU', 'sougou', 1, 70, 0);
+INSERT INTO `hipic_api` VALUES (7, 'XIAOMI', 'xiaomi', 1, 1000, 0);
+INSERT INTO `hipic_api` VALUES (8, 'CATBOX', 'Catbox', 1, 80, 0);
+INSERT INTO `hipic_api` VALUES (9, 'QIHOO', 'Qihoo', 1, 70, 0);
+INSERT INTO `hipic_api` VALUES (10, 'JD', 'Jd', 1, 60, 0);
+INSERT INTO `hipic_api` VALUES (11, 'SUNING', 'SuNing', 1, 60, 0);
+INSERT INTO `hipic_api` VALUES (12, 'JUEJIN', 'juejin', 1, 50, 0);
+INSERT INTO `hipic_api` VALUES (13, 'NETEASE', 'Netease', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (14, 'TOUTIAO', 'toutiao', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (15, 'NIUPIC', 'niupic', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (16, 'FTP', 'ftp', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (17, 'BAIDU', 'BaiDu', 1, 70, 0);
+INSERT INTO `hipic_api` VALUES (18, 'HULUXIA', 'Huluxia', 1, 80, 0);
+INSERT INTO `hipic_api` VALUES (19, 'QPIC', 'Qpic', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (20, 'CHEVERETO', 'Chevereto', 0, 100, 0);
+INSERT INTO `hipic_api` VALUES (21, 'QDOC', 'qdoc', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (22, 'QCORAL', 'qcoral', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (23, 'BCEBOS', 'bcebos', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (24, 'BILIBILI', 'bilibili', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (25, 'BJBCEBOS', 'bjbcebos', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (26, 'OULIU', 'ouliu', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (27, 'POSTIMAGES', 'postimages', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (28, 'UPYUN', 'upyun', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (29, 'SINA', 'sina', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (30, 'PHPCDN', 'phpcdn', 0, 100, 0);
+INSERT INTO `hipic_api` VALUES (31, 'CHAOXING', 'chaoxing', 1, 100, 0);
 
 -- ----------------------------
 -- Table structure for hipic_api_request
@@ -220,7 +235,7 @@ CREATE TABLE `hipic_set`  (
   `encode` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 88 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of hipic_set
@@ -228,7 +243,7 @@ CREATE TABLE `hipic_set`  (
 INSERT INTO `hipic_set` VALUES (1, 'system.base.sitename', 'hidove', 1, '', '');
 INSERT INTO `hipic_set` VALUES (2, 'system.base.subtitle', 'Simple Free Image Hosting', 1, '', '');
 INSERT INTO `hipic_set` VALUES (3, 'system.base.touristsUpload', '1', 1, '', '');
-INSERT INTO `hipic_set` VALUES (4, 'system.base.email', 'i#abcyun.cc', 1, '', '');
+INSERT INTO `hipic_set` VALUES (4, 'system.base.email', 'loliconla#qq.com', 1, '', '');
 INSERT INTO `hipic_set` VALUES (5, 'system.base.cdnjs', '//lib.baomitu.com', 1, '', '');
 INSERT INTO `hipic_set` VALUES (6, 'system.base.keywords', 'Hidove图床,免费图床,图床Api,图片外链', 1, '', '');
 INSERT INTO `hipic_set` VALUES (7, 'system.base.description', 'Hidove图床, 免费公共图床, 提供图片上传和图片外链服务, 原图保存, 隐私相册, 全球CDN加速.', 1, '', '');
@@ -302,6 +317,8 @@ INSERT INTO `hipic_set` VALUES (82, 'system.upload.returnUrlType', '', 2, '', ''
 INSERT INTO `hipic_set` VALUES (83, 'system.distribute.proxy', 'https://images.weserv.nl/?url=', 4, '', '');
 INSERT INTO `hipic_set` VALUES (84, 'system.distribute.proxyNode', 'sougou,baidu', 4, '', '');
 INSERT INTO `hipic_set` VALUES (85, 'system.loadBalance.min', '2', 6, '', '');
+INSERT INTO `hipic_set` VALUES (86, 'api.qiantu.cookie', 'qt_visitor_id=%226b9aa3e71dc358f65cff349b37cedbf6%22; user-browser=%22baidu%22; qtjssdk_2018_cross_new_user=1; qiantudata2018jssdkcross=%7B%22distinct_id%22%3A%22172c01924cd26-0e9a275f4ad0cc-3f6b4e04-1049088-172c01924d347%22%2C%22props%22%3A%7B%22latest_traffic_source_type%22%3A%22%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E6%B5%81%E9%87%8F%22%2C%22latest_referrer%22%3A%22https%3A%2F%2Fwww.baidu.com%2Flink%22%2C%22latest_referrer_host%22%3A%22www.baidu.com%22%2C%22latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC%22%7D%7D; loginTime=17; message2=1; Hm_lvt_41d92aaaf21b7b22785ea85eb88e7cea=1592360797; FIRSTVISITED=1592360797.387; imgCodeKey=%2295937d934addbbb7db769df3b32a3302%22; Hm_lvt_644763986e48f2374d9118a9ae189e14=1592360799; popupShowNum=NaN; originUrl=https%3A%2F%2Fwww.58pic.com%2Flogin; risk_forbid_login_uid=%2218048989%22; auth_id=%2218048989%7CYe%2B8h%2BOCnueIt%2BKGmOmcuOawlOWCgOWEoeW9oQ%3D%3D%7C1592966287%7C22e559a43ee2624c3e55e1b182b0053e%22; success_target_path=%22https%3A%5C%2F%5C%2Fwww.58pic.com%5C%2F%22; sns=%7B%22token%22%3A%7B%22access_token%22%3A%22AC5A95B198D72F7594C7E4053F07ED8E%22%2C%22expires_in%22%3A%227776000%22%2C%22refresh_token%22%3A%225A78577CFCB70A315F4B65E431162E16%22%2C%22openid%22%3A%22B110CDF7C30AA283833A4839B9B63D3B%22%7D%2C%22type%22%3A%22qq%22%7D; ssid=%225ee9820f261fc2.10359118%22; last_login_type=1; qt_risk_visitor_id=%2259e660c935745d307d7bfbd0afc0dba3%22; _is_pay=0; _auth_dl_=MTgwNDg5ODl8MTU5Mjk2NjI4N3xhMDY1Y2UyYjc4M2UyYmE4NmFmNjNkMTNjZTNmYWY4OQ%3D%3D; qt_uid=%2218048989%22; censor=%2220200617%22; ISREQUEST=1; WEBPARAMS=is_pay=0; han_data_is_pay:18048989=%222%22; awake=0; qt_ur_type=2; qt_type=2; source_lookp=%2236116025-https%3A%5C%2F%5C%2Fwww.58pic.com%5C%2F%22; last_view_picid=%2235749171%22; history_search=%22%7B%5C%22%25B8%25B8%25C7%25D7%25BD%25DA_%5C%22%3A%5C%22%5C%5C%5C%2Ftupian%5C%5C%5C%2Ffuqinjie.html%5C%22%7D%22; historyKw=%22s%253A6%253A%2522%25B8%25B8%25C7%25D7%25BD%25DA%2522%253B%22; historyKwUtf8=%22%25E7%2588%25B6%25E4%25BA%25B2%25E8%258A%2582%22; showAd:6b9aa3e71dc358f65cff349b37cedbf6=%22w6SIEgLKiJOIC5HVD3fKoJzIowfHm5u6mwrJmZu7zJy4y5zMmZq8yJm6y5vKyMy5iIWIywr5zxj3AxnLCL2Pzci9iJeIlcj3DxjUiJOXlcjZAg26x6rPBwvZiJOYlcjSyxn3x6nOB6DFDgLTzsi9mtu8mJm5mtCZoh4D%22; 2020-06-17-userSign-18048989=1; Hm_lpvt_41d92aaaf21b7b22785ea85eb88e7cea=1592363425; Hm_lpvt_644763986e48f2374d9118a9ae189e14=1592363425; qt_utime=1592363428', 7, '', '');
+INSERT INTO `hipic_set` VALUES (87, 'system.base.template', '', 1, '', '');
 
 -- ----------------------------
 -- Table structure for hipic_set_group
@@ -313,7 +330,7 @@ CREATE TABLE `hipic_set_group`  (
   `mark` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '一个配置组' COMMENT '备注名，显示在前台',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of hipic_set_group
@@ -323,10 +340,10 @@ INSERT INTO `hipic_set_group` VALUES (2, 'system.upload', '上传配置');
 INSERT INTO `hipic_set_group` VALUES (3, 'system.audit', '鉴黄');
 INSERT INTO `hipic_set_group` VALUES (4, 'system.distribute', '分发');
 INSERT INTO `hipic_set_group` VALUES (5, 'system.imageEdit', '图片处理');
-INSERT INTO `hipic_set_group` VALUES (10, 'system.other', '其他');
 INSERT INTO `hipic_set_group` VALUES (6, 'system.loadBalance', '负载均衡');
 INSERT INTO `hipic_set_group` VALUES (7, 'api', '图床接口配置');
 INSERT INTO `hipic_set_group` VALUES (8, 'system.email', '发件邮箱');
+INSERT INTO `hipic_set_group` VALUES (10, 'system.other', '其他');
 
 -- ----------------------------
 -- Table structure for hipic_storage
@@ -347,15 +364,15 @@ CREATE TABLE `hipic_storage`  (
 -- ----------------------------
 -- Records of hipic_storage
 -- ----------------------------
-INSERT INTO `hipic_storage` VALUES (1, 'ftp', '', '{}', 'ftp', 0, NULL);
-INSERT INTO `hipic_storage` VALUES (2, 'ufile', '', '{}', 'ftp', 0, NULL);
+INSERT INTO `hipic_storage` VALUES (1, 'this', '', '{}', 'this', 0, NULL);
+INSERT INTO `hipic_storage` VALUES (2, 'ftp', '', '{}', 'ftp', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (3, 'cos', '', '{}', 'cos', 0, NULL);
-INSERT INTO `hipic_storage` VALUES (4, 'oos', '', '{}', 'oos', 0, NULL);
+INSERT INTO `hipic_storage` VALUES (4, 'oss', '', '{}', 'oss', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (5, 'upyun', '', '{}', 'upyun', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (6, 'qiniu', '', '{}', 'qiniu', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (7, 'zzidc', '', '{}', 'zzidc', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (8, 'github', '', '{}', 'github', 0, NULL);
-INSERT INTO `hipic_storage` VALUES (10, 'this', '', '{}', 'this', 0, NULL);
+INSERT INTO `hipic_storage` VALUES (10, 'ufile', '', '{}', 'ftp', 0, NULL);
 
 -- ----------------------------
 -- Table structure for hipic_user
@@ -391,6 +408,6 @@ CREATE TABLE `hipic_user`  (
 -- ----------------------------
 -- Records of hipic_user
 -- ----------------------------
-INSERT INTO `hipic_user` VALUES (1, 'admin', '0d6f7e827ade39b9c886128f94b56e1d', 'loliconla@qq.com', '41accc912a75c5a94725021f044f85c9', 1590493513, 0, 1, 2, '95565b84dac5ad49e96e72ec60a96802', 1589984410, '0.0.0.0', 0, '[]', 1, 100202000, 1626344468, '{\"process\":{\"quality\":\"100\",\"interlace\":\"1\"},\"watermark\":{\"height\":\"1\",\"width\":\"1\",\"switch\":\"0\",\"type\":\"2\"},\"imageWatermark\":{\"pathname\":\"watermark\\/c4dfc2ef304c600f8856956891780f82\",\"alpha\":\"0\",\"locate\":\"5\"},\"textWatermark\":{\"text\":\"monica\",\"font\":\"default.ttf\",\"size\":\"20\",\"color\":\"#00000000\",\"offset\":\"0\",\"angle\":\"0\",\"locate\":\"1\"}}', '{}');
+INSERT INTO `hipic_user` VALUES (1, 'admin', '0d6f7e827ade39b9c886128f94b56e1d', 'loliconla@qq.com', '41accc912a75c5a94725021f044f85c9', 1590493513, 985401, 0, 2, '95565b84dac5ad49e96e72ec60a96802', 1589984410, '0.0.0.0', 0, '[]', 1, 100202000, 1626344468, '{\"process\":{\"quality\":\"100\",\"interlace\":\"1\"},\"watermark\":{\"height\":\"1\",\"width\":\"1\",\"switch\":\"0\",\"type\":\"2\"},\"imageWatermark\":{\"pathname\":\"watermark\\/c4dfc2ef304c600f8856956891780f82\",\"alpha\":\"0\",\"locate\":\"5\"},\"textWatermark\":{\"text\":\"monica\",\"font\":\"default.ttf\",\"size\":\"20\",\"color\":\"#00000000\",\"offset\":\"0\",\"angle\":\"0\",\"locate\":\"1\"}}', '{\"this\":{\"distribute\":\"\"},\"ftp\":{\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"cdn\":\"\"},\"ufile\":{\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"cdn\":\"\"},\"oss\":{\"cdn\":\"\",\"AccessKeyId\":\"\",\"AccessKeySecret\":\"\",\"Endpoint\":\"\",\"Bucket\":\"\"},\"cos\":{\"cdn\":\"\",\"SecretId\":\"\",\"SecretKey\":\"\",\"Region\":\"\",\"Bucket\":\"\"},\"upyun\":{\"cdn\":\"\",\"OperatorName\":\"\",\"OperatorPwd\":\"\",\"ServiceName\":\"\"},\"qiniu\":{\"cdn\":\"\",\"AccessKey\":\"\",\"SecretKey\":\"\",\"Bucket\":\"\"},\"zzidc\":{\"cdn\":\"\",\"accessKey\":\"\",\"secretKey\":\"\",\"resource\":\"\",\"voucher\":\"\",\"bucketName\":\"\"},\"github\":{\"cdn\":\"\",\"owner\":\"\",\"repository\":\"\",\"token\":\"\"}}');
 
 SET FOREIGN_KEY_CHECKS = 1;

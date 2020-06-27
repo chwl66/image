@@ -15,6 +15,9 @@ Route::group('/', function () {
     Route::get('changelog', 'changelog');
     Route::get('explore', 'explore');
     Route::get('simple', 'simple');
+    Route::get('plugin', function (){
+        return redirect('https://github.com/Hidove?tab=repositories&q=Image-Upload-For');
+    });
 })->prefix('index.index/');
 
 Route::any('install', 'index.Install/index');
