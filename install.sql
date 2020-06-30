@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 50726
- Source Host           : localhost:3306
- Source Schema         : install.com
-
- Target Server Type    : MySQL
- Target Server Version : 50726
- File Encoding         : 65001
-
- Date: 24/06/2020 20:43:36
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -30,31 +14,31 @@ CREATE TABLE `hipic_api`  (
   `checked` tinyint(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否选择',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `key`(`key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of hipic_api
 -- ----------------------------
 INSERT INTO `hipic_api` VALUES (1, 'THIS', 'this', 1, 100, 1);
 INSERT INTO `hipic_api` VALUES (2, 'ALI', 'ali', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (3, 'VIMCN', 'Vimcn', 1, 1000, 0);
-INSERT INTO `hipic_api` VALUES (4, 'UPLOADCC', 'Uploadcc', 1, 90, 0);
+INSERT INTO `hipic_api` VALUES (3, 'VIMCN', 'vimcn', 1, 1000, 0);
+INSERT INTO `hipic_api` VALUES (4, 'UPLOADCC', 'uploadcc', 1, 90, 0);
 INSERT INTO `hipic_api` VALUES (5, 'SMMS', 'smms', 1, 70, 0);
 INSERT INTO `hipic_api` VALUES (6, 'SOUGOU', 'sougou', 1, 70, 0);
 INSERT INTO `hipic_api` VALUES (7, 'XIAOMI', 'xiaomi', 1, 1000, 0);
-INSERT INTO `hipic_api` VALUES (8, 'CATBOX', 'Catbox', 1, 80, 0);
-INSERT INTO `hipic_api` VALUES (9, 'QIHOO', 'Qihoo', 1, 70, 0);
-INSERT INTO `hipic_api` VALUES (10, 'JD', 'Jd', 1, 60, 0);
-INSERT INTO `hipic_api` VALUES (11, 'SUNING', 'SuNing', 1, 60, 0);
+INSERT INTO `hipic_api` VALUES (8, 'CATBOX', 'catbox', 1, 80, 0);
+INSERT INTO `hipic_api` VALUES (9, 'QIHOO', 'qihoo', 1, 70, 0);
+INSERT INTO `hipic_api` VALUES (10, 'JD', 'jd', 1, 60, 0);
+INSERT INTO `hipic_api` VALUES (11, 'SUNING', 'suning', 1, 60, 0);
 INSERT INTO `hipic_api` VALUES (12, 'JUEJIN', 'juejin', 1, 50, 0);
-INSERT INTO `hipic_api` VALUES (13, 'NETEASE', 'Netease', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (13, 'NETEASE', 'netease', 1, 100, 0);
 INSERT INTO `hipic_api` VALUES (14, 'TOUTIAO', 'toutiao', 1, 100, 0);
 INSERT INTO `hipic_api` VALUES (15, 'NIUPIC', 'niupic', 1, 100, 0);
 INSERT INTO `hipic_api` VALUES (16, 'FTP', 'ftp', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (17, 'BAIDU', 'BaiDu', 1, 70, 0);
-INSERT INTO `hipic_api` VALUES (18, 'HULUXIA', 'Huluxia', 1, 80, 0);
-INSERT INTO `hipic_api` VALUES (19, 'QPIC', 'Qpic', 1, 100, 0);
-INSERT INTO `hipic_api` VALUES (20, 'CHEVERETO', 'Chevereto', 0, 100, 0);
+INSERT INTO `hipic_api` VALUES (17, 'BAIDU', 'baidu', 1, 70, 0);
+INSERT INTO `hipic_api` VALUES (18, 'HULUXIA', 'huluxia', 1, 80, 0);
+INSERT INTO `hipic_api` VALUES (19, 'QPIC', 'qpic', 1, 100, 0);
+INSERT INTO `hipic_api` VALUES (20, 'CHEVERETO', 'chevereto', 0, 100, 0);
 INSERT INTO `hipic_api` VALUES (21, 'QDOC', 'qdoc', 1, 100, 0);
 INSERT INTO `hipic_api` VALUES (22, 'QCORAL', 'qcoral', 1, 100, 0);
 INSERT INTO `hipic_api` VALUES (23, 'BCEBOS', 'bcebos', 1, 100, 0);
@@ -364,7 +348,7 @@ CREATE TABLE `hipic_storage`  (
 -- ----------------------------
 -- Records of hipic_storage
 -- ----------------------------
-INSERT INTO `hipic_storage` VALUES (1, 'this', '', '{}', 'this', 0, NULL);
+INSERT INTO `hipic_storage` VALUES (1, 'this', 'http://img.com/images', '{}', 'this', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (2, 'ftp', '', '{}', 'ftp', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (3, 'cos', '', '{}', 'cos', 0, NULL);
 INSERT INTO `hipic_storage` VALUES (4, 'oss', '', '{}', 'oss', 0, NULL);
@@ -408,6 +392,6 @@ CREATE TABLE `hipic_user`  (
 -- ----------------------------
 -- Records of hipic_user
 -- ----------------------------
-INSERT INTO `hipic_user` VALUES (1, 'admin', '0d6f7e827ade39b9c886128f94b56e1d', 'loliconla@qq.com', '41accc912a75c5a94725021f044f85c9', 1590493513, 985401, 0, 2, '95565b84dac5ad49e96e72ec60a96802', 1589984410, '0.0.0.0', 0, '[]', 1, 100202000, 1626344468, '{\"process\":{\"quality\":\"100\",\"interlace\":\"1\"},\"watermark\":{\"height\":\"1\",\"width\":\"1\",\"switch\":\"0\",\"type\":\"2\"},\"imageWatermark\":{\"pathname\":\"watermark\\/c4dfc2ef304c600f8856956891780f82\",\"alpha\":\"0\",\"locate\":\"5\"},\"textWatermark\":{\"text\":\"monica\",\"font\":\"default.ttf\",\"size\":\"20\",\"color\":\"#00000000\",\"offset\":\"0\",\"angle\":\"0\",\"locate\":\"1\"}}', '{\"this\":{\"distribute\":\"\"},\"ftp\":{\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"cdn\":\"\"},\"ufile\":{\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"cdn\":\"\"},\"oss\":{\"cdn\":\"\",\"AccessKeyId\":\"\",\"AccessKeySecret\":\"\",\"Endpoint\":\"\",\"Bucket\":\"\"},\"cos\":{\"cdn\":\"\",\"SecretId\":\"\",\"SecretKey\":\"\",\"Region\":\"\",\"Bucket\":\"\"},\"upyun\":{\"cdn\":\"\",\"OperatorName\":\"\",\"OperatorPwd\":\"\",\"ServiceName\":\"\"},\"qiniu\":{\"cdn\":\"\",\"AccessKey\":\"\",\"SecretKey\":\"\",\"Bucket\":\"\"},\"zzidc\":{\"cdn\":\"\",\"accessKey\":\"\",\"secretKey\":\"\",\"resource\":\"\",\"voucher\":\"\",\"bucketName\":\"\"},\"github\":{\"cdn\":\"\",\"owner\":\"\",\"repository\":\"\",\"token\":\"\"}}');
+INSERT INTO `hipic_user` VALUES (1, 'admin', '0d6f7e827ade39b9c886128f94b56e1d', 'loliconla@qq.com', '41accc912a75c5a94725021f044f85c9', 1590493513, 995107, 0, 2, '95565b84dac5ad49e96e72ec60a96802', 1589984410, '0.0.0.0', 0, '[]', 1, 100202000, 1626344468, '{\"process\":{\"quality\":\"100\",\"interlace\":\"1\"},\"watermark\":{\"height\":\"1\",\"width\":\"1\",\"switch\":\"0\",\"type\":\"2\"},\"imageWatermark\":{\"pathname\":\"watermark\\/c4dfc2ef304c600f8856956891780f82\",\"alpha\":\"0\",\"locate\":\"5\"},\"textWatermark\":{\"text\":\"monica\",\"font\":\"default.ttf\",\"size\":\"20\",\"color\":\"#00000000\",\"offset\":\"0\",\"angle\":\"0\",\"locate\":\"1\"}}', '{\"this\":{\"distribute\":\"\"},\"ftp\":{\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"cdn\":\"\"},\"ufile\":{\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"cdn\":\"\"},\"oss\":{\"cdn\":\"\",\"AccessKeyId\":\"\",\"AccessKeySecret\":\"\",\"Endpoint\":\"\",\"Bucket\":\"\"},\"cos\":{\"cdn\":\"\",\"SecretId\":\"\",\"SecretKey\":\"\",\"Region\":\"\",\"Bucket\":\"\"},\"upyun\":{\"cdn\":\"\",\"OperatorName\":\"\",\"OperatorPwd\":\"\",\"ServiceName\":\"\"},\"qiniu\":{\"cdn\":\"\",\"AccessKey\":\"\",\"SecretKey\":\"\",\"Bucket\":\"\"},\"zzidc\":{\"cdn\":\"\",\"accessKey\":\"\",\"secretKey\":\"\",\"resource\":\"\",\"voucher\":\"\",\"bucketName\":\"\"},\"github\":{\"cdn\":\"\",\"owner\":\"\",\"repository\":\"\",\"token\":\"\"}}');
 
 SET FOREIGN_KEY_CHECKS = 1;
