@@ -74,7 +74,6 @@ Route::group('ajax/api', function () {
 })->prefix('ajax.api/');
 
 if (env('APP_MASTER_DOMAIN') !== request()->host() && request()->baseUrl() !== '/install') {
-
     Route::domain(request()->host(), function () {
         Route::get('image/:signatures', 'index.image/index')
             ->pattern(['signatures' => '[\w]+']);

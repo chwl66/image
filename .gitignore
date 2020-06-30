@@ -4,3 +4,4 @@
 *.log
 .env
 install.lock
+/public/images
