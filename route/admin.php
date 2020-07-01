@@ -99,7 +99,8 @@ if (env('APP_MASTER_DOMAIN') !== request()->host() && request()->baseUrl() !== '
 
     Route::domain(request()->host(), function () {
         Route::get('image/:signatures', 'index.image/index')
-            ->pattern(['signatures' => '[\w]+']);
+            ->pattern(['signatures' => '[\w]+'])
+            ->middleware(\app\middleware\ImageRecord::class);
         Route::any('/', 'index.index/cdn');
     });
 }

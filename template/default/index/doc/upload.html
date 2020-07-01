@@ -74,9 +74,15 @@
                 </tr>
                 <tr>
                     <td>folder</td>
-                    <td>String</td>
+                    <td>Integer</td>
                     <td>否</td>
-                    <td>用户的目录ID，可上传到指定目录中</td>
+                    <td>用户的目录ID，可上传到指定目录中，通过`{:lang('Folder List')}`API获取</td>
+                </tr>
+                <tr>
+                    <td>bypassVisionPorn</td>
+                    <td>Integer</td>
+                    <td>否</td>
+                    <td>绕过鉴黄，仅支持白名单用户</td>
                 </tr>
                 </tbody>
             </table>
@@ -165,7 +171,7 @@
                     <tbody>
                     <tr>
                         <td>code</td>
-                        <td>Number</td>
+                        <td>Integer</td>
                         <td>200</td>
                         <td>状态码，成功返回200，失败返回400</td>
                     </tr>

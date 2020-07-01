@@ -47,5 +47,4 @@ return [
     'Image Update API' => '图片更新 API',
     'Image Update Doc' => '图片更新文档',
     'Upload API Doc' => '上传接口文档',
-
 ];

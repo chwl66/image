@@ -4,3 +4,6 @@
 *.log
 .env
 install.lock
+composer.lock
+/public/images/*
+/runtime/*

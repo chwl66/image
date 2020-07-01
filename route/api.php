@@ -9,4 +9,5 @@ Route::group('api', function () {
     Route::any('imageList', 'ImageList/get');
     Route::any('imageInfo', 'ImageInfo/get');
     Route::any('qrcode', 'Qrcode/get');
-})->prefix('api.');
+})->prefix('api.')
+    ->allowCrossDomain();

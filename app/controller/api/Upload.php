@@ -23,12 +23,11 @@ use app\controller\api\service\VisionPorn;
 use app\controller\api\service\WhiteListFilter;
 use app\controller\common\ImageInitial;
 use app\model\Image;
-use think\exception\ValidateException;
+use app\validate\imageValidate;
 use think\facade\Filesystem;
 use think\facade\Log;
 use think\facade\Request;
 use think\facade\Session;
-use think\File;
 use think\file\UploadedFile;
 use think\helper\Str;
 
@@ -106,21 +105,12 @@ class Upload extends BaseController
             // 获取表单上传文件
             $file = request()->file('image');
         }
-        try {
-            $this->validate(['image' => $file],
-                [
-                    'image' => [
-                        'require',
-                        'file',
-//                        'image',
-                        'fileSize:' . $this->uploadConfig['maxImageSize'],
-                        'fileExt:' . $this->uploadConfig['imageType'],
-                    ]
-                ]);
-        } catch (ValidateException $e) {
-            return msg(400, $e->getMessage());
-        }
 
+        $validate = new imageValidate();
+
+        if (!$validate->check(['image' => $file])) {
+            return msg(400, $validate->getError());
+        }
 
         //图片查重 仅对游客生效
         if (Session::get('userId') && $this->uploadConfig['duplicates']['switch'] == 1) {
@@ -146,11 +136,19 @@ class Upload extends BaseController
         //图片鉴定
 
         try {
-            //鉴黄
-            $fraction = (new VisionPorn($this->config['audit']))->run($pathName);
-            //白名单过滤
+            //判断是否绕过鉴黄
+            if (
+                empty($this->param['bypassVisionPorn'])
+                || $this->param['bypassVisionPorn'] != 1
+                || $this->user['is_whitelist'] != 1) {
 
-            (new WhiteListFilter($this->config['audit'], $this->user))->run($fraction, $pathName, $realPath);
+                //鉴黄
+                $fraction = (new VisionPorn($this->config['audit']))->run($pathName);
+
+                //白名单过滤
+                (new WhiteListFilter($this->config['audit'], $this->user))->run($fraction, $pathName, $realPath);
+            }
+
             //用户储存容量处理  上传到指定目录
             (new UserStorageCapacity($this->user))->run();
             //记录请求信息

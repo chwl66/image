@@ -9,13 +9,13 @@ class UserProcess extends Process
 
     private $config;
 
-    public function __construct($config, $imagePath, $image = null)
+    public function __construct($config, $imagePath)
     {
         $this->config = $config;
         if (empty($this->config)) {
             return;
         }
-        parent::__construct($this->config, $imagePath,$image);
+        parent::__construct($this->config, $imagePath);
     }
 
     public function run()

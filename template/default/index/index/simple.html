@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{$Hidove.config.system.base.sitename} - {$Hidove.config.system.base.subtitle}</title>
     <meta name="keywords" content="{$Hidove.config.system.base.keywords}">
     <meta name="description" content="{$Hidove.config.system.base.description}">
@@ -15,65 +15,65 @@
 </head>
 
 <body>
-<div class="loading hidden">
-    <span>W</span>
-    <span>A</span>
-    <span>I</span>
-    <span>T</span>
-    <span>I</span>
-    <span>N</span>
-    <span>G</span>
-</div>
-<main>
-    <div class="container">
-        <div class="card">
-            <div class="upload">
-                <input class="file" type="file" name="image" id="upload" accept="image/*" multiple="true">
-            </div>
-            <div class="links-tab hidden">
-                <ul>
-                    <li data-hash="links-url" class="active">URL</li>
-                    <li data-hash="links-html">HTML</li>
-                    <li data-hash="links-bbcode">BBCODE</li>
-                    <li data-hash="links-markdown">MARKDOWN</li>
-                    <li data-hash="links-markdownwithlink">MARKDOWNWITHLINK</li>
-                </ul>
-                <div class="action">
-                    <button id="remove" class="remove btn"></button>
-                    <button id="copy" class="copy btn"></button>
-                </div>
-                <div class="content">
-                    <textarea class="url active" id="links-url" readonly placeholder="还没有上传图片哦~"></textarea>
-                    <textarea class="html" id="links-html" readonly placeholder="还没有上传图片哦~"></textarea>
-                    <textarea class="bbcode" id="links-bbcode" readonly placeholder="还没有上传图片哦~"></textarea>
-                    <textarea class="markdown" id="links-markdown" readonly placeholder="还没有上传图片哦~"></textarea>
-                    <textarea class="markdownwithlink" id="links-markdownwithlink" readonly
-                              placeholder="还没有上传图片哦~"></textarea>
-                </div>
-            </div>
-        </div>
-
+    <div class="loading">
+        <span>W</span>
+        <span>A</span>
+        <span>I</span>
+        <span>T</span>
+        <span>I</span>
+        <span>N</span>
+        <span>G</span>
     </div>
-</main>
-<script>
-    let apiType = ['this'];
-    $.get({
-        url: "/ajax/uploadOption",
-        success: (res) => {
-            apiType = [];
-            let apiTypeTmp = res.data.apiType;
-            apiTypeTmp.map(function (item, index) {
-                if (item.checked === 1)
-                    apiType.push(item.key);
-            });
-        },
-        error: () => {
-            alert(error);
-            console.error(error);
-        }
-    });
-</script>
-<script src="/static/simple/js/app.js"></script>
+    <main>
+        <div class="container">
+            <div class="card">
+                <div class="upload">
+                    <input class="file" type="file" name="image" id="upload" accept="image/*" multiple="true">
+                </div>
+                <div class="links-tab hidden">
+                    <ul>
+                        <li data-hash="links-url" class="active">URL</li>
+                        <li data-hash="links-html">HTML</li>
+                        <li data-hash="links-bbcode">BBCODE</li>
+                        <li data-hash="links-markdown">MARKDOWN</li>
+                        <li data-hash="links-markdownwithlink">MARKDOWNWITHLINK</li>
+                    </ul>
+                    <div class="action">
+                        <button id="remove" class="remove btn"></button>
+                        <button id="copy" class="copy btn"></button>
+                    </div>
+                    <div class="content">
+                        <textarea class="url active" id="links-url" readonly placeholder="还没有上传图片哦~"></textarea>
+                        <textarea class="html" id="links-html" readonly placeholder="还没有上传图片哦~"></textarea>
+                        <textarea class="bbcode" id="links-bbcode" readonly placeholder="还没有上传图片哦~"></textarea>
+                        <textarea class="markdown" id="links-markdown" readonly placeholder="还没有上传图片哦~"></textarea>
+                        <textarea class="markdownwithlink" id="links-markdownwithlink" readonly
+                            placeholder="还没有上传图片哦~"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script>
+        let apiType = ['this'];
+        $.get({
+            url: "/ajax/uploadOption",
+            success: (res) => {
+                apiType = [];
+                let apiTypeTmp = res.data.apiType;
+                apiTypeTmp.map(function (item, index) {
+                    if (item.checked === 1)
+                        apiType.push(item.key);
+                });
+            },
+            error: () => {
+                alert(error);
+                console.error(error);
+            }
+        });
+    </script>
+    <script src="/static/simple/js/app.js?={:date('Ymd')}"></script>
 </body>
 
 </html>

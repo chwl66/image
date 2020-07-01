@@ -14,6 +14,5 @@ use think\facade\Route;
 //});
 
 Route::get('test', function () {
-    dump(getimagesize('D:\Pictures\15200390891799222.webp'));
-    dump(getimagesize('D:\Pictures\p2609399538.webp'));
+    opcache_reset();
 });
