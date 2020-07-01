@@ -1,0 +1,107 @@
+<title>其他设置</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>其他设置</cite></a>
+    </div>
+</div>
+
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">其他设置</div>
+                <div class="layui-card-body" pad15>
+                    <div class="layui-form" wid100 lay-filter="Hidove-set">
+                        <div class="layui-field-box">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">SMTP服务器</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="system.email.host" value="" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">如：smtp.mxhichina.com</div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">发件人邮箱</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="system.email.username" value="" lay-verify="email"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">邮箱登入密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="system.email.password" value="" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">发件人昵称</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="system.email.sender" value="" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">SMTP端口号</label>
+                                <div class="layui-input-inline" style="width: 80px;">
+                                    <input type="text" name="system.email.port" lay-verify="number" value=""
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">一般为 25 或 465</div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">SMTP协议</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="system.email.encryption" value="" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">允许 TLS 或者ssl协议</div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">回复邮箱地址</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="system.email.replyMail" value="" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">回复的时候回复给哪个邮箱 建议和站长邮箱一致</div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" id="send_mail_test">测试发送</button>
+                                    <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('set', layui.factory('set'));
+    $('#send_mail_test').click(function () {
+
+      let loadinMsg = layer.load(2);
+        $.ajax({
+            url: ajaxPath + '/email/test',
+            type: 'get',
+            success: function (data) {
+                if (data.code === 200) {
+                    layer.msg(data.msg, {icon: 6});
+                } else {
+                    layer.msg(data.msg, {icon: 5});
+                }
+            },
+            error: function () {
+                layer.msg(data.msg, {icon: 5});
+            }
+        }).done(function () {
+          layer.close(loadinMsg);
+        });
+    });
+</script>

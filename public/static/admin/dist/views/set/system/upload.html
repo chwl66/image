@@ -1,0 +1,111 @@
+<title>上传配置</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>上传配置</cite></a>
+    </div>
+</div>
+
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">上传配置</div>
+                <div class="layui-card-body" pad15>
+                    <div class="layui-form" wid100 lay-filter="Hidove-set">
+                        <div class="layui-field-box">
+
+                            <blockquote class="layui-elem-quote">图片上传设置</blockquote>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">允许上传的图片类型</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.upload.imageType" value="" class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">例如：jpg,png,gif,jpeg,ico</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">允许上传的图片最大图片大小</label>
+                                <div class="layui-input-block">
+                                    <input id="text" type="number" name="system.upload.maxImageSize" value=""
+                                           class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：单位 字节 例如：5242880 字节 = 5MB</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">允许上传的最大图片个数</label>
+                                <div class="layui-input-block">
+                                    <input type="number" name="system.upload.maxFileCount" value="" class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：只针对首页Fileinput上传 例如：10张</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">自定义分发地址后缀</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.upload.suffix" lay-verify="text" value=""
+                                           class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：例如 .jpg 则结果为
+                                        https://xxx.com/image/xxx.jpg
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">图片储存路径规则</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.upload.rule" lay-verify="text" value=""
+                                           class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：参考PHP的date函数，例如 Y/m/d 则结果为
+                                        2020/05/20/xxxx.jpg
+                                    </div>
+                                </div>
+                            </div>
+                            <blockquote class="layui-elem-quote">图片重复</blockquote>
+                            <blockquote class="layui-elem-quote">根据md5、sha1计算
+                                符合指定条件返回之前已上传的图片，不会更新cdn，仅对游客上传有效
+                            </blockquote>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">是否开启</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="system.upload.duplicates.switch" value="1"
+                                           lay-skin="switch" lay-text="ON|OFF">
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">重复查询时间间隔</label>
+                                <div class="layui-input-block">
+                                    <input type="number" name="system.upload.duplicates.time" lay-verify="text" value=""
+                                           class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：单位秒
+                                        例如30分钟前到现在这段时间内上传了一张一模一样的图片，请填写1800提示：0秒代表当前时间无限久以前
+                                    </div>
+                                </div>
+                            </div>
+                            <blockquote class="layui-elem-quote">返回Url类型</blockquote>
+                            <blockquote class="layui-elem-quote">
+                                例如，填写distribute，那么上传时只会返回distribute类型的url地址，防那些单纯利用接口但不使用图床分发的人
+                            </blockquote>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">返回Url类型</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.upload.returnUrlType" lay-verify="text" value=""
+                                           class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：指定你允许返回的URL类型，支持多个，英文逗号分割（,）</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('set', layui.factory('set'));
+</script>

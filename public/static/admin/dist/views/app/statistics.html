@@ -1,0 +1,118 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <div class="layui-card-header">最近一周上传的图片数</div>
+          <div class="layui-card-body">
+
+            <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-normline">
+              <div carousel-item id="LAY-index-normline">
+                <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-md6">
+        <div class="layui-card">
+          <div class="layui-card-header">今日用户图片上传数排行榜</div>
+          <div class="layui-card-body">
+
+            <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-heapline">
+              <div carousel-item id="LAY-index-heapline">
+                <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="layui-row">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">最近一周API调用情况</div>
+        <div class="layui-card-body">
+          <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="getWeekApiRequestInfo">
+            <div carousel-item id="getWeekApiRequestInfo">
+              <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">今日图片请求次数排行榜</div>
+        <div class="layui-card-body">
+          <table class="layui-table layuiadmin-page-table" lay-skin="line">
+            <thead>
+            <tr>
+              <th>用户名</th>
+              <th>图片名称</th>
+              <th>今日请求次数</th>
+              <th>总请求次数</th>
+              <th>最后请求时间</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="getTodayPictureRequest">
+            </tbody>
+          </table>
+        </div>
+        <div id="pageForTodayPictureRequest"></div>
+      </div>
+    </div>
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header"><span lay-tips="今日调用分发接口的图片来源域名的次数">今日来源域名访问数排行榜</span></div>
+        <div class="layui-card-body">
+          <table class="layui-table layuiadmin-page-table" lay-skin="line">
+            <thead>
+            <tr>
+              <th>来源域名</th>
+              <th>第一次请求时间</th>
+              <th>最后一次请求时间</th>
+              <th>IP</th>
+              <th>请求次数</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="getTodayRefereRequest">
+            </tbody>
+          </table>
+          <div id="pageForTodayRefereRequest"></div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header"><span lay-tips="从盘古开天辟地到现在调用分发接口的图片来源域名次数">来源域名访问数总排行榜</span></div>
+        <div class="layui-card-body">
+          <table class="layui-table layuiadmin-page-table" lay-skin="line">
+            <thead>
+            <tr>
+              <th>来源域名</th>
+              <th>第一次请求时间</th>
+              <th>最后一次请求时间</th>
+              <th>IP</th>
+              <th>请求次数</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="getTotalRefereRequest">
+            </tbody>
+          </table>
+          <div id="pageForTotalRefereRequest"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  //控制器
+  layui.use('statistics', layui.factory('statistics'));
+</script>

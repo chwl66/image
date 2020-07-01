@@ -1,0 +1,97 @@
+<title>其他设置</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>其他设置</cite></a>
+    </div>
+</div>
+
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">其他设置</div>
+                <div class="layui-card-body" pad15>
+                    <div class="layui-form" wid100 lay-filter="Hidove-set">
+                        <div class="layui-field-box">
+
+                            <blockquote class="layui-elem-quote">负载均衡</blockquote>
+                            <blockquote class="layui-elem-quote">节点上传失败，会使用本地重试一次</blockquote>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">是否开启负载均衡</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="system.loadBalance.switch" lay-skin="switch"
+                                          value="1" lay-text="ON|OFF">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">提示：开启则分发上传时根据自上而下权重随机调用节点分发</div>
+                            </div>
+                            <blockquote class="layui-elem-quote">启用负载的最小节点个数</blockquote>
+                            <blockquote class="layui-elem-quote">单次上传请求如果很少api节点（apiType只有一个或者两个），就没有必要使用，请求次数多了还不如不用</blockquote>
+                            <blockquote class="layui-elem-quote">Example：最小节点个数=2，如果你选择的公共节点只有ali,toutiao，则只会使用本地上传，选择了ali,toutiao,netease，则将使用负载节点分发</blockquote>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">最小节点个数</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="system.loadBalance.min" value="" class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：推荐2个</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">分发api接口</label>
+                                <div class="layui-input-block">
+                                    <textarea name="system.loadBalance.node" class="layui-textarea"
+                                              placeholder=""></textarea>
+                                    <div class="layui-form-mid layui-word-aux">提示：一行一个</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">例外情况</label>
+                                <div class="layui-input-block">
+                                    <textarea name="system.loadBalance.exception" class="layui-textarea"
+                                              placeholder=""></textarea>
+                                    <div class="layui-form-mid layui-word-aux">
+                                        提示：不使用负载均衡的api接口标识，填写后将使用本地服务器分发，使用英文逗号分割，例如：github,sina
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="nodes">
+                                <fieldset class="layui-elem-field layui-field-title site-title">
+                                    <legend>节点监控</legend>
+                                </fieldset>
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width="150">
+                                        <col width="200">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>节点</th>
+                                        <th>延迟</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>正在获取节点信息</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('set', layui.factory('set'));
+    layui.use('loadBalance', layui.factory('loadBalance'));
+</script>

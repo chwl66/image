@@ -1,0 +1,136 @@
+<title>鉴黄配置</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>鉴黄配置</cite></a>
+    </div>
+</div>
+
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">鉴黄配置</div>
+                <div class="layui-card-body" pad15>
+                    <div class="layui-form" wid100 lay-filter="Hidove-set">
+                        <div class="layui-field-box">
+                            <blockquote class="layui-elem-quote">
+                                这个貌似不用多介绍，鉴黄设置
+                            </blockquote>
+                            <legend>监黄Api</legend>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">监黄Api开关</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="system.audit.switch" lay-skin="switch"
+                                           value="1" lay-text="ON|OFF">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">监黄类型</label>
+                                <div class="layui-input-inline">
+                                    <select name="system.audit.type" lay-verify="">
+                                        <option value="0">请选择级别</option>
+                                        <option value="moderatecontent">moderatecontent</option>
+                                        <option value="sightengine">sightengine</option>
+                                        <option value="baidu">百度</option>
+                                        <option value="tencent">腾讯</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">及格分数</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="system.audit.fraction" value="" class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：大于等于该分数则直接拦截并禁止该图片上传</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">单次封禁时长</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="system.audit.duration" value="" class="layui-input">
+                                    <div class="layui-form-mid layui-word-aux">提示：每次封禁多少秒无法上传</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label"><span
+                                            lay-tips="推荐存在数据库中，这样你还知道别人上传了啥好东西">违规图片预处理</span></label>
+                                    <div class="layui-input-inline">
+                                        <select name="system.audit.action">
+                                            <option value="">请选择处理方式</option>
+                                            <option value="0">直接删除</option>
+                                            <option value="1">存放在数据库中</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <blockquote class="layui-elem-quote">moderatecontent鉴黄配置 https://www.moderatecontent.com
+                            </blockquote>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">key</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.audit.moderatecontent.key" value=""
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <blockquote class="layui-elem-quote">Sightengine鉴黄配置 https://sightengine.com</blockquote>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">api_user</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.audit.sightengine.api_user" value=""
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">api_secret</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.audit.sightengine.api_secret" value=""
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <blockquote class="layui-elem-quote">百度鉴黄配置 https://ai.baidu.com/tech/imagecensoring
+                            </blockquote>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">client_id</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.audit.baidu.client_id" value="" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">client_secret</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.audit.baidu.client_secret" value=""
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <blockquote class="layui-elem-quote">腾讯鉴黄配置 https://ai.qq.com</blockquote>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">appid</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.audit.tencent.appid" value="" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">appkey</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="system.audit.tencent.appkey" value="" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('set', layui.factory('set'));
+</script>

@@ -1,0 +1,62 @@
+
+
+<title>卡密管理</title>
+  
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>应用</cite></a>
+    <a><cite>卡密管理</cite></a>
+  </div>
+</div>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="app-content-comment">
+      <blockquote class="layui-elem-quote">
+        是否使用处 值对应用户的ID，填入0表示为未使用
+      </blockquote>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">卡密管理</label>
+          <div class="layui-input-inline">
+            <input type="text" name="key" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">用户名</label>
+          <div class="layui-input-inline">
+            <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="recharge-card-search">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="deleteRechargeCards">删除</button>
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="reloadTable">刷新</button>
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="add">添加</button>
+      </div>
+      <div style="padding-bottom: 10px;">
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="clearUsed">清理已使用卡密</button>
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="exportNotUsed">导出未使用卡密</button>
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="exportUsed">导出已使用卡密</button>
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="exportAll">导出全部卡密</button>
+      </div>
+      <table id="table" lay-filter="table"></table>
+      <script type="text/html" id="tableTools">
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="delete">
+          <i class="layui-icon">&#xe640;</i>
+        </button>
+      </script>
+    </div>
+  </div>
+</div>
+<script>
+    //控制器
+    layui.use('rechargeCard', layui.factory('rechargeCard'));
+</script>

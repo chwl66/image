@@ -1,0 +1,54 @@
+
+
+<title>缓存管理</title>
+<style>
+    .layui-btn{
+        margin: 0 7px 10px 0;
+    }
+</style>
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>应用</cite></a>
+    <a><cite>缓存管理</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+      <div class="layui-card-header">缓存管理</div>
+    <div class="layui-card-body"pad15>
+        <div class="layui-form" wid100 lay-filter="Hidove-app-cache">
+        <div class="layui-form-item layui-form-text">
+            <blockquote class="layui-elem-quote">这个貌似不用多介绍，一行一个，分发地址格式：https://xxx.com/image/xxx</blockquote>
+            <label class="layui-form-label">需要刷新的地址</label>
+            <div class="layui-input-block">
+                <textarea name="imageUrl" class="layui-textarea"></textarea>
+            </div>
+        </div>
+            <div class="layui-form-item layui-form-text">
+                <blockquote class="layui-elem-quote">一行一个，用户名</blockquote>
+                <label class="layui-form-label">需要刷新的用户名</label>
+                <div class="layui-input-block">
+                    <textarea name="username" class="layui-textarea"></textarea>
+                </div>
+            </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="send">提交</button>
+                <button id="refreshAllOfImageDistribution" class="layui-btn" lay-submit lay-filter="refreshAllOfImageDistribution">刷新全部图片分发识别缓存</button>
+                <button id="refreshAllOfImage" class="layui-btn" lay-submit lay-filter="refreshAllOfImage">刷新全部图片缓存</button>
+                <button id="refreshAllOfConfig" class="layui-btn" lay-submit lay-filter="refreshAllOfConfig">刷新全部配置缓存</button>
+                <button id="refreshOpcache" class="layui-btn" lay-submit lay-filter="refreshOpcache">刷新Opcache缓存</button>
+                <button id="refreshAll" class="layui-btn" lay-submit lay-filter="refreshAll">刷新全部缓存</button>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //控制器
+  layui.use('cache', layui.factory('cache'));
+</script>

@@ -1,0 +1,93 @@
+<title>其他设置</title>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>设置</cite></a>
+    <a><cite>其他设置</cite></a>
+  </div>
+</div>
+
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">其他设置</div>
+        <div class="layui-card-body" pad15>
+          <div class="layui-form" wid100 lay-filter="Hidove-set">
+            <div class="layui-field-box">
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">公告(支持html标签)</label>
+                <div class="layui-input-block">
+                  <textarea name="system.other.notify" class="layui-textarea"></textarea>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">后台地址&安全入口</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.other.authPath" lay-verify="text" value="" class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：后台管理入口,设置后只能通过指定安全入口登录后台,如: hidove 为空时为默认admin</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">超级令牌</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.other.superToken" lay-verify="text" value="" class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：超级令牌，可用于定时任务鉴权</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">探索功能</label>
+                <div class="layui-input-block">
+                  <input type="checkbox" name="system.other.explore" value="1" lay-skin="switch" lay-text="ON|OFF">
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">API调用统计 统计API上传接口和分发接口的请求，不推荐开启，服务器牛逼当我没说</blockquote>
+              <div class="layui-form-item">
+                <label class="layui-form-label">是否开启</label>
+                <div class="layui-input-block">
+                  <input type="checkbox" name="system.other.apiRecord"  value="1"  lay-skin="switch" lay-text="ON|OFF">
+                </div>
+              </div>
+
+              <blockquote class="layui-elem-quote">
+                保留域名 (禁止用户绑定域名) 一行一个< www.hidove.cn >格式，支持*.hidove.cn格式
+              </blockquote>
+              <div class="layui-form-item">
+                <label class="layui-form-label">保留域名</label>
+                <div class="layui-input-block">
+                  <textarea name="system.other.retentionDomain" class="layui-textarea" placeholder="保留域名"></textarea>
+                </div>
+              </div>
+
+              <blockquote class="layui-elem-quote">支付中心信息</blockquote>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">卡密购买地址:</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.other.shopUrl" value="" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">支付中心公告</label>
+                <div class="layui-input-block">
+                  <textarea name="system.other.financeNotice" class="layui-textarea" placeholder="支付中心公告"></textarea>
+                  <div class="layui-form-mid layui-word-aux">提示：支持HTML</div>
+                </div>
+              </div>
+<!--              保存-->
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  layui.use('set', layui.factory('set'));
+</script>

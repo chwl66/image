@@ -1,0 +1,35 @@
+<title>执行SQL</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>系统</cite></a>
+        <a><cite>执行SQL</cite></a>
+    </div>
+</div>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-form">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">SQL语句</label>
+                    <div class="layui-input-block">
+                        <textarea name="sql" class="layui-textarea" placeholder="请输入SQL语句"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="execute">执行</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //控制器
+    layui.use('sql', layui.factory('sql'));
+
+</script>

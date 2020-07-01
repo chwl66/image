@@ -1,0 +1,103 @@
+<title>分发配置</title>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>设置</cite></a>
+    <a><cite>分发配置</cite></a>
+  </div>
+</div>
+
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">分发配置</div>
+        <div class="layui-card-body" pad15>
+          <div class="layui-form" wid100 lay-filter="Hidove-set">
+            <div class="layui-field-box">
+              <blockquote class="layui-elem-quote">分发跳转设置</blockquote>
+              <div class="layui-form-item">
+                <label class="layui-form-label">获取图片状态码</label>
+                <div class="layui-input-inline">
+                  <select name="system.distribute.api">
+                    <option value="">请选择处理方式</option>
+                    <option value="none">不判断(返回200)</option>
+                    <option value="local">本地接口</option>
+                    <option value="chinaz">chinaz接口</option>
+                    <option value="other">第三方接口</option>
+                  </select>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span
+                        lay-tips="直接返回结果，或者 data.code的json对象">第三方接口Url</span></label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.distribute.apiUrl" value="" class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：例子https://img.abcyun.co/?url=</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <div class="layui-word-aux">提示：分发跳转地址是根据cdn节点的http状态是否为404来判断图片是否存在的，支持防盗链判断！</div>
+                  <div class="layui-word-aux">如果你的服务器判断cdn节点状态非常慢时可以使用扩展第三方接口</div>
+                  <div class="layui-word-aux">强烈建议使用Redis缓存加速！</div>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">正常状态码</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.distribute.httpCode" value="" class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：以英文逗号,分割 例如：200,301,302</div>
+                </div>
+              </div>
+
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">分发域名</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.distribute.distribute" lay-verify="text" value="" class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：跳转地址的域名，需要协议头，例如：https://pic.abcyun.co</div>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">自定义分发地址后缀</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.distribute.suffix" lay-verify="text" value="" class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：例如 jpg 则结果为 https://xxx.com/image/xxx.jpg</div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">反向代理</blockquote>
+              <blockquote class="layui-elem-quote">使用场景：节点速度对用户不友好、节点使用了防盗链等等</blockquote>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">代理API</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.distribute.proxy" lay-verify="text" value="" class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：例如 https://images.weserv.nl/?url=</div>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">需要代理的api接口</label>
+                <div class="layui-input-block">
+                  <textarea name="system.distribute.proxyNode" class="layui-textarea"
+                            placeholder=""></textarea>
+                  <div class="layui-form-mid layui-word-aux">
+                    提示：需要使用代理的api接口标识，填写后将使用代理，使用英文逗号分割，例如：sougou,baidu
+                  </div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  layui.use('set', layui.factory('set'));
+</script>

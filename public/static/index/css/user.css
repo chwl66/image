@@ -1,0 +1,125 @@
+.qr-code{
+    /*width: 150px;*/
+    max-width: 100%;
+}
+.Hidove-photos{
+    min-height: 50vh;
+}
+.imageAttribute-body{
+    /*margin-left: 8px;*/
+    padding: 10px;
+}
+.imageAttribute-body pre{
+    /*display: inline-block;*/
+}
+.imageinfo p,#imageAttributeLabel,.Hidove-folders p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.imageinfo,.Hidove-folders{
+    border: solid #fff 1px;
+    text-align: center;
+    height: 150px;
+}
+.imageinfo .image-main,.Hidove-folders .image-main{
+    height: 100%;
+}
+.Hidove-folders img{
+    color: #6c757d;
+}
+.Hidove-folders img:hover{
+    color: #343a40!important;
+}
+.imageinfo img,.Hidove-folders img{
+    max-height: 70%;
+    position: relative;
+    top: 50%; /*偏移*/
+    transform: translateY(-50%);
+    margin-bottom: 0px;
+}
+.imageinfo a,.Hidove-folders  a{
+    display: block;
+    height: 80%;
+}
+.imageinfo .caption,.Hidove-folders .caption{
+    height: auto;
+}
+img {
+    max-width: 100%;
+    height:auto;
+}
+.imageinfo i{
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    font-size: 19px;
+    color: #cecece;
+    top: 5px;
+    left: 5px;
+}
+.imageinfo:hover,.Hidove-folders:hover{
+    background-color: #ebebeb;
+}
+.imageinfo:hover i{
+    display: block;
+}
+.imageinfo-active{
+    background: rgba(204,232,255,.5);
+    border: 1px solid rgba(153,209,255,.57);
+}
+.imageinfo-active i{
+    display: block;
+    color: #3b8cff;
+}
+.Hidove-user-form-search{
+    float: right;
+}
+.Hidove-user-form-action{
+    float: left;
+}
+.Hidove-photos{
+    margin: 2em 0;
+}
+.Hidove-user-form .Hidove-action-btn{
+    margin-right: 10px;
+}
+.Hidove-user-form{
+    margin-bottom: 10px;
+}
+.Hidove-block-span{
+    display: block;
+    padding: .375rem .75rem;
+}
+.Hidove-block-span:hover{
+    cursor: pointer;
+}
+.Hidove-breadcrumb a{
+    color: #03a9f4;
+}
+.Hidove-breadcrumb .active a,.Hidove-move-breadcrumb .active a{
+    color: #777777;
+}
+.Hidove-move-breadcrumb a:hover,.Hidove-breadcrumb a:hover{
+    cursor: pointer;
+    text-decoration: none;
+}
+.Hidove-breadcrumb a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+.Hidove-panel-tip{
+    margin: 0 15px;
+}
+.progress{
+    margin-bottom: 0;
+    display: inline-block;
+    width: 50%;
+}
+.imageAttribute-body{
+    word-break:break-all;word-wrap:break-word;
+}
+.page-link{
+    cursor: pointer;
+}

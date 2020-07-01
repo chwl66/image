@@ -1,0 +1,112 @@
+<title>网站设置</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>设置</cite></a>
+        <a><cite>网站设置</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">网站设置</div>
+                <div class="layui-card-body" pad15>
+                    <div class="layui-form" wid100 lay-filter="Hidove-set">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">网站名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="system.base.sitename" value="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">网站副标题</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="system.base.subtitle" value="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">游客上传</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="system.base.touristsUpload" value="1" lay-skin="switch"
+                                       lay-text="ON|OFF">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">开放注册</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="system.base.openRegistration" value="1" lay-skin="switch"
+                                       lay-text="ON|OFF">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">模板</label>
+                            <div class="layui-input-inline">
+                                <select name="system.base.template">
+                                    <option value="" disabled>请选择模板</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">邮箱</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="system.base.email" value="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">静态资源加速</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="system.base.cdnjs" lay-verify="text" value=""
+                                       class="layui-input">
+                                <div class="layui-form-mid layui-word-aux">提示：https://lib.baomitu.com 这种格式
+                                    使用本地资源请填写/static/common
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">META关键词</label>
+                            <div class="layui-input-block">
+                                <textarea name="system.base.keywords" class="layui-textarea"
+                                          placeholder="多个关键词用英文状态 , 号分割"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">META描述</label>
+                            <div class="layui-input-block">
+                                <textarea name="system.base.description" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">统计代码</label>
+                            <div class="layui-input-block">
+                                <textarea name="system.base.footer_code" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $.get({
+        url: ajaxPath + '/template/get',
+        success: function (res) {
+            let data = res.data;
+            let html = '';
+            data.list.forEach(function (value) {
+                html = html + '<option value="' + value + '">' + value + '</option>';
+            });
+            $('select[name="system.base.template"]').append(html);
+            $('select[name="system.base.template"]').val(data.current);
+        }
+    });
+    layui.use('set', layui.factory('set'));
+</script>

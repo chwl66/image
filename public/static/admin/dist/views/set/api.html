@@ -1,0 +1,114 @@
+<title>图床接口设置</title>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>设置</cite></a>
+    <a><cite>图床接口设置</cite></a>
+  </div>
+</div>
+
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">图床接口设置</div>
+        <div class="layui-card-body" pad15>
+          <div class="layui-form" wid100 lay-filter="Hidove-set">
+            <div class="layui-field-box">
+              <blockquote class="layui-elem-quote">Qpic和 Qcoral 因为鸡肋已经去除</blockquote>
+
+<!--              <blockquote class="layui-elem-quote">Qcoral和Qdoc是不同的两个节点，Qcoral节点的地址带有coral，Qcoral Cookie 获取地址：-->
+<!--                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"-->
+<!--                        onclick="redirect('page/updateSkey');">点击进入-->
+<!--                </button>-->
+<!--              </blockquote>-->
+<!--              <div class="layui-form-item layui-form-text">-->
+<!--                <label class="layui-form-label"><span-->
+<!--                        lay-tips="Qcoral图床的cookie">Qcoral Cookie</span></label>-->
+<!--                <div class="layui-input-block">-->
+<!--                                    <textarea name="api.qpic.coral" class="layui-textarea"-->
+<!--                                              placeholder="Qcoral Cookie"></textarea>-->
+<!--                  <div class="layui-form-mid layui-word-aux">提示：Cookie失效将每小时发送邮件提醒，请配置好邮件服务->回复邮箱地址-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+              <blockquote class="layui-elem-quote">Qdoc的带有txdoc，Qdoc Cookie 手动获取地址：
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
+                        onclick="window.open('https://docs.qq.com/desktop');">点击进入
+                </button>（Cookie需带有uid和uid_key）
+              </blockquote>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span
+                        lay-tips="Qdoc图床的cookie">Qdoc Cookie</span></label>
+                <div class="layui-input-block">
+                                    <textarea name="api.qpic.doc" class="layui-textarea"
+                                              placeholder="Qdoc Cookie"></textarea>
+                  <div class="layui-form-mid layui-word-aux">提示：Cookie失效将每小时发送邮件提醒，请配置好邮件服务->回复邮箱地址
+                  </div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">新浪图床配置 新浪微博账号密码</blockquote>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span lay-tips="账号">Username</span></label>
+                <div class="layui-input-block">
+                                    <textarea name="api.sina.username" class="layui-textarea"
+                                              placeholder="username"></textarea>
+                  <div class="layui-form-mid layui-word-aux">提示：新浪微博账号</div>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span lay-tips="密码">Password</span></label>
+                <div class="layui-input-block">
+                                    <textarea name="api.sina.password" class="layui-textarea"
+                                              placeholder="password"></textarea>
+                  <div class="layui-form-mid layui-word-aux">提示：新浪微博密码</div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">百度开发者论坛，获取地址：https://developer.baidu.com/forum </blockquote>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span
+                        lay-tips="Bcebos Cookie">Bcebos Cookie</span></label>
+                <div class="layui-input-block">
+                                    <textarea name="api.baidu.bcebos" class="layui-textarea"
+                                              placeholder="Bcebos Cookie"></textarea>
+                  <div class="layui-form-mid layui-word-aux">提示：百度账号 登录 Cookie
+                  </div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">哔哩哔哩，获取地址：https://www.bilibili.com </blockquote>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span
+                        lay-tips="Bilibili Cookie">Bilibili Cookie</span></label>
+                <div class="layui-input-block">
+                                    <textarea name="api.bilibili.drawImage" class="layui-textarea"
+                                              placeholder="Bilibili Cookie"></textarea>
+                  <div class="layui-form-mid layui-word-aux">提示：Bilibili 登录 Cookie</div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">超星，获取地址：http://pan.ananas.chaoxing.com </blockquote>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span
+                        lay-tips="Chaoxing Cookie">Chaoxing Cookie</span></label>
+                <div class="layui-input-block">
+                                    <textarea name="api.chaoxing.cookie" class="layui-textarea"
+                                              placeholder="Chaoxing Cookie"></textarea>
+                  <div class="layui-form-mid layui-word-aux">提示：Chaoxing网盘 登录 Cookie</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  layui.use('set', layui.factory('set'));
+</script>

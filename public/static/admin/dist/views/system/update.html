@@ -1,0 +1,36 @@
+<title>检测更新</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>系统</cite></a>
+        <a><cite>检测更新</cite></a>
+    </div>
+</div>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-input-block" style="margin: 20px 0;">
+                <button class="layui-btn" lay-submit id="check">检查更新</button>
+                <button class="layui-btn" lay-submit id="update">在线更新</button>
+            </div>
+            <blockquote class="layui-elem-quote">
+                <span>当前版本：</span><span id="currentVersion">1.0</span>
+            </blockquote>
+            <blockquote class="layui-elem-quote">
+                <span>最新版本：</span><span id="latestVersion">1.0</span>
+            </blockquote>
+            <fieldset class="layui-elem-field">
+                <legend>更新日志</legend>
+                <div class="layui-field-box">
+                    <pre id="updateLog"></pre>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<script>
+    //控制器
+    layui.use('update', layui.factory('update'));
+</script>

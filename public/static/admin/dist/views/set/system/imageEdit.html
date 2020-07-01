@@ -1,0 +1,196 @@
+interlace<title>图片处理</title>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>设置</cite></a>
+    <a><cite>图片处理</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">图片处理</div>
+        <div class="layui-card-body" pad15>
+          <div class="layui-form" wid100 lay-filter="Hidove-set">
+            <blockquote class="layui-elem-quote">图片处理设置</blockquote>
+            <div class="layui-form-item">
+              <label class="layui-form-label">是否对JPEG类型图像设置隔行扫描</label>
+              <div class="layui-input-block">
+                <input type="checkbox" name="system.imageEdit.process.interlace" value="1" lay-skin="switch" lay-text="ON|OFF">
+              </div>
+              <div class="layui-form-mid layui-word-aux">提示：设置隔行扫描的情况下在网页进行浏览时。是从上到下一行一行的显示，否则图片整个显示出来
+                然后由模糊到清晰显示。
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">图像质量</label>
+              <div class="layui-input-inline">
+                <input type="number" name="system.imageEdit.process.quality" value="" class="layui-input">
+                <div class="layui-form-mid layui-word-aux">提示：0 ~ 100</div>
+              </div>
+            </div>
+            <blockquote class="layui-elem-quote">水印设置</blockquote>
+            <div class="layui-field-box">
+              <div class="layui-form-item">
+                <label class="layui-form-label">开关</label>
+                <div class="layui-input-block">
+                  <input type="checkbox" name="system.imageEdit.watermark.switch" value="1" lay-skin="switch"
+                         lay-text="ON|OFF">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">水印类型</label>
+                <div class="layui-input-inline">
+                  <select name="system.imageEdit.watermark.type">
+                    <option value="0">请选择类型</option>
+                    <option value="1">图片水印</option>
+                    <option value="2">文字水印</option>
+                  </select>
+                  <div class="layui-form-mid layui-word-aux">提示： 0 = 图片水印, 1 = 文字水印</div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">需要添加水印的图片的最小尺寸</blockquote>
+              <div class="layui-form-item">
+                <label class="layui-form-label">宽度</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="system.imageEdit.watermark.width" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：单位像素</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">高度</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="system.imageEdit.watermark.height" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：单位像素</div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">图片水印设置</blockquote>
+              <div class="layui-form-item">
+                <label class="layui-form-label">水印图片</label>
+                <div class="layui-input-inline">
+                  <div class="layui-upload-drag" id="uploadImageWatermark">
+                    <i class="layui-icon"></i>
+                    <p>点击上传，或将文件拖拽到此处</p>
+                    <div id="imageWatermark">
+                      <hr>
+                      <img src="/images/watermark/watermark" alt="上传成功后渲染" style="max-width: 196px">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">水印位置</label>
+                <div class="layui-input-inline">
+                  <select name="system.imageEdit.imageWatermark.locate">
+                    <option value="0">请选择位置</option>
+                    <option value="1">左上角水印</option>
+                    <option value="2">上居中水印</option>
+                    <option value="3">右上角水印</option>
+                    <option value="4">左居中水印</option>
+                    <option value="5">居中水印</option>
+                    <option value="6">右居中水印</option>
+                    <option value="7">左下角水印</option>
+                    <option value="8">下居中水印</option>
+                    <option value="9">右下角水印</option>
+                  </select>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">透明度</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="system.imageEdit.imageWatermark.alpha" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：0 ~ 100</div>
+                </div>
+              </div>
+              <blockquote class="layui-elem-quote">文字水印设置</blockquote>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">添加的文字</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.imageEdit.textWatermark.text" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：添加的文字，不能为空</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">字体文件路径</label>
+                <div class="layui-input-block">
+                  <input type="text" name="system.imageEdit.textWatermark.font" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：字体文件路径，不能为空，默认 default.ttf 字体文件目录 static/common/ttf </div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">字号</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="system.imageEdit.textWatermark.size" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：字号，单位是像素，不能为空</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">文字颜色</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="system.imageEdit.textWatermark.color" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：文字颜色 例如：#00000000</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">文字写入位置</label>
+                <div class="layui-input-inline">
+                  <select name="system.imageEdit.textWatermark.locate">
+                    <option value="0">请选择位置</option>
+                    <option value="1">左上角水印</option>
+                    <option value="2">上居中水印</option>
+                    <option value="3">右上角水印</option>
+                    <option value="4">左居中水印</option>
+                    <option value="5">居中水印</option>
+                    <option value="6">右居中水印</option>
+                    <option value="7">左下角水印</option>
+                    <option value="8">下居中水印</option>
+                    <option value="9">右下角水印</option>
+                  </select>
+                  <div class="layui-form-mid layui-word-aux">提示：文字写入位置</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">文字相对当前位置的偏移量</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="system.imageEdit.textWatermark.offset" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：文字相对当前位置的偏移量 例如：0</div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">文字倾斜角度</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="system.imageEdit.textWatermark.angle" value=""
+                         class="layui-input">
+                  <div class="layui-form-mid layui-word-aux">提示：文字倾斜角度 例如：0</div>
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="save_set">确认保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  layui.use('set', layui.factory('set'));
+  layui.use('imageEdit', layui.factory('imageEdit'));
+
+</script>

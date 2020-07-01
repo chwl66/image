@@ -1,0 +1,7 @@
+@media (max-width: 1200px) {
+  .links-tab .action {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

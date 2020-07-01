@@ -1,0 +1,169 @@
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md8">
+      <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+          <div class="layui-card">
+            <div class="layui-card-header">快捷方式</div>
+            <div class="layui-card-body">
+
+              <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                <div carousel-item>
+                  <ul class="layui-row layui-col-space10">
+                    <li class="layui-col-xs3">
+                      <a lay-href="app/images">
+                        <i class="layui-icon layui-icon-picture"></i>
+                        <cite>图片管理</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs3">
+                      <a lay-href="app/suspiciousimages">
+                        <i class="layui-icon layui-icon-chart"></i>
+                        <cite>可疑图片管理</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs3">
+                      <a lay-href="app/api">
+                        <i class="layui-icon layui-icon-template-1"></i>
+                        <cite>图床Api</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs3">
+                      <a lay-href="/user/list">
+                        <i class="layui-icon layui-icon-user"></i>
+                        <cite>用户管理</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs3">
+                      <a lay-href="/user/group">
+                        <i class="layui-icon layui-icon-find-fill"></i>
+                        <cite>角色管理</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs3">
+                      <a lay-href="/app/statistics">
+                        <i class="layui-icon layui-icon-survey"></i>
+                        <cite>数据统计</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs3">
+                      <a lay-href="/app/cache">
+                        <i class="layui-icon layui-icon-chat"></i>
+                        <cite>缓存管理</cite>
+                      </a>
+                    </li>
+                    <li class="layui-col-xs3">
+                      <a lay-href="/app/storage">
+                        <i class="layui-icon layui-icon-set"></i>
+                        <cite>储存策略</cite>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md6" id="view">
+          <div class="layui-card">
+            <div class="layui-card-header">数据概览</div>
+            <div class="layui-card-body">
+
+              <div class="layui-carousel layadmin-carousel layadmin-backlog">
+                <div carousel-item>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-header">数据统计</div>
+            <div class="layui-card-body">
+
+              <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-dataview">
+                <div carousel-item id="LAY-index-dataview">
+                  <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                  <div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md4">
+      <div class="layui-card">
+        <div class="layui-card-header">版本信息</div>
+        <div class="layui-card-body layui-text">
+          <table class="layui-table">
+            <colgroup>
+              <col width="100">
+              <col>
+            </colgroup>
+            <tbody>
+            <tr>
+              <td>当前版本</td>
+              <td>
+                <script type="text/html" template>
+                  Hidove图床 Pro
+                  <a href="https://blog.hidove.cn/post/479" target="_blank" style="padding-left: 15px;">更新日志</a>
+                </script>
+              </td>
+            </tr>
+            <tr>
+              <td>主要特色</td>
+              <td>单页面 / 响应式 / 清爽 / 极简</td>
+            </tr>
+            <tr>
+              <td>获取渠道</td>
+              <td style="padding-bottom: 0;">
+                <p>作者博客：https://blog.hidove.cn</p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="layui-card">
+        <div class="layui-card-header">
+          作者心语
+          <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
+        </div>
+        <div class="layui-card-body layui-text layadmin-text">
+          <p>本人开发了很多开源免费产品，没什么目的，只是喜欢自己造轮子。小坏蛋们不要倒卖就好。</p>
+          <p>—— Ivey（<a href="http://www.hidove.cn" target="_blank">www.hidove.cn</a>）</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script id="getTotalInformation" type="text/html">
+  <div class="layui-card">
+    <div class="layui-card-header">合计数据</div>
+    <div class="layui-card-body">
+      <div class="layui-carousel layadmin-carousel layadmin-backlog">
+        <div >
+          <ul class="layui-row layui-col-space10">
+            {{#  layui.each(d, function(index, item){ }}
+            <li class="layui-col-xs6">
+              <div class="layadmin-backlog-body">
+                <h3>{{ index }}</h3>
+                <p><cite>{{ item }}</cite></p>
+              </div>
+            </li>
+            {{#  }); }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+<script>
+  //控制器
+  layui.use('console', layui.factory('console'));
+</script>
+

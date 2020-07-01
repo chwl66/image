@@ -1,0 +1,79 @@
+<style>
+  /*修复table中select显示不完整*/
+  .layui-input{
+    height:30px;
+  }
+  .layui-table-cell {
+    overflow: initial;
+  }
+</style>
+
+<title>网站用户</title>
+  
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>用户</cite></a>
+    <a><cite>网站用户</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="layadmin-userfront-formlist">
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">ID</label>
+          <div class="layui-input-block">
+            <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">用户名</label>
+          <div class="layui-input-block">
+            <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">邮箱</label>
+          <div class="layui-input-block">
+            <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">权限组</label>
+          <div class="layui-input-block">
+            <select name="group_id" id ="groupIdSearch" lay-filter="groupIdSearch">
+              <option value="">不限</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="tableSearch">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel" id="deleteSelect">删除</button>
+        <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel" id="reloadTable">刷新</button>
+      </div>
+      
+      <table id="HidoveTable" lay-filter="HidoveTable"></table>
+      <script type="text/html" id="tableTools">
+        <a class="layui-btn layui-btn-xs" lay-event="resetPassword">重置密码</a>
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="resetToken"></i>重置Token</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"></i>删除</a>
+      </script>
+    </div>
+  </div>
+</div>
+<script>
+</script>
+<script>
+  //控制器
+  layui.use('user', layui.factory('user'));
+</script>

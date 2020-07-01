@@ -1,0 +1,72 @@
+<style>
+  .preview{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
+
+<title>图片管理</title>
+  
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>应用</cite></a>
+    <a><cite>图片管理</cite></a>
+  </div>
+</div>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="app-content-comment">
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">用户名</label>
+          <div class="layui-input-inline">
+            <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">图片标识</label>
+          <div class="layui-input-inline">
+            <input type="text" name="signatures" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">图片文件名</label>
+          <div class="layui-input-inline">
+            <input type="text" name="filename" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="images-search">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="deleteImages">删除</button>
+        <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="forceImagesDelete">强制删除</button>
+          <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="reloadTable">刷新</button>
+      </div>
+      <table id="table" lay-filter="table"></table>
+      <script type="text/html" id="tableTools">
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="edit">
+          <i class="layui-icon">&#xe642;</i>
+        </button>
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="read">
+          <i class="layui-icon">&#xe64c;</i>
+        </button>
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="delete">
+          <i class="layui-icon">&#xe640;</i>
+        </button>
+      </script>
+    </div>
+  </div>
+</div>
+<script>
+    //控制器
+    layui.use('images', layui.factory('images'));
+</script>

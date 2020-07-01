@@ -1,0 +1,198 @@
+
+body {
+    -webkit-perspective: 800px;
+    perspective: 800px;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Gudea', sans-serif;
+    background: #EA5C54;
+    /* Old browsers */
+    /* FF3.6+ */
+
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EA5C54 ', endColorstr='#bb6dec', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+}
+
+body ::-webkit-input-placeholder {
+    color: #4E546D;
+}
+
+
+body p {
+    color: #D3D7F7;
+    font-size: 10px;
+    text-align: left;
+}
+
+
+body .login {
+    box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
+    opacity: 1;
+    -webkit-transition-timing-function: cubic-bezier(0.68, -0.25, 0.265, 0.85);
+    -webkit-transition-property: -webkit-transform, opacity, box-shadow, top, left;
+    transition-property: transform, opacity, box-shadow, top, left;
+    -webkit-transition-duration: .5s;
+    transition-duration: .5s;
+    -webkit-transform-origin: 161px 100%;
+    -ms-transform-origin: 161px 100%;
+    transform-origin: 161px 100%;
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    background: #35394a;
+    /* Old browsers */
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #35394a), color-stop(100%, rgb(0, 0, 0)));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(230deg, rgba(53, 57, 74, 0) 0%, rgb(0, 0, 0) 100%);
+    /* Chrome10+,Safari5.1+ */
+    /* Opera 11.10+ */
+    /* IE10+ */
+    background: linear-gradient(230deg, rgba(53, 57, 74, 0) 0%, rgb(0, 0, 0) 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(53, 57, 74, 0)', endColorstr='rgb(0, 0, 0)', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+    width: 35%;
+    /*border-top: 2px solid #D8312A;*/
+    /*height: 50%;*/
+    height: 300px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 5%;
+}
+@media screen and (max-width: 600px) {
+    body .login {
+        width: 80%;
+        height: 300px;
+    }
+}
+body .login .validation {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 14px;
+    opacity: 0;
+}
+body .login .captcha{
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 0;
+    opacity: 1;
+    width: 30%;
+    /*right: 15%;*/
+    /*top: 0;*/
+    /*opacity: 1;*/
+}
+
+
+body .login .captcha img {
+    width: 100%;
+}
+
+body .login .disclaimer {
+    position: absolute;
+    bottom: 20px;
+    left: 35px;
+    width: 250px;
+}
+
+body .login_title {
+    color: #D3D7F7;
+    height: 60px;
+    text-align: left;
+    font-size: 16px;
+}
+
+body .login_fields {
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+body .login_fields .icon {
+    position: absolute;
+    z-index: 1;
+    left: 36px;
+    top: 8px;
+    opacity: .5;
+}
+
+body .login_fields input[type='password'], body .login_fields input[type='text'] {
+    color: #61BFFF !important;
+}
+
+body .login_fields input[type='text'], body .login_fields input[type='password'] {
+    color: #afb1be;
+    width: 60%;
+    margin-top: -2px;
+    background: rgba(57, 61, 82, 0);
+    left: 0;
+    padding: 10px 65px;
+    border-top: 2px solid rgba(57, 61, 82, 0);
+    border-bottom: 2px solid rgba(57, 61, 82, 0);
+    border-right: none;
+    border-left: none;
+    outline: none;
+    font-family: 'Gudea', sans-serif;
+    box-shadow: none;
+
+}
+
+body .login_fields__user, body .login_fields__password {
+    position: relative;
+}
+
+body .login_fields__submit {
+    position: relative;
+    top: 17px;
+    left: 0;
+    width: 80%;
+    right: 0;
+    margin: auto;
+}
+
+body .login_fields__submit .forgot {
+    float: right;
+    font-size: 10px;
+    margin-top: 11px;
+    text-decoration: underline;
+}
+
+body .login_fields__submit .forgot a {
+    color: #606479;
+}
+
+body .login_fields__submit input {
+    border-radius: 50px;
+    background: transparent;
+    padding: 10px 50px;
+    border: 2px solid #4FA1D9;
+    color: #4FA1D9;
+    text-transform: uppercase;
+    font-size: 11px;
+    -webkit-transition-property: background, color;
+    transition-property: background, color;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+}
+
+body .login_fields__submit input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+body .login_fields__submit input:hover {
+    color: white;
+    background: #4FA1D9;
+    cursor: pointer;
+    -webkit-transition-property: background, color;
+    transition-property: background, color;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+}

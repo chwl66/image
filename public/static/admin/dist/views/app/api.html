@@ -1,0 +1,33 @@
+
+
+<title>图床Api管理</title>
+
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>应用</cite></a>
+    <a><cite>图床Api管理</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-header layuiadmin-card-header-auto">
+      <button class="layui-btn layuiadmin-btn-tags" data-type="add" id="Hidove-add">添加</button>
+      <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel" id="reloadTable">刷新</button>
+    </div>
+    <div class="layui-card-body">    
+      <table id="api-table" lay-filter="api-table"></table>
+      <script type="text/html" id="api-toolbar">
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="delete">
+          <i class="layui-icon">&#xe640;</i>
+        </button>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script>
+  //控制器
+  layui.use('api', layui.factory('api'));
+</script>

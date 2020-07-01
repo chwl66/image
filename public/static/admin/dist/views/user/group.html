@@ -1,0 +1,41 @@
+<style>
+  /*修复table中select显示不完整*/
+  .layui-input{
+    height:30px;
+  }
+  .layui-table-cell {
+    overflow: initial;
+  }
+</style>
+
+<title>角色管理</title>
+  
+<div class="layui-card layadmin-header">
+  <div class="layui-breadcrumb" lay-filter="breadcrumb">
+    <a lay-href="">主页</a>
+    <a><cite>用户</cite></a>
+    <a><cite>角色管理</cite></a>
+  </div>
+</div>
+
+<div class="layui-fluid">   
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <button class="layui-btn layuiadmin-btn-role" data-type="delete" id="delete">删除</button>
+        <button class="layui-btn layuiadmin-btn-role" data-type="add" id="reloadTable">刷新</button>
+        <button class="layui-btn layuiadmin-btn-role" data-type="add" id="add">添加</button>
+      </div>
+    
+      <table id="group-table" lay-filter="group-table"></table>
+      <script type="text/html" id="tableTools">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</a>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script>
+  //控制器
+  layui.use('group', layui.factory('group'));
+</script>
