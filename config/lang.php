@@ -9,7 +9,7 @@ return [
     // 允许的语言列表
     'allow_lang_list' => [
         'en-us',
-        'zh-cn',
+//        'zh-cn',
         'zh-hk',
         'zh-tw',
     ],

@@ -6,4 +6,3 @@
 install.lock
 composer.lock
 /public/images/*
-/runtime/*

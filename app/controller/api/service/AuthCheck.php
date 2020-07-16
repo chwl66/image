@@ -71,7 +71,6 @@ class AuthCheck
                     ->delete();
 
                 $count = $upload_log
-//                    ->whereBetween('create_time', [time() - 3600, time()])
                     ->count();
 
                 $upload_log->push([

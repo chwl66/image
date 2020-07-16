@@ -76,12 +76,19 @@ class UserControl extends BaseController
                 return $value;
             });
             foreach ($folderArr as $value) {
-                $find = Folders::create([
+                $find = Folders::where([
                     'name' => $value,
                     'user_id' => $this->user['id'],
                     'parent_id' => $parentId,
-                    'create_time' => time(),
-                ]);
+                ])->findOrEmpty();
+                if ($find->isEmpty()){
+                    $find = Folders::create([
+                        'name' => $value,
+                        'user_id' => $this->user['id'],
+                        'parent_id' => $parentId,
+                        'create_time' => time(),
+                    ]);
+                }
                 $parentId = $find->id;
             }
         }

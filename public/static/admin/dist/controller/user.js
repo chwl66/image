@@ -296,7 +296,7 @@ function loadGroupSelect() {
                     html = html + '<option value="' + value.id + '">' + value.name + '</option>';
                 });
                 $('#groupIdSearch').append(html);
-                layui.form.render('select');
+                // layui.form.render('select');
             } else {
                 layer.msg(data.msg, {icon: 5});
             }

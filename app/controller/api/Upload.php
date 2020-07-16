@@ -137,6 +137,7 @@ class Upload extends BaseController
 
         try {
             //判断是否绕过鉴黄
+            $fraction = 0;
             if (
                 empty($this->param['bypassVisionPorn'])
                 || $this->param['bypassVisionPorn'] != 1
