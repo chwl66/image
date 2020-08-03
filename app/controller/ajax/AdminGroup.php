@@ -51,7 +51,7 @@ class AdminGroup extends BaseController
 
         $model = Group::where('id', $id)->findOrEmpty();
 
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
 
             return msg(400, '该用户组不存在');
         }

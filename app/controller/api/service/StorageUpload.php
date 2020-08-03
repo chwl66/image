@@ -30,7 +30,7 @@ class StorageUpload
         }
         $storageConfig = Storage::where('name',$this->storageDriver)->findOrEmpty();
 
-        if ($storageConfig->isEmpty()) {
+        if (!$storageConfig->isExists()) {
             return '未配置该cdn,请配置好后重试';
         }
         if (empty($storageConfig['cdn'])) {

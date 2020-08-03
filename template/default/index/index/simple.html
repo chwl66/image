@@ -8,10 +8,10 @@
     <title>{$Hidove.config.system.base.sitename} - {$Hidove.config.system.base.subtitle}</title>
     <meta name="keywords" content="{$Hidove.config.system.base.keywords}">
     <meta name="description" content="{$Hidove.config.system.base.description}">
-    <script src="{$Hidove.config.system.base.cdnjs}/jquery/3.5.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Hidove/spop/dist/spop.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/Hidove/spop/dist/spop.min.js"></script>
-    <link rel="stylesheet" href="/static/simple/css/style.css">
+    <script src="{$Hidove.config.system.base.cdnjs}/jquery/3.5.0/jquery.min.js?v={:get_current_version()}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Hidove/spop/dist/spop.min.css?v={:get_current_version()}">
+    <script src="https://cdn.jsdelivr.net/gh/Hidove/spop/dist/spop.min.js?v={:get_current_version()}"></script>
+    <link rel="stylesheet" href="/static/simple/css/style.css?v={:get_current_version()}">
 </head>
 
 <body>
@@ -56,6 +56,7 @@
         </div>
     </main>
     <script>
+        const web_upload_key = '{:get_web_upload_key()};'
         let apiType = ['this'];
         $.get({
             url: "/ajax/uploadOption",
@@ -73,7 +74,7 @@
             }
         });
     </script>
-    <script src="/static/simple/js/app.js?={:date('Ymd')}"></script>
+    <script src="/static/simple/js/app.js?v={:get_current_version()}"></script>
 </body>
 
 </html>

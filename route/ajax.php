@@ -1,5 +1,6 @@
 <?php
 
+use app\middleware\UserAuth;
 use think\facade\Route;
 
 Route::group('ajax', function () {
@@ -28,14 +29,14 @@ Route::group('ajax/userImages', function () {
     Route::any('updateImageInfo', 'updateImageInfo');
     Route::any('folderRename', 'folderRename');
 })->prefix('ajax.UserImages/')
-    ->middleware(\app\middleware\UserAuth::class);
+    ->middleware(UserAuth::class);
 
 Route::group('ajax/user', function () {
     Route::any('get', 'get');
     Route::any('updateApiFolder', 'updateApiFolder');
     Route::any('update', 'update');
 })->prefix('ajax.UserControl/')
-    ->middleware(\app\middleware\UserAuth::class);
+    ->middleware(UserAuth::class);
 
 Route::group('ajax/userCache', function () {
     Route::any('refreshConfig', 'refreshConfig');
@@ -43,31 +44,31 @@ Route::group('ajax/userCache', function () {
     Route::any('refreshAll', 'refreshAll');
     Route::any('refresh', 'refresh');
 })->prefix('ajax.userCache/')
-    ->middleware(\app\middleware\UserAuth::class);
+    ->middleware(UserAuth::class);
 
 Route::group('ajax/userNode', function () {
     Route::any('update', 'update');
 })->prefix('ajax.userNode/')
-    ->middleware(\app\middleware\UserAuth::class);
+    ->middleware(UserAuth::class);
 
 Route::group('ajax/userWatermark', function () {
     Route::any('get', 'get');
     Route::any('update', 'update');
 })->prefix('ajax.UserWatermark/')
-    ->middleware(\app\middleware\UserAuth::class);
+    ->middleware(UserAuth::class);
 
 Route::group('ajax/userStorage', function () {
     Route::get('get', 'get');
     Route::any('update', 'update');
 })->prefix('ajax.userStorage/')
-    ->middleware(\app\middleware\UserAuth::class);
+    ->middleware(UserAuth::class);
 
 Route::group('ajax/userFinance', function () {
     Route::any('recharge', 'recharge');
     Route::any('updateGroup', 'updateGroup');
     Route::any('getGroupList', 'getGroupList');
 })->prefix('ajax.userFinance/')
-    ->middleware(\app\middleware\UserAuth::class);
+    ->middleware(UserAuth::class);
 
 Route::group('ajax/api', function () {
     Route::get('get', 'get');

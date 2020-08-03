@@ -25,12 +25,14 @@ class Jd implements ImageApi
         ];
         $result = $this->HidoveJdPost('https://search.jd.com/image?op=upload', $data, 'http://m.qzone.com/infocenter?g_f=', $hearder);
         preg_match(' ~callback\(\"(.+?)\"\);~', $result, $matches);
-        if (empty($matches[1])) {
+        if (!isset($matches[1])) {
+            hidove_log($result);
             return '上传失败！';
         } else {
-            if (!filter_var($matches[1],FILTER_VALIDATE_URL)){
+            if (!is_valid_url($matches[1])){
                 return 'https://img' . rand(10, 14) . '.360buyimg.com/uba/' . $matches[1];
             }else{
+                hidove_log($result);
                 return '上传失败！'.$matches[1];
             }
         }

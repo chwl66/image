@@ -38,7 +38,7 @@ class WhiteListFilter
             $tmp = time();
             $insertData = [
                 'username' => $this->user['username'],
-                'ip' => Request::ip(),
+                'ip' => get_request_ip(),
                 'referer' => Request::server('HTTP_REFERER'),
                 'reason' => '图片[' . $pathName . ']涉嫌违规，禁止上传',
                 'image' => $img2base64,

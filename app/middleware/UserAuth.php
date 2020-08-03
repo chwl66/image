@@ -5,7 +5,6 @@ namespace app\middleware;
 
 
 use app\model\User;
-use think\facade\Session;
 
 class UserAuth
 {
@@ -18,7 +17,7 @@ class UserAuth
      */
     public function handle($request, \Closure $next)
     {
-        $userId = Session::get('userId');
+        $userId = User::get_user_id();
         if (empty($userId)){
             return redirect('/user/login');
         }

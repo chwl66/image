@@ -5,19 +5,25 @@ namespace app\controller\ajax;
 
 
 use app\BaseController;
-use app\model\Folders;
+use app\middleware\ClearUserConfigCache;
+use app\model\User;
 use think\facade\Request;
 use think\facade\Session;
-use think\facade\Validate;
 
 class UserStorage extends BaseController
 {
     private $user;
 
+    protected $middleware = [
+        ClearUserConfigCache::class => [
+            'only' => ['update']
+        ]
+    ];
+
     protected function initialize()
     {
-        $userId = Session::get('userId');
-        $this->user = \app\model\User::where('id', $userId)->find();
+        $userId = User::get_user_id();;
+        $this->user = User::where('id', $userId)->find();
     }
 
     public function get()

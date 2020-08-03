@@ -9,7 +9,10 @@
 // +----------------------------------------------------------------------
 
 use app\model\Set;
+use app\model\User;
 use think\facade\Cache;
+use think\facade\Config;
+use think\facade\Log;
 use think\facade\Request;
 use think\facade\Session;
 use think\helper\Str;
@@ -67,8 +70,13 @@ function format_date($timestamp)
     return date('Y-m-d H:i:s', $timestamp);
 }
 
-function hidove_get($url, $header = ['Content-Type: application/json'], $referer = null)
+function hidove_get($url, $headers = [], $referer = null)
 {
+
+    $headers = array_merge([
+        'User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
+        'x-forwarded-for:' . rand_ip(),
+    ], $headers);
     // 创建一个新 cURL 资源
     $curl = curl_init();
     // 设置URL和相应的选项
@@ -85,15 +93,12 @@ function hidove_get($url, $header = ['Content-Type: application/json'], $referer
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
     #TRUE 将 curl_exec获取的信息以字符串返回，而不是直接输出。
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    #设置useragent
-    curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36");   // 伪造ua
     #设置header
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    // 跟踪重定向
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
     #伪造来源网址REFERER
-    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);        // 跟踪重定向
     curl_setopt($curl, CURLOPT_REFERER, empty($referer) ? $url : $referer);
-    #取消gzip压缩
-    //curl_setopt($curl, CURLOPT_ENCODING, 'gzip');
     // 抓取 URL 并把它传递给浏览器
     $res = curl_exec($curl);
     // 关闭 cURL 资源，并且释放系统资源
@@ -109,10 +114,15 @@ function hidove_post(
     $url,
     $post,
     $referer = 'https://www.baidu.com',
-    $headers = ['User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50']
+    $headers = []
 )
 {
+    // 初始化
+    $headers = array_merge([
+        'User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
+        'x-forwarded-for:' . rand_ip(),
 
+    ], $headers);
     // 创建一个新 cURL 资源
     $curl = curl_init();
     // 设置URL和相应的选项
@@ -147,13 +157,15 @@ function hidove_post(
 }
 
 
-function hidove_curl($url, $put, $headers = [
-    'User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36',
-],
+function hidove_curl($url, $put, $headers = [],
                      $type = 'PUT'
 )
 {
 
+    $headers = array_merge([
+        'User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
+        'x-forwarded-for:' . rand_ip(),
+    ], $headers);
     // 创建一个新 cURL 资源
     $curl = curl_init();
     // 设置URL和相应的选项
@@ -355,12 +367,21 @@ function get_left_str($str, $rightStr)
  * @param $filePath string 图片地址
  * @return string
  */
-function img2base64($filePath)
+/**
+ * 图片转base64
+ * @param $filePath
+ * @param bool $type 为真是返回纯base64数据
+ * @return string
+ */
+function img2base64($filePath, $type = false)
 {
     $image_info = getimagesize($filePath);
     $image_data = fread(fopen($filePath, 'r'), filesize($filePath));
-    $base64_image = 'data:' . $image_info['mime'] . ';base64,' . base64_encode($image_data);
-    return $base64_image;
+    $base64_encode = base64_encode($image_data);
+    if ($type === true) {
+        return $base64_encode;
+    }
+    return 'data:' . $image_info['mime'] . ';base64,' . $base64_encode;
 }
 
 //随机IP
@@ -376,32 +397,157 @@ function rand_ip()
     return $ip1id . "." . $ip2id . "." . $ip3id . "." . $ip4id;
 }
 
+
+function get_web_upload_key()
+{
+    $key = Cache::get('web_upload_key');
+    if (empty($key)) {
+        $key = make_token();
+        Cache::set('web_upload_key', $key, mt_rand(1200, 3600 * 3));
+    }
+    return $key;
+}
+
+/**
+ * 是否为前台上传
+ * @return bool
+ */
+function is_web_upload()
+{
+    $str = get_param('is_web_upload');
+    $staticchars = 'elr5vCgGnQ9pMqJxVcwdoh2KDPjAHbafRtSU61iZkTON0s84YXImuy7zELBF3W';
+    $decodechars = "";
+    for ($i = 1; $i < strlen($str);) {
+        $num0 = strpos($staticchars, $str[$i]);
+        if ($num0 !== false) {
+            $num1 = ($num0 + 59) % 62;
+            $code = $staticchars[$num1];
+        } else {
+            $code = $str[$i];
+        }
+        $decodechars .= $code;
+        $i += 3;
+    }
+
+    return $decodechars === get_web_upload_key() && Request::isAjax();
+}
+
+/**
+ * 获取当前版本
+ * @return array|mixed|null
+ */
+function get_current_version()
+{
+    return Config::get('hidove.version');
+}
+
+function get_request_ip()
+{
+    $ip = Request::server('HTTP_CF_CONNECTING_IP');
+    if ($ip) return $ip;
+    return Request::ip();
+}
+
+function hidove_log($data)
+{
+    $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+    if (empty($json)) $json = $data;
+    Log::record($json, 'Hidove');
+}
+
+/**
+ * 获取APITYPE
+ * @return array|mixed|string|null
+ */
+function get_api_type()
+{
+    return get_param('apiType');
+}
+
+/**
+ * 是否为合法URL
+ * @param null $url
+ * @return bool
+ */
+function is_valid_url($url = null)
+{
+    if (!is_string($url)) return false;
+    $filter_var = boolval(filter_var($url, FILTER_VALIDATE_URL));
+    if ($filter_var) return $filter_var;
+    $parse_url = parse_url($url);
+    $path = array_pop($parse_url);
+
+    $url = str_ireplace($path, '/' . urlencode($path), $url);
+    return boolval(filter_var($url, FILTER_VALIDATE_URL));
+}
+
+/**
+ * 获取token
+ * @return array|mixed|string|null
+ */
+function get_token()
+{
+    $get_param = trim(get_param('token'));
+    return $get_param;
+}
+function is_token(){
+    $userId =  Session::get('userId');
+    if (!$userId){
+        if (get_token()){
+            return true;
+        }
+    }
+    return false;
+}
+function get_param($key)
+{
+    $param = Request::header($key);
+    if ($param) return $param;
+
+    $param = Request::header(mb_strtolower($key));
+    if ($param) return $param;
+
+
+    $param = Request::param($key);
+    if ($param) return $param;
+
+    return Request::param(mb_strtolower($key));
+}
+
 //拼接分发地址spliceDistributeUrl
 function splice_distribute_url($signatures)
 {
-    $userId = Session::get('userId');
+    $userId = User::get_user_id();
 
     $distribute = Cache::get(__FUNCTION__ . '_' . $userId);
 
     $suffix = hidove_config_get('system.distribute.suffix');
 
     if (!$distribute && !empty($userId)) {
-        $model = \app\model\User::where('id', $userId)
+        $model = User::where('id', $userId)
             ->findOrEmpty();
         @$distribute = $model->storage['this']['distribute'];
     }
-    if (!filter_var($distribute, FILTER_VALIDATE_URL)) {
+    if (!is_valid_url($distribute)) {
         $distribute = hidove_config_get('system.distribute.distribute');
-        if (!filter_var($distribute, FILTER_VALIDATE_URL)) {
+        if (!is_valid_url($distribute)) {
             $distribute = Request::domain();
         }
     }
-    Cache::tag('config_user_' . $userId)
+    Cache::tag(['config_user', 'config_user_' . $userId])
         ->set(__FUNCTION__ . '_' . $userId, $distribute);
+    Cache::tag('')
+        ->append(__FUNCTION__ . '_' . $userId);
+
     $suffix = empty($suffix) ? '' : $suffix;
     return $distribute . '/image/' . $signatures . $suffix;
 }
 
+/**
+ * 格式化为数组、去除两遍空格、去除空值、并且转小写
+ * @param $apiType
+ * @return array|false|string[]
+ */
 function format_api_type($apiType)
 {
     if (!is_array($apiType)) {
@@ -417,6 +563,12 @@ function format_api_type($apiType)
     return $apiType;
 }
 
+/**
+ * 数组完全合并
+ * @param $arr
+ * @param $arr2
+ * @return mixed
+ */
 function array_merge_deep($arr, $arr2)
 {
     foreach ($arr2 as $key => $value) {
@@ -429,9 +581,36 @@ function array_merge_deep($arr, $arr2)
     return $arr;
 }
 
+/**
+ * 获取模板路径
+ * @return string
+ */
 function get_template_path()
 {
     $template = hidove_config_get('system.base.template');
     if (empty(trim($template))) $template = 'default';
     return app()->getRootPath() . '/template/' . $template . '/';
+}
+
+/**
+ * 提升数组下标
+ * @param $array
+ * @param string|array $key
+ * @return array
+ */
+function rising_subscript($array, $key = 'this')
+{
+    if (is_array($key)) {
+        $key = array_reverse($key);
+        foreach ($key as $v){
+            $array = rising_subscript($array, $v);
+        }
+        return $array;
+    }
+    if (isset($array[$key])) {
+        $thisTmp[$key] = $array[$key];
+        $array = array_merge($thisTmp, $array);
+    }
+    return $array;
+
 }

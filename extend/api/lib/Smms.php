@@ -25,19 +25,19 @@ class Smms implements ImageApi
             'User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
 //            'Authorization: xxx',
         );
-        $result = hidove_post('https://sm.ms/api/v2/upload', $data, 'https://sm.ms/api/v2/upload', $headers);
-        $result = json_decode($result,true);
-        if (!empty($result['data'])) {
-            $imageUrl = $result['data']['url'];
-            return $imageUrl;
-        } else if (!empty($result)) {
-            if ($result['code']=='exception') {
-                return substr($result['message'],strpos($result['message'],'http'));
-            }else{
-                return '上传失败！ '.$result['message'];
-            }
-        }else{
-            return $result;
+        $res = hidove_post('https://sm.ms/api/v2/upload', $data, 'https://sm.ms/api/v2/upload', $headers);
+        $result = json_decode($res, true);
+        if (!empty($result['data']))
+            return $result['data']['url'];
+
+        if (!empty($result)) {
+            if ($result['code'] == 'exception')
+                return substr($result['message'], strpos($result['message'], 'http'));
+
+            hidove_log($res);
+            return '上传失败！' . $result['message'];
         }
+        hidove_log($res);
+        return $result;
     }
 }

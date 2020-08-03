@@ -25,17 +25,13 @@ class Qpic implements ImageApi
         ]);
         $res = get_mid_str($res, 'fansAdminImgCallback(', ');');
         $result = json_decode($res);
-        if (isset($result->data->strUrl) && filter_var($result->data->strUrl,FILTER_VALIDATE_URL)) {
-            $imageUrl = str_replace('http://', 'https://', $result->data->strUrl);
-            return $imageUrl;
-        } else {
-            $imageApiProvider = new imageApiProvider();
-            $imageApiProvider->sendMailReminder($res, __CLASS__);
-            if (isset($result->strErrMsg)) {
-                return '上传失败！' . $result->strErrMsg;
-            } else {
-                return '上传失败！';
-            }
-        }
+        if (isset($result->data->strUrl) && is_valid_url($result->data->strUrl))
+            return str_replace('http://', 'https://', $result->data->strUrl);
+
+        (new imageApiProvider())->sendMailReminder($res, __CLASS__);
+
+        hidove_log($res);
+        if (isset($result->strErrMsg)) return '上传失败！' . $result->strErrMsg;
+        return '上传失败！';
     }
 }

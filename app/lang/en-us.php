@@ -20,6 +20,7 @@ return [
     'User center' => 'User center',
     'Reset Password' => 'Reset Password',
     'Watermark' => 'Watermark',
+    'Node management'=>'Node management',
     'Log In' => 'Log In',
     'Log Out' => 'Log Out',
     'Log in to Picture bed' => 'Log in to Picture bed',

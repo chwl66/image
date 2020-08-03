@@ -23,12 +23,12 @@ class Chevereto implements ImageApi
 
         $data['source'] = new \CURLFile($pathName);
 
-        $result =  hidove_post($UploadUrl, $data);
-        $result = json_decode($result, true);
+        $res =  hidove_post($UploadUrl, $data);
+        $result = json_decode($res, true);
         if ($result['status_code'] == 200) {
-            $imageUrl = $result['image']['url'];
-            return $imageUrl;
+            return $result['image']['url'];
         } else {
+            hidove_log($res);
             return '上传失败！';
         }
     }

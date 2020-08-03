@@ -1,5 +1,8 @@
 <?php
 
+use app\model\User;
+use think\facade\Cache;
+use think\facade\Request;
 use think\facade\Route;
 
 //Route::get('test', function () {
@@ -14,5 +17,17 @@ use think\facade\Route;
 //});
 
 Route::get('test', function () {
-    opcache_reset();
+    $arr = [
+        'a' => '',
+        'b' => '',
+        'c' => '',
+        'distribute' => '',
+        'this' => '',
+    ];
+    $va = rising_subscript($arr, ['distribute', 'this']);
+    var_dump($va);
+
+});
+Route::get('testtest', function () {
+    dump(Request::server());
 });

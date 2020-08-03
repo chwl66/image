@@ -38,7 +38,8 @@ function fileinput(allowedFileExtensions, maxFileSize, maxFileCount) {
             });
             return {
                 'apiType': publicStorage,
-                'privateStorage': privateStorage
+                'privateStorage': privateStorage,
+                'is_web_upload': is_web_upload(web_upload_key),
             };
         },
         showClose: false,

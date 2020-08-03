@@ -12,6 +12,7 @@ use think\facade\Request;
 
 class AdminCache extends BaseController
 {
+
     /**
      * 根据url刷新图片缓存
      * @return \think\response\Json
@@ -72,7 +73,7 @@ class AdminCache extends BaseController
 
         $userId = Request::param('id');
         $model = User::where('username', $userId)->findOrEmpty();
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
             return msg(400, '该用户不存在');
         }
         Image::where('user_id', $userId)->update(['is_invalid' => 0]);
@@ -99,6 +100,7 @@ class AdminCache extends BaseController
     public function allOfConfig()
     {
         Cache::tag('config')->clear();
+        Cache::tag('config_user')->clear();
 
         return msg(200, 'success');
 

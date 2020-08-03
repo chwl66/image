@@ -19,6 +19,7 @@ class Catbox implements ImageApi
         $data['reqtype'] = 'fileupload';
         $result = hidove_post('https://catbox.moe/user/api.php', $data, 'https://catbox.moe/user/api.php');
         if (strpos($result,' ') || empty($result)) {
+            hidove_log($result);
             return '上传失败！';
         } else {
             return $result;

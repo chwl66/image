@@ -3,6 +3,8 @@ declare (strict_types=1);
 
 namespace app\model;
 
+use think\facade\Request;
+use think\facade\Session;
 use think\Model;
 
 /**
@@ -63,11 +65,12 @@ class User extends Model
         'watermark',
         'storage'
     ];
-    protected $hidden=[
+    protected $hidden = [
         'password',
         'reset_key',
         'reset_time',
     ];
+
 
     public function group()
     {
@@ -78,12 +81,85 @@ class User extends Model
     {
         return $this->hasOne(Folders::class, 'id', 'api_folder_id');
     }
+
     public function images()
     {
         return $this->hasMany(Image::class, 'user_id', 'id');
     }
+
     public function folders()
     {
         return $this->hasMany(Folders::class, 'user_id', 'id');
+    }
+
+    public static function is_login($model = null)
+    {
+        if ($model instanceof User && !empty($user) && $model->isExists()) {
+            return true;
+        }
+        if (Session::get('userId')) {
+            return true;
+        }
+        $model = self::where([
+            'token' => get_token()
+        ])->findOrEmpty();
+        if ($model->isExists()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function get_user()
+    {
+
+        $userId = Session::get('userId');
+        if ($userId) {
+            $where = [
+                'id' => $userId
+            ];
+        } else {
+            $where = [
+                'token' => get_token()
+            ];
+        }
+        $model = self::where($where)->findOrEmpty();
+        if ($model->isExists()) {
+            return $model;
+        }
+        return null;
+    }
+
+    public static function get_user_id()
+    {
+
+        $userId = Session::get('userId');
+        if ($userId) {
+            return $userId;
+        }
+
+        $model = self::where([
+            'token' => get_token()
+        ])->findOrEmpty();
+        if ($model->isExists()) {
+            return $model->id;
+        }
+        return null;
+    }
+
+    /**
+     * 是否为管理员
+     * @param User|null $user
+     * @return bool
+     */
+    public static function is_admin(User $user = null)
+    {
+
+        if (!$user instanceof User) {
+            $user = self::get_user();
+        }
+        if (!empty($user) && $user->isExists() && $user->group_id === 2) {
+            return true;
+        }
+        return false;
     }
 }

@@ -15,9 +15,6 @@ use app\controller\index\service\getHttpCode;
 use app\controller\index\service\ImageFilter;
 use app\controller\common\ImageInitial;
 use app\provider\WeightRand;
-use app\model\ApiRequest;
-use app\model\ImageRequest;
-use Carbon\Carbon;
 use think\exception\HttpException;
 use think\facade\Cache;
 use think\facade\Request;
@@ -47,8 +44,7 @@ class Image extends BaseController
         $this->image = \app\model\Image::where('signatures', $this->signatures)
             ->findOrEmpty();
 
-
-        if ($this->image->isEmpty())
+        if (!$this->image->isExists())
             throw new HttpException(404, '404 NOT FOUND!');
 
         if ($this->image->is_invalid === 1)

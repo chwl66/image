@@ -47,7 +47,7 @@ class UrlFilter
             if (is_array($value)) {
                 $imageUrlForDatabase[$key] = [];
                 foreach ($value as $k => $v) {
-                    if (filter_var($v, FILTER_VALIDATE_URL)) {
+                    if (is_valid_url($v)) {
                         $class = '\\storage\\driver\\' . ucfirst($k);
                         if (class_exists($class)) {
                             $imageUrlForDatabase[$key][$k] = $this->pathName;
@@ -81,8 +81,9 @@ class UrlFilter
                     https://tva1.sinaimg.cn/large/005JH6wMzy7pJbskllp03');
                     $value =  trim($urlList[array_rand($urlList)]);
                 }
-                if (filter_var($value, FILTER_VALIDATE_URL)) {
-                    if (!Storage::where('name', $key)->findOrEmpty()->isEmpty()) {
+
+                if (is_valid_url($value)) {
+                    if (Storage::where('name', $key)->findOrEmpty()->isExists()) {
                         $imageUrlForDatabase[$key] = $this->pathName;
                     } else {
                         $imageUrlForDatabase[$key] = $value;

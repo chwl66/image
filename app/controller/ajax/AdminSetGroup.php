@@ -15,7 +15,7 @@ class AdminSetGroup
 
         $model = SetGroup::whereOr('id', $id)
             ->whereOr('name',$name)->findOrEmpty();
-        if ($model->isEmpty()){
+        if (!$model->isExists()){
             return msg(400,'没有找到该配置组');
         }
         return msg(200,'success',$model);

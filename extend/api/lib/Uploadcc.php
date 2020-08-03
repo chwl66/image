@@ -17,12 +17,13 @@ class Uploadcc implements ImageApi
         //https://upload.cc/image_upload
         $data['uploaded_file[]'] = new \CURLFile($pathName);
 
-        $result = hidove_post('https://upload.cc/image_upload',$data,'https://upload.cc/');
-        $result = json_decode($result,true);
+        $res = hidove_post('https://upload.cc/image_upload',$data,'https://upload.cc/');
+        $result = json_decode($res,true);
         if (!empty($result['success_image'][0]['url'])) {
             $result = 'https://upload.cc/'.$result['success_image'][0]['url'];
         }else{
             $result = '上传失败';
+            hidove_log($res);
         }
         return $result;
     }

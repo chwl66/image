@@ -7,6 +7,7 @@ namespace app\controller\ajax;
 use app\BaseController;
 use app\model\Group;
 use app\model\RechargeCard;
+use app\model\User;
 use Carbon\Carbon;
 use think\facade\Request;
 use think\facade\Session;
@@ -17,8 +18,8 @@ class UserFinance extends BaseController
 
     protected function initialize()
     {
-        $userId = Session::get('userId');
-        $this->user = \app\model\User::where('id', $userId)->find();
+        $userId = User::get_user_id();;
+        $this->user = User::where('id', $userId)->find();
     }
 
     public function updateGroup()
@@ -28,7 +29,7 @@ class UserFinance extends BaseController
             return msg(400, '没有权限升级');
         }
         $model = Group::where('id', $groupId)->findOrEmpty();
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
             return msg(400, '该用户组不存在');
         }
         if ($this->user->finance < $model->price) {
@@ -61,7 +62,7 @@ class UserFinance extends BaseController
             ['user_id', '=', 0],
             ['used_time', '=', 0],
         ])->findOrEmpty();
-        if ($model->isEmpty()){
+        if (!$model->isExists()){
             return msg(400, '卡密无效');
         }
         $model->user_id = $this->user->id;

@@ -1,11 +1,11 @@
 {extend name="index/base" /}
 {block name="title"}{:lang('Image management')} - {$Hidove.config.system.base.sitename}{/block}
 {block name="head"}
-<link href="/static/index/css/user.css" rel="stylesheet">
+<link href="/static/index/css/user.css?v={:get_current_version()}" rel="stylesheet">
 <!--右键菜单-->
-<link rel="stylesheet" href="/static/common/contextjs/css/context.css">
+<link rel="stylesheet" href="/static/common/contextjs/css/context.css?v={:get_current_version()}">
 <!--cdn-->
-<link href="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet">
+<link href="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.css?v={:get_current_version()}" rel="stylesheet">
 {/block}
 {block name="body"}
 <div class="container Hidove-main mt-3 mb-3">
@@ -180,12 +180,12 @@
 {/block}
 {block name="script"}
 <!--cdn-->
-<script src="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-<script src="{$Hidove.config.system.base.cdnjs}/clipboard.js/2.0.4/clipboard.min.js"></script>
-<script src="{$Hidove.config.system.base.cdnjs}/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/fancybox/3.5.7/jquery.fancybox.min.js?v={:get_current_version()}"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/clipboard.js/2.0.4/clipboard.min.js?v={:get_current_version()}"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/jquery.lazyload/1.9.1/jquery.lazyload.min.js?v={:get_current_version()}"></script>
 <script src="/static/common/contextjs/js/context.js "></script>
-<script src="/static/index/js/jquery.base64.js"></script>
-<script src="/static/index/js/user/images.js"></script>
+<script src="/static/index/js/jquery.base64.js?v={:get_current_version()}"></script>
+<script src="/static/index/js/user/images.js?v={:get_current_version()}"></script>
 <script>
     spop({
         template: '正在加载中',

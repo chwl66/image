@@ -16,14 +16,16 @@ class Niupic implements ImageApi
     {
         $data['image_field'] = new \CURLFile($pathName);
 
-        $result = hidove_post('https://niupic.com/index/upload/process', $data, 'https://niupic.com/');
-        $result = json_decode($result,true);
+        $res = hidove_post('https://niupic.com/index/upload/process', $data, 'https://niupic.com/');
+        $result = json_decode($res,true);
         if (isset($result['data'])){
             $imageUrl =  'https://'.$result['data'];
-            if (filter_var($imageUrl,FILTER_VALIDATE_URL)){
+            if (is_valid_url($imageUrl)){
                 return $imageUrl;
             }
         }
+
+        hidove_log($res);
         return '上传失败';
     }
 }

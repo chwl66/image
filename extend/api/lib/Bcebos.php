@@ -43,6 +43,7 @@ EOT;
         } else {
             $response = '上传失败！';
         }
+        hidove_log($res);
         (new imageApiProvider())->sendMailReminder($res,__CLASS__);
         return $response;
 

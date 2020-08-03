@@ -21,14 +21,12 @@ class Qiantu implements ImageApi
             'User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
             'Cookie:' . $cookie,
         );
-        $result = hidove_post('https://www.58pic.com/index.php?m=ajaxResume&a=baseUpload', $data,
+        $res = hidove_post('https://www.58pic.com/index.php?m=ajaxResume&a=baseUpload', $data,
             'https://www.58pic.com', $headers);
-        $result = json_decode($result);
-        if (!empty($result->path)) {
+        $result = json_decode($res);
+        if (!empty($result->path))
             return 'https:' . $result->path;
-        } else {
-            Log::record(json_encode($result), 'Hidove');
-            return '上传失败!';
-        }
+        hidove_log($res);
+        return '上传失败!';
     }
 }

@@ -34,16 +34,16 @@ class ImagesProvider
         foreach ($imageUrl as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $k => $v) {
-                    if (!filter_var($v, FILTER_VALIDATE_URL)) {
+                    if (!is_valid_url($v)) {
                         $errors[] = "[$k]:" . $v;
                         unset($imageUrl[$key][$k]);
                     }
                 }
             } else {
-                if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                if (!is_valid_url($value)) {
                     $errors[] = "[$key]:" . $value;
                     unset($imageUrl[$key]);
-                } else if (!Storage::where('name', $key)->findOrEmpty()->isEmpty()) {
+                } else if (Storage::where('name', $key)->findOrEmpty()->isExists()) {
                     $imageUrl[$key] = $model->pathname;
                 }
                 //验证授权
@@ -116,7 +116,7 @@ class ImagesProvider
                 $masterStorage = Storage::where('name', $k)
                     ->cache(true, 600)
                     ->findOrEmpty();
-                if (!$masterStorage->isEmpty()){
+                if ($masterStorage->isExists()){
                     $class = '\storage\\driver\\' . ucwords($k);
                     try {
                         (new $class($masterStorage['data']))->delete($value['pathname']);
@@ -126,7 +126,7 @@ class ImagesProvider
                     }
                 }
             }
-            if (!$user->isEmpty()) {
+            if ($user->isExists()) {
                 if ($user->capacity_used >= $value['file_size']) {
                     $user->capacity_used = $user->capacity_used - $value['file_size'];
                 } else {

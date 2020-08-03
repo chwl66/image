@@ -17,13 +17,11 @@ class Sougou implements ImageApi
         $data['file'] = new \CURLFile($pathName);
 
         $UploadUrl = 'http://pic.sogou.com/ris_upload?r=' . rand(10000, 99999);
-        $result = hidove_post($UploadUrl, $data, 'http://pic.sogou.com');
-        preg_match('~query=(.+?)&~', $result, $ImageUrl);
-        if (isset($ImageUrl[1])) {
-            $imageUrl = urldecode($ImageUrl[1]);
-            return str_replace('http://','https://',$imageUrl);
-        } else {
-            return '上传失败！';
-        }
+        $res = hidove_post($UploadUrl, $data, 'http://pic.sogou.com');
+        preg_match('~query=(.+?)&~', $res, $ImageUrl);
+        if (isset($ImageUrl[1]))
+            return str_replace('http://', 'https://', urldecode($ImageUrl[1]));
+        hidove_log($res);
+        return '上传失败！';
     }
 }

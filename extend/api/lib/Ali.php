@@ -15,7 +15,6 @@ class Ali implements ImageApi
 {
     public function upload($pathName)
     {
-//        $imageInfo = getImageInfo($filePath);
         $UploadUrl = 'https://kfupload.alibaba.com/mupload';
         $headers = [
             'Content-Type: multipart/form-data; boundary=----WebKitFormBoundary5zcj0rAM8NsP64PJ',
@@ -47,11 +46,12 @@ Content-Type: image/jpeg
 
 ------WebKitFormBoundary5zcj0rAM8NsP64PJ--';
         $result =  hidove_post($UploadUrl, $data, 'http://www.aliexpress.com/', $headers);
-        $result = json_decode($result, true);
-        if ($result['code'] == 0) {
-            $imageUrl = $result['url'];
-            return $imageUrl;
+        $json = json_decode($result);
+
+        if (isset($json->code) && $json->code == 0 && !empty($json->url)) {
+            return $json->url;
         } else {
+            hidove_log($result);
             return '上传失败！';
         }
     }

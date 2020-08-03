@@ -6,6 +6,7 @@ namespace app\controller\ajax;
 
 use app\BaseController;
 use app\model\Folders;
+use app\model\User;
 use think\facade\Request;
 use think\facade\Session;
 use think\facade\Validate;
@@ -16,8 +17,8 @@ class UserControl extends BaseController
 
     protected function initialize()
     {
-        $userId = Session::get('userId');
-        $this->user = \app\model\User::where('id', $userId)->find();
+        $userId = User::get_user_id();
+        $this->user = User::where('id', $userId)->find();
     }
 
     public function get()
@@ -81,7 +82,7 @@ class UserControl extends BaseController
                     'user_id' => $this->user['id'],
                     'parent_id' => $parentId,
                 ])->findOrEmpty();
-                if ($find->isEmpty()){
+                if (!$find->isExists()){
                     $find = Folders::create([
                         'name' => $value,
                         'user_id' => $this->user['id'],

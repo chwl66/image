@@ -20,6 +20,7 @@ return [
     'User center'=>'用户中心',
     'Reset Password'=>'重置密码',
     'Watermark'=>'水印管理',
+    'Node management'=>'节点管理',
     'Log In' => '登录',
     'Log Out' => '注销',
     'Log in to Picture bed' => '登录图床',

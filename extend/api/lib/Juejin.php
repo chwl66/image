@@ -19,11 +19,10 @@ class Juejin implements ImageApi
         $UploadUrl = 'https://cdn-ms.juejin.im/v1/upload?bucket=gold-user-assets';
         $result = hidove_post($UploadUrl, $data, 'https://juejin.im');
         $result = json_decode($result, true);
-        if ($result['m'] == 'ok') {
-            $imageUrl = 'https://' . $result['d']['domain'] . '/' . $result['d']['key'];
-            return $imageUrl;
-        } else {
-            return '上传失败！';
-        }
+        if ($result['m'] == 'ok')
+            return 'https://' . $result['d']['domain'] . '/' . $result['d']['key'];
+
+        hidove_log($result);
+        return '上传失败！';
     }
 }

@@ -23,13 +23,10 @@ class Imagelala implements ImageApi
 
         $data['source'] = new \CURLFile($pathName);
 
-        $result =  hidove_post($UploadUrl, $data);
+        $res = hidove_post($UploadUrl, $data);
         $result = json_decode($result, true);
-        if ($result['status_code'] == 200) {
-            $imageUrl = $result['image']['url'];
-            return $imageUrl;
-        } else {
-            return '上传失败！';
-        }
+        if ($result['status_code'] == 200) return $result['image']['url'];
+        hidove_log($res);
+        return '上传失败！';
     }
 }

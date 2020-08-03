@@ -16,9 +16,10 @@ class Vimcn implements ImageApi
     {
         $data['file'] = new \CURLFile($pathName);
 
-        $result = hidove_post('https://img.vim-cn.com/', $data, 'https://img.vim-cn.com/');
-        $result = preg_replace("~\s~", '', $result);
+        $res = hidove_post('https://img.vim-cn.com/', $data, 'https://img.vim-cn.com/');
+        $result = preg_replace("~\s~", '', $res);
         $result = str_replace("http://", 'https://', $result);
+        if (!is_valid_url($result)) hidove_log($res);
         return $result;
     }
 }

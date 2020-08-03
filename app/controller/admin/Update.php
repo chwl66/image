@@ -10,6 +10,7 @@
 namespace app\controller\admin;
 
 use app\BaseController;
+use app\model\Migration;
 use think\facade\Config;
 use think\facade\Db;
 use think\facade\Env;
@@ -49,7 +50,7 @@ class Update extends BaseController
 
         $data = hidove_post('http://auth.abcyun.cc/api/update', [
             'domain' => Request::host(),
-            'version' => Config::get('hidove.version'),
+            'version' => get_current_version(),
             'token' => Env::get('app.auth.token'),
         ]);
         $json = json_decode($data, true);
@@ -81,7 +82,14 @@ class Update extends BaseController
             return msg(200, '未发现数据库更新文件');
         }
         foreach ($glob as $value) {
-
+            $basename = basename($value);
+            $migration = Migration::where('filename', $basename)
+                ->findOrEmpty();
+            if ($migration->isExists()) {
+                $result[$value] = '[' . $basename . '：该文件已经执行过了，已跳过]';
+                unlink($value);
+                continue;
+            }
             try {
                 $lines = file($value);
                 $sql = '';
@@ -102,11 +110,15 @@ class Update extends BaseController
                     unset($lines[$key]);
                 }
                 if ($number > 0) {
-                    $result[$value] = '[' . basename($value) . "：影响的记录数 $number" . ']';
+                    $result[$value] = '[' . $basename . "：影响的记录数 $number" . ']';
                 }
             } catch (\Exception $e) {
-                $result[$value] = '[' . basename($value) . '：' . $e->getMessage() . ']';
+                $result[$value] = '[' . $basename . '：' . $e->getMessage() . ']';
             } finally {
+                Migration::create([
+                    'filename' => $basename,
+                    'create_time' => time()
+                ]);
                 unlink($value);
             }
         }

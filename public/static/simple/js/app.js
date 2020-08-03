@@ -71,8 +71,8 @@ $(document).ready(function () {
 
 function uploadFromImageUrl(url) {
     url = url.trim();
-    $('.loading').css('display','flex');
-    let p = new Promise((resolve,reject) => {
+    $('.loading').css('display', 'flex');
+    let p = new Promise((resolve, reject) => {
         $.ajax({
             url: '/ajax/imagePreview?url=' + url,
             cache: false,
@@ -90,14 +90,14 @@ function uploadFromImageUrl(url) {
                 if (index === -1) {
                     fileName = fileName + '.jpg';
                 }
-                resolve( new window.File([blob], fileName));
+                resolve(new window.File([blob], fileName));
             },
             error: function (data) {
                 reject(data.statusText)
             }
         });
 
-    }).catch((res)=>{
+    }).catch((res) => {
         msg(res)
     });
     p.then((file) => {
@@ -107,7 +107,7 @@ function uploadFromImageUrl(url) {
 
 function upload(files) {
 
-    $('.loading').css('display','flex');
+    $('.loading').css('display', 'flex');
 
     let task = [];
 
@@ -123,7 +123,7 @@ function upload(files) {
             msg(res)
         })
         .finally(() => {
-            $('.loading').css('display','none');
+            $('.loading').css('display', 'none');
         })
 }
 
@@ -133,6 +133,7 @@ function uploadPromise(file, apiType) {
         let formdata = new FormData();
         formdata.append('image', file);
         formdata.append('apiType', apiType);
+        formdata.append('is_web_upload', is_web_upload(web_upload_key));
         $.post({
             url: '/api/upload',
             data: formdata,

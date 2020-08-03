@@ -7,8 +7,6 @@ namespace app\controller\ajax;
 use app\BaseController;
 use app\middleware\Throttle;
 use app\model\User;
-use Carbon\Carbon;
-use think\facade\Cache;
 use think\facade\Request;
 use think\facade\Session;
 use think\facade\Validate;
@@ -35,7 +33,7 @@ class UserAuth extends BaseController
             'username' => $param['username'],
             'password' => hidove_md5($param['password']),
         ])->findOrEmpty();
-        if ($user->isEmpty()) {
+        if (!$user->isExists()) {
             return msg(400, '用户名或密码错误');
         }
         Session::set('userId', $user->id);
@@ -64,7 +62,7 @@ class UserAuth extends BaseController
         $user->capacity_used = 0;
         $user->api_folder_id = 0;
         $user->group_id = 1;
-        $user->ip = Request::ip();
+        $user->ip = get_request_ip();
         $user->is_private = 0;
         $user->is_whitelist = 0;
         $user->watermark = [];
@@ -90,7 +88,7 @@ class UserAuth extends BaseController
             'username' => $param['username'],
             'email' => $param['email'],
         ])->findOrEmpty();
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
             return msg(400, '用户名或邮箱错误');
         }
 
@@ -136,7 +134,7 @@ class UserAuth extends BaseController
             ]
         )->findOrEmpty();
 
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
             return msg(400, '验证秘钥无效');
         }
         $model->reset_time = 0;

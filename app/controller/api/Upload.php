@@ -23,11 +23,12 @@ use app\controller\api\service\VisionPorn;
 use app\controller\api\service\WhiteListFilter;
 use app\controller\common\ImageInitial;
 use app\model\Image;
+use app\model\User;
 use app\validate\imageValidate;
+use think\Exception;
 use think\facade\Filesystem;
 use think\facade\Log;
 use think\facade\Request;
-use think\facade\Session;
 use think\file\UploadedFile;
 use think\helper\Str;
 
@@ -49,6 +50,21 @@ class Upload extends BaseController
     protected $middleware = [];
 
     private $param;
+    private $signatures;
+    private $time;
+    /**
+     * @var array
+     */
+    private $imageUrl;
+    /**
+     * @var array|\think\Model
+     */
+    private $model;
+    private $pathName;
+    /**
+     * @var UploadedFile
+     */
+    private $file;
 
     protected function initialize()
     {
@@ -56,8 +72,8 @@ class Upload extends BaseController
 
         $this->config = hidove_config_to_array(hidove_config_get('system.'));
 
-        $this->apiType = Request::param('apiType');
-        $this->privateStorage = Request::param('privateStorage');
+        $this->apiType = get_api_type();
+        $this->privateStorage = get_param('privateStorage');
 
         $this->apiType = format_api_type($this->apiType);
         $this->privateStorage = format_api_type($this->privateStorage);
@@ -69,6 +85,9 @@ class Upload extends BaseController
             $this->distributeDomain = $this->distributeDomain . '/';
         }
         $this->param = Request::param();
+        $this->time = time();
+        $this->signatures = uniqid();
+
     }
 
     public function upload()
@@ -90,48 +109,68 @@ class Upload extends BaseController
             return msg(400, $e->getMessage());
         }
         $tempPath = app()->getRuntimePath() . 'file';
-        $tempFilename = $tempPath . '/' . uniqid() . '.png';
+        $this->tempFilename = $tempPath . '/' . uniqid() . '.png';
         //指定用户组允许url上传
-        if (!empty($this->param['url']) && in_array($this->user->group_id, [2])) {
+        if (!empty($this->param['url']) && User::is_admin($this->user)) {
             $imageTempData = hidove_get($this->param['url']);
             if (!file_exists($tempPath)) {
                 mkdir($tempPath);
             }
-            file_put_contents($tempFilename, $imageTempData);
+            file_put_contents($this->tempFilename, $imageTempData);
             $urlArr = explode('/', $this->param['url']);
-            $file = new UploadedFile($tempFilename, $urlArr[count($urlArr) - 1]);
+            $this->file = new UploadedFile($this->tempFilename, $urlArr[count($urlArr) - 1]);
 
         } else {
             // 获取表单上传文件
-            $file = request()->file('image');
+            $this->file = request()->file('image');
         }
 
         $validate = new imageValidate();
 
-        if (!$validate->check(['image' => $file])) {
+        if (!$validate->check(['image' => $this->file])) {
             return msg(400, $validate->getError());
         }
 
         //图片查重 仅对游客生效
-        if (Session::get('userId') && $this->uploadConfig['duplicates']['switch'] == 1) {
-            $time = time();
-            $model = Image::where([
-                'md5' => $file->md5(),
-                'sha1' => $file->sha1(),
+        if (!User::is_login() && $this->uploadConfig['duplicates']['switch'] == 1) {
+            $this->model = Image::where([
+                'md5' => $this->file->md5(),
+                'sha1' => $this->file->sha1(),
                 'user_id' => 0,
-            ])->whereBetweenTime('create_time', $time - $this->uploadConfig['duplicates']['time'], $time)
+            ])->whereBetweenTime('create_time', $this->time - $this->uploadConfig['duplicates']['time'], $this->time)
                 ->findOrEmpty();
-            if (!$model->isEmpty()) {
-                $imageUrl = (new ImageInitial($model))->main();
-                $imageUrl = array_merge(['distribute' => splice_distribute_url($model->signatures)], $imageUrl);
+            if ($this->model->isExists()) {
+                $imageUrl = (new ImageInitial($this->model))->main();
+                $imageUrl = array_merge(['distribute' => splice_distribute_url($this->model->signatures)], $imageUrl);
                 return msg(200, 'success', ['url' => $imageUrl]);
             }
-            unset($model);
+            unset($this->model);
         }
-        $signatures = uniqid();
-        $fileName = $signatures . '.' . $file->extension();
-        $pathName = $this->filesystem->putFileAs(date($this->uploadConfig['rule']), $file, $fileName);
-        $realPath = $this->filesystem->path($pathName);
+        // 用户图片查重
+        if (User::is_login()) {
+            $this->model = Image::where([
+                'md5' => $this->file->md5(),
+                'sha1' => $this->file->sha1(),
+                'user_id' => $this->user->id,
+            ])->findOrEmpty();
+
+            if ($this->model->isExists()) {
+                try {
+                    $this->imageDistribute();
+                    return $this->end();
+
+                } catch (\Exception $e) {
+                    $this->deleteFile();
+                    hidove_log($this->imageUrl);
+                    return msg(400, $e->getMessage());
+                }
+
+            }
+            unset($this->model);
+        }
+        $fileName = $this->signatures . '.' . $this->file->extension();
+        $this->pathName = $this->filesystem->putFileAs(date($this->uploadConfig['rule']), $this->file, $fileName);
+        $realPath = $this->filesystem->path($this->pathName);
 
         //图片鉴定
 
@@ -144,10 +183,10 @@ class Upload extends BaseController
                 || $this->user['is_whitelist'] != 1) {
 
                 //鉴黄
-                $fraction = (new VisionPorn($this->config['audit']))->run($pathName);
+                $fraction = (new VisionPorn($this->config['audit']))->run($this->pathName);
 
                 //白名单过滤
-                (new WhiteListFilter($this->config['audit'], $this->user))->run($fraction, $pathName, $realPath);
+                (new WhiteListFilter($this->config['audit'], $this->user))->run($fraction, $this->pathName, $realPath);
             }
 
             //用户储存容量处理  上传到指定目录
@@ -157,12 +196,12 @@ class Upload extends BaseController
                 RecordRequest::run();
             }
         } catch (\Exception $e) {
-            $this->deleteFile($file, $pathName, $tempFilename);
+            $this->deleteFile();
             return msg(400, $e->getMessage());
         }
-
+        // 图片处理 水印+压缩
         if (
-            !in_array($file->getMime(), ['image/x-icon', 'image/gif', 'image/vnd.microsoft.icon'])
+            !in_array($this->file->getMime(), ['image/x-icon', 'image/gif', 'image/vnd.microsoft.icon'])
             && $this->user->group->picture_process === 1
         ) {
             try {
@@ -176,85 +215,118 @@ class Upload extends BaseController
                     ->run();
 
             } catch (\Exception $e) {
-                Log::record('[' . $signatures . ']' . $e->getMessage(), 'Hidove');
+                Log::record('[' . $this->signatures . ']' . $e->getMessage(), 'Hidove');
             }
         }
 
 
         $data = [
-            'signatures' => $signatures,
+            'signatures' => $this->signatures,
             'storage_key' => $this->user['group']['storage'],
             'url' => [],
-            'pathname' => $pathName,
+            'pathname' => $this->pathName,
             'user_id' => $this->user['id'],
             'folder_id' => $this->user['api_folder_id'],
-            'filename' => $file->getOriginalName(),
+            'filename' => $this->file->getOriginalName(),
             'fraction' => $fraction,//鉴黄分数
-            'image_type' => $file->extension(),
-            'md5' => $file->md5(),
-            'sha1' => $file->sha1(),
-            'mime' => $file->getMime(),
-            'file_size' => $file->getSize(),
-            'create_time' => time(),
-            'update_time' => time(),
-            'ip' => Request::ip(),
+            'image_type' => $this->file->extension(),
+            'md5' => $this->file->md5(),
+            'sha1' => $this->file->sha1(),
+            'mime' => $this->file->getMime(),
+            'file_size' => $this->file->getSize(),
+            'create_time' => $this->time,
+            'update_time' => $this->time,
+            'ip' => get_request_ip(),
             'yesterday_request' => 0,
-            'final_request_time' => time(),
+            'final_request_time' => $this->time,
         ];
-        $model = new Image($data);
-        $model->setAttr('user', $this->user);
+        $this->model = new Image($data);
 
+        // 图片所属修改
+        $this->model->setAttr('user', $this->user);
 
-        $imageUrl = (new ImagesProvider())->updateImageUrl($model, [
-            'publicCloud' => $this->apiType,
-            'privateStorage' => $this->privateStorage
-        ]);
+        // 图片分发
+        try {
+            $this->imageDistribute();
 
-        //图片Url过滤
-
-        $urlFilter = new UrlFilter($imageUrl, $pathName);
-        $imageUrlForDatabase = $urlFilter->run();
-        $imageUrlForNoPrivate = $imageUrlForDatabase;
-        unset($imageUrlForNoPrivate['private']);
-        if (empty($imageUrlForDatabase['private']) && empty($imageUrlForNoPrivate)) {
-            $this->deleteFile($file, $pathName, $tempFilename);
-            Log::record(json_encode($imageUrl, JSON_UNESCAPED_UNICODE), 'Hidove');
-            return msg(400, '上传失败:' . $urlFilter->toString($urlFilter->getError()));
+        } catch (\Exception $e) {
+            $this->deleteFile();
+            hidove_log($this->imageUrl);
+            return msg(400, $e->getMessage());
         }
-        $imageUrl = array_merge(['distribute' => splice_distribute_url($signatures)], $imageUrl);
-
-        $model->url = $imageUrlForDatabase;
-        $model->save();
 
         //更新用户图片容量
 
         if ($this->user->id !== 0) {
-            $this->user->capacity_used += $file->getSize();
+            $this->user->capacity_used += $this->file->getSize();
             $this->user->save();
         }
+
+        return $this->end();
+
+    }
+
+    private function imageDistribute()
+    {
+        // 分发上传
+        $this->imageUrl = (new ImagesProvider())->updateImageUrl($this->model, [
+            'publicCloud' => $this->apiType,
+            'privateStorage' => $this->privateStorage
+        ]);
+        //图片Url过滤
+        $urlFilter = new UrlFilter($this->imageUrl, $this->model->pathname);
+        // 上传至数据库的url
+        $imageUrlForDatabase = $urlFilter->run();
+
+        // 私有储存和公开地址由于是二维数组，所以需要分割开才能判断是否为空
+        $imageUrlForNoPrivate = $imageUrlForDatabase;
+        unset($imageUrlForNoPrivate['private']);
+        if (empty($imageUrlForDatabase['private']) && empty($imageUrlForNoPrivate)) {
+            throw new Exception('上传失败:' . $urlFilter->toString($urlFilter->getError()));
+        }
+
+        $this->model->url = array_merge($this->model->url, $imageUrlForDatabase);
+
+        //合并为前台url，去除不带域名的url
+        $temp = array_filter($this->model->url, function ($v) {
+            return is_valid_url($v);
+        });
+        $this->imageUrl = array_merge($temp, $this->imageUrl);
+
+        $this->imageUrl = array_merge(
+            ['distribute' => splice_distribute_url($this->model->signatures)], $this->imageUrl
+        );
+
+        $this->model->url = rising_subscript($this->model->url, 'this');
+        $this->imageUrl = rising_subscript($this->imageUrl, ['distribute', 'this']);
+        $this->model->save();
+    }
+
+    private function end()
+    {
         //删除临时文件
-        if (isset($tempFilename) && file_exists($tempFilename))
-            unlink($tempFilename);
+        if (isset($this->tempFilename) && file_exists($this->tempFilename))
+            unlink($this->tempFilename);
 
         //限制返回接口类型
         $returnUrlType = format_api_type(hidove_config_get('system.upload.returnUrlType'));
         if (!empty($returnUrlType)) {
-            $imageUrl = array_filter($imageUrl, function ($key) use ($returnUrlType) {
+            $this->imageUrl = array_filter($this->imageUrl, function ($key) use ($returnUrlType) {
                 if (in_array($key, $returnUrlType))
                     return true;
                 return false;
             }, ARRAY_FILTER_USE_KEY);
         }
-        return msg(200, 'success', ['url' => $imageUrl]);
+        return msg(200, 'success', ['url' => $this->imageUrl]);
     }
 
-    private function deleteFile(&$file, $pathName, $tempFilename = '')
+    private function deleteFile()
     {
-        unset($file);
-        if ($this->filesystem->has($pathName))
-            $this->filesystem->delete($pathName);
+        unset($this->file);
+        if ($this->filesystem->has($this->pathName))
+            $this->filesystem->delete($this->pathName);
         //删除临时文件
-        if (isset($tempFilename) && file_exists($tempFilename))
-            unlink($tempFilename);
+        if (isset($this->tempFilename) && file_exists($this->tempFilename))
+            unlink($this->tempFilename);
     }
 }

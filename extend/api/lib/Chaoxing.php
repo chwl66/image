@@ -25,28 +25,31 @@ class Chaoxing implements ImageApi
 
         $data ['v'] = '';
         $data ['d'] = '';
-        $result = hidove_post($UploadUrl, $data);
-        $result = json_decode($result, true);
+        $res = hidove_post($UploadUrl, $data);
+        $json = json_decode($res, true);
         //token失效
-        if (empty($result)) {
+        if (empty($json)) {
             $cookie = hidove_config_get('api.chaoxing.cookie');
             $hidove_get = hidove_get('http://pan.ananas.chaoxing.com/tk', [
                 'cookie:' . $cookie
             ]);
             if (strpos($hidove_get, 'tk=') !== 0) {
+                hidove_log($res);
+                hidove_log($hidove_get);
                 (new imageApiProvider())->sendMailReminder($data['token'], __CLASS__);
                 return '上传失败！';
             }
             $data['token'] = get_mid_str($hidove_get,'tk=\'','\';');
             Cache::set('upload_api_chaoxing', $data['token']);
-            $result = hidove_post($UploadUrl, $data);
-            $result = json_decode($result, true);
+            $res = hidove_post($UploadUrl, $data);
+            $json = json_decode($res, true);
         }
-        if (!empty($result['objectid'])) {
-            $objectid = $result['objectid'];
-        } else if (!empty($result['panMsg']['objectid'])) {
-            $objectid = $result['panMsg']['objectid'];
+        if (isset($json['objectid'])) {
+            $objectid = $json['objectid'];
+        } else if (isset($json['panMsg']['objectid'])) {
+            $objectid = $json['panMsg']['objectid'];
         } else {
+            hidove_log($res);
             return '上传失败！';
         }
         return 'http://p.ananas.chaoxing.com/star3/origin/' . $objectid;

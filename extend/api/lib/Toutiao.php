@@ -17,13 +17,11 @@ class Toutiao implements ImageApi
         $data['photo'] = new \CURLFile($pathName);
 
         $UploadUrl = 'https://mp.toutiao.com/upload_photo/?type=json';
-        $result = hidove_post($UploadUrl, $data, '"https://mp.toutiao.com/');
-        $result = json_decode($result, true);
-        if ($result['message'] == 'success') {
-            $imageUrl = $result['web_url'];
-            return $imageUrl;
-        } else {
-            return '上传失败！';
-        }
+        $res = hidove_post($UploadUrl, $data, '"https://mp.toutiao.com/');
+        $result = json_decode($res, true);
+        if ($result['message'] == 'success')
+            return $result['web_url'];
+        hidove_log($res);
+        return '上传失败！';
     }
 }

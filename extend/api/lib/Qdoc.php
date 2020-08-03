@@ -23,14 +23,12 @@ class Qdoc implements ImageApi
             'Cookie: ' . $cookie,
             'User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'
         );
-        $result = hidove_post($UploadUrl, $data, 'https://www.qq.com/', $headers);
-        $result = json_decode($result);
-        if (isset($result->url)) {
-            $imageUrl = get_left_str($result->url, '?');
-            return $imageUrl;
-        } else {
-            return '上传失败！';
-        }
+        $res = hidove_post($UploadUrl, $data, 'https://www.qq.com/', $headers);
+        $result = json_decode($res);
+        if (isset($result->url))
+            return get_left_str($result->url, '?');
+        hidove_log($res);
+        return '上传失败！';
     }
 
 }

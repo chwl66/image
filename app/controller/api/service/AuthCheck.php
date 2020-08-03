@@ -23,27 +23,15 @@ class AuthCheck
 
     public function run()
     {
-
-        $token = Request::param('token');
-        if (!empty($token)) {
-            $model = User::where('token', $token)->findOrEmpty();
-            if ($model->isEmpty()){
-                throw new Exception('The token is illegal!');
-            }
-        } else {
-            $userId = Session::get('userId');
-            if (!empty($userId)){
-                $model = User::where('id', $userId)->findOrEmpty();
-            }
-        }
-        if (empty($model) || $model->isEmpty()) {
+        $model = User::get_user();
+        if (!User::is_login($model)) {
             //游客
             if ($this->config['touristsUpload'] != 1) {
 
                 throw new Exception('禁止游客上传');
 
             } else {
-                if (Request::isAjax()){
+                if (is_web_upload()) {
 
                     $model = new User([
                         'id' => 0,
@@ -51,8 +39,8 @@ class AuthCheck
                         'api_folder_id' => 0,
                         'group_id' => 1,
                     ]);
-                }else{
-                    throw new Exception('The token is illegal!');
+                } else {
+                    throw new Exception('Unauthorized!');
                 }
             }
 
@@ -61,9 +49,9 @@ class AuthCheck
         if ($model->group->frequency !== -1) {
             if ($model->id == 0) {
 
-                $upload_log = Cache::get('upload_log_' . Request::ip());
+                $upload_log = Cache::get('upload_log_' . get_request_ip());
 
-                if (empty($upload_log)){
+                if (empty($upload_log) && $upload_log instanceof Collection) {
                     $upload_log = new Collection();
                 }
                 $upload_log
@@ -76,7 +64,7 @@ class AuthCheck
                 $upload_log->push([
                     'create_time' => time()
                 ]);
-                Cache::set('upload_log_' . Request::ip(), $upload_log);
+                Cache::set('upload_log_' . get_request_ip(), $upload_log);
 
             } else {
 

@@ -19,14 +19,16 @@ class Baidu implements ImageApi
         $timestamp = (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
         $UploadUrl = 'https://graph.baidu.com/upload?from=pc&tn=pc&uptime=' . $timestamp;
         $result = hidove_post($UploadUrl, $data, 'http://image.baidu.com');
-        $result = json_decode($result, true);
-        if (!empty($result['data']) && $result['status'] == 0) {
-            if (empty($result['data']['sign'])){
+        $json = json_decode($result);
+        if (!empty($json->data) && $json->status == 0) {
+            if (!isset($json->data->sign)) {
+                hidove_log($result);
                 return '上传失败！';
             }
-            $imageUrl = 'https://graph.baidu.com/resource/' . $result['data']['sign'] . '.jpg';
+            $imageUrl = 'https://graph.baidu.com/resource/' . $json->data->sign . '.jpg';
             return $imageUrl;
         } else {
+            hidove_log($result);
             return '上传失败！';
         }
     }

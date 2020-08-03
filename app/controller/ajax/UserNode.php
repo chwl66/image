@@ -15,7 +15,7 @@ class UserNode extends BaseController
 
     protected function initialize()
     {
-        $userId = Session::get('userId');
+        $userId = User::get_user_id();;
         $this->user = User::where('id', $userId)->findOrEmpty();
     }
     public function update()

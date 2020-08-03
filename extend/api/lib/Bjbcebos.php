@@ -17,15 +17,17 @@ class Bjbcebos implements ImageApi
     {
         $data['file'] = new \CURLFile($pathName);
         $UploadUrl = 'https://zhiqiu.baidu.com/imcswebchat/api/file/upload';
-        $hidove_post = hidove_post($UploadUrl, $data);
-        $hidove_post = json_decode($hidove_post);
+        $result= hidove_post($UploadUrl, $data);
+        $hidove_post = json_decode($result);
         if (!empty($hidove_post->url)) {
             return $hidove_post->url;
         } else if (!empty($hidove_post->msg)) {
-            return '上传失败' . $hidove_post->msg;
+            $res = '上传失败' . $hidove_post->msg;
         } else {
-            return '上传失败';
+            $res = '上传失败';
         }
+        hidove_log($result);
+        return $res;
 
 
     }

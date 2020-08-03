@@ -82,7 +82,7 @@ class AdminUser extends BaseController
         unset($param['id']);
         $model = User::where('id', $id)->findOrEmpty();
 
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
 
             return msg(400, '该用户不存在');
         }
@@ -164,7 +164,7 @@ class AdminUser extends BaseController
         $user->capacity_used = 0;
         $user->api_folder_id = 0;
         $user->group_id = 1;
-        $user->ip = Request::ip();
+        $user->ip = get_request_ip();
         $user->is_private = 0;
         $user->is_whitelist = 0;
         $user->watermark = [];

@@ -1,7 +1,6 @@
 {extend name="index/base" /}
 {block name="title"}{:lang('Finance')} - {$Hidove.config.system.base.sitename}{/block}
 {block name="head"}
-<script src="/static/index/js/function.js"></script>
 <style>
     .card-body {
         height: 100%;
@@ -61,6 +60,6 @@
 </div>
 {/block}
 {block name="script"}
-<script src="/static/index/js/jquery.base64.js"></script>
-<script src="/static/index/js/user/finance.js"></script>
+<script src="/static/index/js/jquery.base64.js?v={:get_current_version()}"></script>
+<script src="/static/index/js/user/finance.js?v={:get_current_version()}"></script>
 {/block}

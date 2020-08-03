@@ -18,14 +18,14 @@ class Xiaomi implements ImageApi
         $file = curl_file_create($pathName, $imageInfo['mime'], 'hidove.' . $imageInfo['type']);
         $data['pic'] = $file;
         $UploadUrl = 'https://shopapi.io.mi.com/homemanage/shop/uploadpic';
-        $result = hidove_post($UploadUrl, $data, 'http://shopapi.io.mi.com');
-        $result = json_decode($result, true);
+        $res = hidove_post($UploadUrl, $data, 'http://shopapi.io.mi.com');
+        $result = json_decode($res, true);
         if (!empty($result) && $result['code'] == 0) {
             $imageUrl = $result['result'];
             $imageUrl = substr($imageUrl, 0, stripos($imageUrl, '&'));
             return $imageUrl;
-        } else {
-            return '上传失败！';
         }
+        hidove_log($res);
+        return '上传失败！';
     }
 }

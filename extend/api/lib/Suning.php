@@ -33,13 +33,13 @@ class Suning implements ImageApi
             'User-Agent:Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50'
         ];
         $UploadUrl = 'http://review.suning.com/imageload/uploadImg.do';
-        $result = hidove_post($UploadUrl, $data, 'http://www.suning.com', $hearder);
-        $result = json_decode($result, true);
+        $res = hidove_post($UploadUrl, $data, 'http://www.suning.com', $hearder);
+        $result = json_decode($res, true);
         if (!empty($result['src'])) {
             $imageUrl = 'https:' . $result['src'] . '.jpg';
             return $imageUrl;
-        } else {
-            return '上传失败！';
         }
+        hidove_log($res);
+        return '上传失败！';
     }
 }

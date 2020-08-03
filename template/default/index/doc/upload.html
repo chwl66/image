@@ -1,8 +1,8 @@
 {extend name="index/base" /}
 {block name="title"}{:lang('Upload API Doc')} - {$Hidove.config.system.base.sitename}{/block}
 {block name="head"}
-<link rel="stylesheet" type="text/css" href="/static/common/highlight/styles/github-gist.css"/>
-<script src="/static/common/highlight/highlight.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/common/highlight/styles/github-gist.css?v={:get_current_version()}"/>
+<script src="/static/common/highlight/highlight.pack.js?v={:get_current_version()}"></script>
 {/block}
 {block name="body"}
 <div class="container Hidove-main">

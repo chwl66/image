@@ -2,12 +2,14 @@
 {block name="title"}{$Hidove.config.system.base.sitename} - {$Hidove.config.system.base.subtitle}{/block}
 {block name="head"}
 
-<link href="{$Hidove.config.system.base.cdnjs}/animate.css/3.7.2/animate.min.css" rel="stylesheet">
-<link href="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
-<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/js/fileinput.min.js"></script>
-<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/js/plugins/piexif.min.js"></script>
-<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/js/plugins/purify.min.js"></script>
-<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/themes/fas/theme.min.js"></script>
+<link href="{$Hidove.config.system.base.cdnjs}/animate.css/3.7.2/animate.min.css?v={:get_current_version()}"
+      rel="stylesheet">
+<link href="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/css/fileinput.min.css?v={:get_current_version()}"
+      rel="stylesheet" type="text/css"/>
+<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/js/fileinput.min.js?v={:get_current_version()}"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/js/plugins/piexif.min.js?v={:get_current_version()}"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/js/plugins/purify.min.js?v={:get_current_version()}"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/bootstrap-fileinput/5.1.1/themes/fas/theme.min.js?v={:get_current_version()}"></script>
 
 
 {/block}
@@ -41,17 +43,17 @@
                 {foreach $Hidove.user.storage as $key=>$value}
 
                 {if($key !== 'this')}
-                    {if empty($value.cdn)}
-                    <label class="btn btn-outline-secondary disabled">
-                        <input type="checkbox" autocomplete="off" name="privateStorage" value="{$key}"
-                               title="{$key}">{$key|strtoupper}
-                    </label>
-                    {else}
-                    <label class="btn btn-outline-secondary">
-                        <input type="checkbox" autocomplete="off" name="privateStorage" value="{$key}"
-                               title="{$key}">{$key|strtoupper}
-                    </label>
-                    {/if}
+                {if empty($value.cdn)}
+                <label class="btn btn-outline-secondary disabled">
+                    <input type="checkbox" autocomplete="off" name="privateStorage" value="{$key}"
+                           title="{$key}">{$key|strtoupper}
+                </label>
+                {else}
+                <label class="btn btn-outline-secondary">
+                    <input type="checkbox" autocomplete="off" name="privateStorage" value="{$key}"
+                           title="{$key}">{$key|strtoupper}
+                </label>
+                {/if}
                 {/if}
                 {/foreach}
             </div>
@@ -137,6 +139,9 @@
 </div>
 {/block}
 {block name="script"}
-<script src="/static/index/js/index/upload.js?v=2.1.3"></script>
-<script src="/static/index/js/index/index.js"></script>
+<script>
+    const web_upload_key = '{:get_web_upload_key()}'
+</script>
+<script src="/static/index/js/index/upload.js?v={:get_current_version()}"></script>
+<script src="/static/index/js/index/index.js?v={:get_current_version()}"></script>
 {/block}

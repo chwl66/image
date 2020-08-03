@@ -6,6 +6,7 @@ namespace app\controller\ajax;
 
 use app\BaseController;
 use app\model\Image;
+use app\model\User;
 use think\facade\Cache;
 use think\facade\Request;
 use think\facade\Session;
@@ -16,7 +17,7 @@ class UserCache extends BaseController
 
     protected function initialize()
     {
-        $this->userId = Session::get('userId');
+        $this->userId = User::get_user_id();
     }
 
     public function refresh()

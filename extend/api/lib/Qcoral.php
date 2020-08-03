@@ -65,15 +65,15 @@ eot;
             $imageUrl = $result['data']['picture'][0]['url'] . '/0';
             $imageUrl = str_replace('http://', 'https://', $imageUrl);
             return $imageUrl;
-        } else {
-            if (!empty($result['errorMsg'])) {
-                $this->sendMailReminder($result['errorMsg'],"Qpic");
-                return '上传失败！' . $result['errorMsg'];
-            }else{
-                $this->sendMailReminder(null,"Qpic");
-                return '上传失败！';
-            }
-            //{"errCode":8,"errorMsg":"not Login yet","info":{"time":1581831901}}
+        }
+        hidove_log($result);
+        $result = json_decode($result, true);
+        if (!empty($result['errorMsg'])) {
+            $this->sendMailReminder($result['errorMsg'],"Qpic");
+            return '上传失败！' . $result['errorMsg'];
+        }else{
+            $this->sendMailReminder(null,"Qpic");
+            return '上传失败！';
         }
     }
 

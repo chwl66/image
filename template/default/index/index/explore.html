@@ -27,8 +27,8 @@
 <div id="exploreClosed" style="display: none;text-align: center">The Explore has been turned off.</div>
 {/block}
 {block name="script"}
-<script src="{$Hidove.config.system.base.cdnjs}/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
-<script src="/static/common/jQuery-waterfall/js/jquery.waterfall.js"></script>
+<script src="{$Hidove.config.system.base.cdnjs}/jquery.lazyload/1.9.1/jquery.lazyload.min.js?v={:get_current_version()}"></script>
+<script src="/static/common/jQuery-waterfall/js/jquery.waterfall.js?v={:get_current_version()}"></script>
 <script>
     var page = 0;
     load(++page);

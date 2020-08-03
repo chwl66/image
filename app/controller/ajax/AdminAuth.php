@@ -38,7 +38,7 @@ class AdminAuth
             'password' => hidove_md5($param['password']),
             'group_id' => 2,
         ])->findOrEmpty();
-        if ($user->isEmpty()) {
+        if (!$user->isExists()) {
             return msg(400, '用户名或密码错误');
         }
         Session::set('userId', $user->id);

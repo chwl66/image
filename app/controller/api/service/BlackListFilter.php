@@ -17,7 +17,7 @@ class BlackListFilter
     public function __construct($user)
     {
         $this->user = $user;
-        $this->ip = Request::ip();
+        $this->ip = get_request_ip();
     }
 
     public function run()

@@ -1,6 +1,6 @@
 <?php
 /**
- * FILE_NAME: Ali.php
+ * FILE_NAME: Huluxia.php
  * From: www.hidove.cn
  * Author: Ivey
  * Date: 2019/10/6 10:27
@@ -15,7 +15,6 @@ class Huluxia implements ImageApi
 {
     public function upload($pathName)
     {
-        $imageInfo = get_image_info($pathName);
         $UploadUrl = 'https://upload.huluxia.net/upload/image/larger';
         $data['file'] = new \CURLFile($pathName);
 
@@ -25,6 +24,7 @@ class Huluxia implements ImageApi
             $imageUrl = str_replace('http://','https://',$result['url']);
             return $imageUrl;
         } else {
+            hidove_log($result);
             return '上传失败！';
         }
     }

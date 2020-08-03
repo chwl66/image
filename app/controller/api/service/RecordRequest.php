@@ -13,7 +13,7 @@ class RecordRequest
     public static function run()
     {
         $model = ApiRequest::whereDay('create_time', 'today');
-        $is_token = Request::param('token');
+        $is_token = is_token();
         if (empty($is_token)) {
             $model = $model->where('key', 'officialUpload');
         } else {
@@ -21,7 +21,7 @@ class RecordRequest
         }
         $model = $model
             ->findOrEmpty();
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
             $model = new ApiRequest();
             $model->key = empty($is_token)?'officialUpload':'tokenUpload';
             $model->create_time = time();

@@ -5,8 +5,7 @@ namespace app\controller\api\service;
 
 
 use app\model\Folders;
-use app\model\User;
-use think\facade\Request;
+use think\Exception;
 
 class UserStorageCapacity
 {
@@ -16,7 +15,7 @@ class UserStorageCapacity
     public function __construct($user)
     {
         $this->user = $user;
-        $this->folderId = Request::param('folder');
+        $this->folderId = get_param('folder');
 
     }
 
@@ -45,7 +44,7 @@ class UserStorageCapacity
                 'id' => $this->user->api_folder_id,
                 'user_id' => $this->user->id
             ])->findOrEmpty();
-            if ($folderInfo->isEmpty()) {
+            if (!$folderInfo->isExists()) {
                 $this->user->api_folder_id = 0;
             }
         }

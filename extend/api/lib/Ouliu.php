@@ -20,9 +20,9 @@ class Ouliu implements ImageApi
         $result = hidove_post('https://upload.ouliu.net', $data);
         //id="codedirect" class="imgcodebox" value="[\S]+"
         $imageUrl = get_mid_str($result, 'id="codedirect" class="imgcodebox" value="', '" onclick="setTxt');
-        if (empty($imageUrl)){
-            return '上传失败';
-        }
-        return str_replace('http://', 'https://', $imageUrl);
+        if (!empty($imageUrl))
+            return str_replace('http://', 'https://', $imageUrl);
+        hidove_log($result);
+        return '上传失败';
     }
 }

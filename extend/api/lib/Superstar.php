@@ -14,13 +14,11 @@ class Superstar implements ImageApi
 
         $UploadUrl = 'http://notice.chaoxing.com/pc/files/uploadNoticeFile';
         $data['attrFile'] = new \CURLFile($pathName);
-        $result = hidove_post($UploadUrl, $data);
-        $result = json_decode($result);
-        if (!empty($result->url)) {
-            return str_replace('http://','https://',get_left_str($result->url,'?'));
-        } else {
-            Log::record(json_encode($result),'Hidove');
-            return '上传失败！';
-        }
+        $res = hidove_post($UploadUrl, $data);
+        $result = json_decode($res);
+        if (!empty($result->url))
+            return str_replace('http://', 'https://', get_left_str($result->url, '?'));
+        hidove_log($res);
+        return '上传失败！';
     }
 }

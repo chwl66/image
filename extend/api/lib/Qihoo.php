@@ -19,21 +19,19 @@ class Qihoo implements ImageApi
     public function upload($pathName)
     {
         $imageInfo = get_image_info($pathName);
-        $file = curl_file_create($pathName,$imageInfo['mime'],'hidove.'.$imageInfo['type']);
+        $file = curl_file_create($pathName, $imageInfo['mime'], 'hidove.' . $imageInfo['type']);
         $data['upload'] = $file;
         $UploadUrl = 'https://st.so.com/stu';
         $result = $this->HidovePostLocation($UploadUrl, $data, 'http://st.so.com/');
-        if ($result['redirect_url'] !== '') {
-            preg_match('~imgkey=(.+?)&~',$result['redirect_url'],$matches);
-            if (empty($matches[1])){
-                return '上传失败！';
-            }
-            $imageUrl = 'https://ps.ssl.qhmsg.com/'.$matches[1];
-            return $imageUrl;
-        } else {
-            return '上传失败！';
+        if ($result['info']['redirect_url'] !== '') {
+            preg_match('~imgkey=(.+?)&~', $result['info']['redirect_url'], $matches);
+            if (!empty($matches[1]))
+                return 'https://ps.ssl.qhmsg.com/' . $matches[1];
         }
+        hidove_log($result);
+        return '上传失败！';
     }
+
     private function HidovePostLocation($url, $post, $referer, $headers = [
         'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36',
     ]
@@ -68,6 +66,9 @@ class Qihoo implements ImageApi
         $return = curl_exec($curl);
         $info = curl_getinfo($curl);
         curl_close($curl);
-        return $info;
+        return [
+            'data' => $return,
+            'info' => $info,
+        ];
     }
 }

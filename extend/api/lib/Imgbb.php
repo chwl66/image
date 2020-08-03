@@ -23,13 +23,12 @@ class Imgbb implements ImageApi
 
         $data['image'] = new \CURLFile($pathName);
 
-        $result =  hidove_post($UploadUrl, $data);
-        $result = json_decode($result, true);
-        if ($result['status'] == 200) {
-            $imageUrl = $result['data']['url'];
-            return $imageUrl;
-        } else {
-            return '上传失败！';
-        }
+        $res = hidove_post($UploadUrl, $data);
+        $result = json_decode($res, true);
+        if ($result['status'] == 200)
+            return $result['data']['url'];
+
+        hidove_log($res);
+        return '上传失败！';
     }
 }

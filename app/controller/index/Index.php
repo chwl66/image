@@ -15,6 +15,7 @@ use app\controller\common\ImageInitial;
 use app\middleware\Template;
 use app\model\Api;
 use app\model\Image;
+use app\model\User;
 use think\facade\Request;
 use think\facade\Session;
 use think\facade\View;
@@ -30,7 +31,7 @@ class Index extends BaseController
 
     protected function initialize()
     {
-        $this->userId = Session::get('userId');
+        $this->userId = User::get_user_id();
         $this->Hidove['user'] = \app\model\User::where('id', $this->userId)->find();
 
         $this->Hidove['config']['system']['base'] = hidove_config_get('system.base.');
@@ -63,7 +64,7 @@ class Index extends BaseController
     {
         $signatures = Request::param('signatures');
         $image = Image::where('signatures', $signatures)->findOrEmpty();
-        if ($image->isEmpty()) {
+        if (!$image->isExists()) {
             throw new \think\exception\HttpException(404, '404 NOT FOUND!');
         }
         $api = Api::select();

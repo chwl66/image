@@ -17,7 +17,7 @@ class UserWatermark extends BaseController
 
     protected function initialize()
     {
-        $userId = Session::get('userId');
+        $userId = User::get_user_id();;
         $this->user = User::where('id', $userId)->findOrEmpty();
     }
 

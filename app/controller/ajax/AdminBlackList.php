@@ -49,7 +49,7 @@ class AdminBlackList
         $id = $parram['id'];
         unset($parram['id']);
         $model = Blacklist::where('id', $id)->findOrEmpty();
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
             return msg(400, '找不到这条记录');
         }
         if (!empty($parram['duration'])) {

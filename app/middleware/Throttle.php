@@ -50,11 +50,11 @@ class Throttle
 
         $this->identification = $this->rateLimit['prefix'];
         if ($this->rateLimit['key'] === true) {
-            $this->identification .= Request::ip();
+            $this->identification .= get_request_ip();
         } else {
             $this->identification = str_replace('__CONTROLLER__', Request::controller(), $this->rateLimit['key']);
             $this->identification = str_replace('__ACTION__', Request::action(), $this->identification);
-            $this->identification = str_replace('__IP__', Request::ip(), $this->identification);
+            $this->identification = str_replace('__IP__', get_request_ip(), $this->identification);
             $this->identification .= $this->rateLimit['key'];
         }
         if (empty($this->rateLimit['visit_frequency'])) {

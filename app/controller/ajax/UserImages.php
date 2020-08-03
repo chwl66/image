@@ -18,7 +18,7 @@ class UserImages extends BaseController
 
     protected function initialize()
     {
-        $userId = Session::get('userId');
+        $userId = User::get_user_id();;
         $this->Hidove['user'] = User::where('id', $userId)->find();
     }
 
@@ -162,7 +162,7 @@ class UserImages extends BaseController
             ['id', '=', $folderId],
             ['user_id', '=', $this->Hidove['user']->id],
         ])->findOrEmpty();
-        if ($folder->isEmpty()) {
+        if (!$folder->isExists()) {
             return msg(400, '目录不存在');
         }
         if (!$folder->children->isEmpty() || !$folder->images->isEmpty()) {

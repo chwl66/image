@@ -43,7 +43,7 @@ class ImageUpdate
             'signatures' => $signatures,
             'user_id' => $request->user->id,
         ])->findOrEmpty();
-        if ($model->isEmpty()) {
+        if (!$model->isExists()) {
             return msg(400, 'This picture was not found!');
         }
 

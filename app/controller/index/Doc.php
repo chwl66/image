@@ -6,6 +6,7 @@ use app\BaseController;
 use app\middleware\Template;
 use app\model\Api;
 use app\model\Storage;
+use app\model\User;
 use think\facade\Session;
 use think\facade\View;
 
@@ -20,8 +21,8 @@ class Doc extends BaseController
 
     protected function initialize()
     {
-        $this->userId = Session::get('userId', 'Hidove');
-        $this->Hidove['user'] = \app\model\User::where('id', $this->userId)->find();
+        $this->userId = User::get_user_id();
+        $this->Hidove['user'] = User::where('id', $this->userId)->find();
         $this->Hidove['config']['system']['base'] = hidove_config_get('system.base.');
     }
 

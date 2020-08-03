@@ -48,7 +48,7 @@ class ImageInfo
             'final_request_time',
         ])
             ->findOrEmpty();
-        if ($imageinfo->isEmpty()) {
+        if (!$imageinfo->isExists()) {
             return msg(400, 'This image is not found');
         }
         return msg(200, 'success', $imageinfo);

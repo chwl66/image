@@ -7,6 +7,7 @@ use app\model\ApiRequest;
 use app\model\Image;
 use app\model\ImageRequest;
 use Carbon\Carbon;
+use think\facade\Cache;
 use think\facade\Request;
 
 class ImageRecord
@@ -28,10 +29,28 @@ class ImageRecord
 
         //记录请求信息
         if ($apiRecord == 1) {
-            $image = Image::where('signatures', Request::param('signatures'))
-                ->findOrEmpty();
-            if (!$image->isEmpty())
-                $this->recordRequest($image);
+            $signatures = Request::param('signatures');
+            $recordData = Cache::get('image_record_' . $signatures);
+
+            $time = time();
+            if (!isset($recordData['value'])) {
+                $recordData['value'] = 0;
+                $recordData['time'] = $time;
+            }
+            Cache::tag('image_record')
+                ->set('image_record_' . $signatures, [
+                    'value' => $recordData['value'] + 1,
+                    'time' => $time
+                ], 0);
+            // 偶然性记录
+            if ((mt_rand(0, 3000) > 1688 && mt_rand(88, 16888) % 3 === 0) || $recordData['time'] - $time > 3600) {
+
+                $image = Image::where('signatures', $signatures)
+                    ->findOrEmpty();
+                if ($image->isExists())
+                    $this->recordRequest($image);
+                Cache::delete('image_record_' . $signatures);
+            }
         }
         return $res->header([
             'Cache-Control' => 'max-age=259200'
@@ -45,7 +64,7 @@ class ImageRecord
     {
         $referer = parse_url(Request::server('HTTP_REFERER'));
         $referer = empty($referer['host']) ? '直接访问' : $referer['host'];
-        $ip = Request::ip();
+        $ip = get_request_ip();
         //更新图片请求信息
         if (!Carbon::parse($image->final_request_time)->isToday()) {
             $image->today_request_times = 1;

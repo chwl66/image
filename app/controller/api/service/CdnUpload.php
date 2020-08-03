@@ -31,7 +31,7 @@ class CdnUpload
             $storageConfig = Storage::where('name', $value)
             ->findOrEmpty();
 
-            if ($storageConfig->isEmpty()) {
+            if (!$storageConfig->isExists()) {
                 continue;
             }
             $class = '\\storage\\driver\\' . ucfirst($storageConfig['driver']);

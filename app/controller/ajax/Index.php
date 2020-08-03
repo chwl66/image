@@ -64,7 +64,7 @@ class Index extends BaseController
     public function imagePreview()
     {
         $url = Request::param('url');
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        if (!is_valid_url($url)) {
             return msg(400, 'URL格式错误');
         }
         $data = hidove_get($url);

@@ -28,18 +28,16 @@ class Sina implements ImageApi
             "Cookie: $Cookie"
         ];
         $data = file_get_contents($pathName);
-        $result = hidove_post($UploadUrl, $data, ' https://d.weibo.com/?topnav=1&mod=logo&wvr=6', $headers);
-        $result = json_decode($result);
-        if (!empty($result->data->pics->pic_1->pid)) {
-            $imageUrl = 'https://tva' . mt_rand(1, 4) . '.sinaimg.cn/large/' . $result->data->pics->pic_1->pid . '.jpg';
-            return $imageUrl;
-        } else {
-            Cache::delete('upload_api_sina');
-            if (!$Cookie) {
-                return '上传失败！Cookie获取失败！';
-            }
-            return '上传失败！';
-        }
+        $res = hidove_post($UploadUrl, $data, ' https://d.weibo.com/?topnav=1&mod=logo&wvr=6', $headers);
+        $result = json_decode($res);
+        if (!empty($result->data->pics->pic_1->pid))
+            return 'https://tva' . mt_rand(1, 4) . '.sinaimg.cn/large/' . $result->data->pics->pic_1->pid . '.jpg';
+
+        hidove_log($res);
+        Cache::delete('upload_api_sina');
+        if (!$Cookie) return '上传失败！Cookie获取失败！';
+        
+        return '上传失败！';
     }
 
     /**

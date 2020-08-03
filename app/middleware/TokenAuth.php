@@ -11,11 +11,10 @@ class TokenAuth
     public function handle($request, \Closure $next)
     {
 
-        $token = Request::param('token');
+        $token = get_token();
         if (empty($token)) {
             return msg(400, 'This token can\'t be null!');
         }
-        $token = trim($token);
 
         $model = User::where('token', $token)->findOrEmpty();
 
